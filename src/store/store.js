@@ -1,12 +1,23 @@
 import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
-const useStore = create((set) => ({
-  count: 0,
-  selectedButton: null,
+const StorageKey = "storage-key";
 
-  setSelectedButton: (button) => set({ selectedButton: button }),
-  incrementCount: () => set((state) => ({ count: state.count + 10 })),
-  removeCount: () => set({ count: 0 }),
-}));
+const useStore = create(
+  persist(
+    devtools((set) => ({
+      count: 0,
+      selectedButton: null,
+
+      setSelectedButton: (button) => set({ selectedButton: button }),
+      incrementCount: () => set((state) => ({ count: state.count + 10 })),
+      minusCount: () => set((state) => ({ count: state.count - 7 })),
+      removeCount: () => set({ count: 0 }),
+    }))
+  ),
+  {
+    name: StorageKey,
+  }
+);
 
 export default useStore;
