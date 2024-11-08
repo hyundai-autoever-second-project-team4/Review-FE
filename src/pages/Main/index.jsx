@@ -36,7 +36,7 @@ function Main() {
         title: "",
         page: 0,
       }),
-    staleTime: 5000, // 1분 // 데이터가 신선함을 유지하는 시간. 유지되는 기간동안 다시 마운트 될 때, 데이터를 재요청하지 않음. 해당 시간이 지나게 되면 stale 상태가 됨.
+    staleTime: 5000, // 1분 // 데이가 신선함을 유지하는 시간. 유지되는 기간동안 다시 마운트 될 때, 데이터를 재요청하지 않음. 해당 시간이 지나게 되면 stale 상태가 됨.
     enabled: user.userId !== null, // 해당 조건일 경우에만 실행되도록
   });
   const [name, setName] = useState("");
