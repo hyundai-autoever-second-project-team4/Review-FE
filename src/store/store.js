@@ -3,16 +3,20 @@ import { devtools, persist } from "zustand/middleware";
 
 const StorageKey = "storage-key";
 
+const UserInit = {
+  userId: null,
+  nickName: "",
+  profile: null,
+  email: "",
+};
+
 const useStore = create(
   persist(
     devtools((set) => ({
-      count: 0,
-      selectedButton: null,
+      user: UserInit,
 
-      setSelectedButton: (button) => set({ selectedButton: button }),
-      incrementCount: () => set((state) => ({ count: state.count + 10 })),
-      minusCount: () => set((state) => ({ count: state.count - 7 })),
-      removeCount: () => set({ count: 0 }),
+      setUser: (newUser) => set({ user: newUser }),
+      logOut: () => set({ user: UserInit }),
     }))
   ),
   {

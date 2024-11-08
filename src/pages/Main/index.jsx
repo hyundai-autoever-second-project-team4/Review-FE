@@ -1,16 +1,111 @@
-import React from "react";
+import React, { useState } from "react";
 import useStore from "../../store/store";
+import { getPostingList, login } from "../../api/api";
+import styled from "styled-components";
+import PostingCard from "./template/PostingCard";
+import { convertToKoreanFormat } from "../../utils/time";
+import { useQuery } from "@tanstack/react-query";
+import CustomLoading from "./template/CustomLoading";
+import { useNavigate } from "react-router-dom";
+
+const ProfileImg = styled.img`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+`;
+
+const NickName = styled.p`
+  font-size: 24px;
+  font-weight: 500;
+`;
 
 function Main() {
-  const { count, incrementCount, removeCount, minusCount } = useStore(
-    (state) => state
-  );
+  const { user, setUser, logOut } = useStore((state) => state);
+  const { data, isLoading } = useQuery({
+    queryKey: ["postingList"],
+    queryFn: () =>
+      getPostingList({
+        nationCode: "",
+        cityCode: "",
+        writerNickname: "",
+        title: "",
+        page: 0,
+      }),
+    staleTime: 5000, // 1분 // 데이터가 신선함을 유지하는 시간. 유지되는 기간동안 다시 마운트 될 때, 데이터를 재요청하지 않음. 해당 시간이 지나게 되면 stale 상태가 됨.
+    enabled: user.userId !== null, // 해당 조건일 경우에만 실행되도록
+  });
+  const [name, setName] = useState("");
+  const [pw, setPw] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const response = await login({
+      email: name,
+      password: pw,
+    });
+
+    const token = response.headers.authorization;
+    const data = response.data;
+
+    setUser(data);
+    if (token) {
+      localStorage.setItem("token", token.slice(7));
+    } else {
+      console.error("Token is undefined.");
+    }
+  };
+
   return (
     <div>
-      <div>{count}</div>
-      <button onClick={incrementCount}>증가</button>
-      <button onClick={minusCount}>감소</button>
-      <button onClick={removeCount}>초기화</button>
+      <button onClick={() => navigate("/detail")}>디테일 페이지로</button>
+      {user.userId === null ? (
+        <div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="password"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+          />
+          <button onClick={handleLogin}>로그인</button>
+        </div>
+      ) : (
+        <>
+          <div>
+            <ProfileImg alt="/Default Profile.png" src={user.profile} />
+            <NickName>{user.nickName}</NickName>
+            <button onClick={() => logOut()}>로그아웃</button>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+            {isLoading ? (
+              <CustomLoading />
+            ) : (
+              data?.data?.content?.map((item) => (
+                <PostingCard
+                  key={item.postingId}
+                  title={item.title}
+                  mainImg={item.mainImgUrl}
+                  content={item.content}
+                  commentsCount={item.commentCnt}
+                  createAt={convertToKoreanFormat(item.createdAt)}
+                  isMine={false}
+                  nickname={item.writerNickname}
+                  profileImg={item.profile}
+                  width="250px"
+                />
+              ))
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
