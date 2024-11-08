@@ -1,11 +1,40 @@
 /* reset css */
 
+@font-face {
+  font-family: "Noto Sans KR";
+  font-weight: 300;
+  src: url("./styles/fonts/NotoSansKR-Light.ttf") format("woff2"),
+    url("./styles/fonts/NotoSansKR-Light.ttf") format("woff"),
+    url("./styles/fonts/NotoSansKR-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  font-weight: 400;
+  src: url("./styles/fonts/NotoSansKR-Regular.ttf") format("woff2"),
+    url("./styles/fonts/NotoSansKR-Regular.ttf") format("woff"),
+    url("./styles/fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  font-weight: 500;
+  src: url("styles/fonts/NotoSansKR-Medium.ttf") format("woff2");
+}
+
+@font-face {
+  font-family: "Noto Sans KR";
+  font-weight: 700;
+  src: url("./styles/fonts/NotoSansKR-Bold.ttf") format("woff2"),
+    url("./styles/fonts/NotoSansKR-Bold.ttf") format("woff"),
+    url("./styles/fonts/NotoSansKR-Bold.ttf") format("truetype");
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   color: #334155;
-  /* font-family: Pretendard; */
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 html,

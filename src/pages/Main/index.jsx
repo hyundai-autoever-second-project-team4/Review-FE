@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useStore from "../../store/store";
+import useUserStore from "../../store/userStore";
 import { getPostingList, login } from "../../api/api";
 import styled from "styled-components";
 import PostingCard from "./template/PostingCard";
@@ -7,6 +7,11 @@ import { convertToKoreanFormat } from "../../utils/time";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoading from "./template/CustomLoading";
 import { useNavigate } from "react-router-dom";
+import theme from "../../styles/theme";
+
+const Container = styled.div`
+  background-color: ${theme.colors.black};
+`;
 
 const ProfileImg = styled.img`
   width: 36px;
@@ -20,7 +25,7 @@ const NickName = styled.p`
 `;
 
 function Main() {
-  const { user, setUser, logOut } = useStore((state) => state);
+  const { user, setUser, logOut } = useUserStore((state) => state);
   const { data, isLoading } = useQuery({
     queryKey: ["postingList"],
     queryFn: () =>
@@ -56,7 +61,8 @@ function Main() {
   };
 
   return (
-    <div>
+    <Container>
+      asdjkshjashdsajdhaskjsadhj
       <button onClick={() => navigate("/detail")}>디테일 페이지로</button>
       {user.userId === null ? (
         <div>
@@ -106,7 +112,7 @@ function Main() {
           </div>
         </>
       )}
-    </div>
+    </Container>
   );
 }
 
