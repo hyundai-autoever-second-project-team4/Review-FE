@@ -13,6 +13,7 @@ const theme = {
     gray3: "#5E5E64",
     red: "#FF5B5B",
     blue: "#5252F5",
+    review: "#f5f5f5",
   },
   fontSizes: {
     xs: "10px",
