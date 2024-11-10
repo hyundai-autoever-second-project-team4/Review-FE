@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./StartRatingStyle";
 import StarIcon from "../../assets/svg/star.svg";
+import EmptyStarIcon from "../../assets/svg/emptyStar.svg";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import theme from "../../styles/theme";
 import { Rating } from "@mui/material";
@@ -24,7 +25,7 @@ function StarRating({ rate, readOnly, setRating }) {
         }
         emptyIcon={
           <DynamicSVG
-            svgUrl={StarIcon}
+            svgUrl={EmptyStarIcon}
             width={24}
             height={24}
             color={theme.colors.gray2}
