@@ -8,10 +8,9 @@ import { useQuery } from "@tanstack/react-query";
 import CustomLoading from "./template/CustomLoading";
 import { useNavigate } from "react-router-dom";
 import theme from "../../styles/theme";
+import CustomModal from "../../components/CustomModal/CustomModal";
 
-const Container = styled.div`
-  background-color: ${theme.colors.black};
-`;
+const Container = styled.div``;
 
 const ProfileImg = styled.img`
   width: 36px;
@@ -41,7 +40,12 @@ function Main() {
   });
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+
+  const handleClose = () => {
+    setModal(false);
+  };
 
   const handleLogin = async () => {
     const response = await login({
@@ -63,6 +67,14 @@ function Main() {
   return (
     <Container>
       asdjkshjashdsajdhaskjsadhj
+      <button onClick={() => setModal(true)}>모달 열기</button>
+      <CustomModal
+        modal={modal}
+        modalClose={handleClose}
+        title="뱃지 획득 조건"
+        reviewModal
+        large
+      ></CustomModal>
       <button onClick={() => navigate("/detail")}>디테일 페이지로</button>
       {user.userId === null ? (
         <div>
