@@ -5,7 +5,7 @@ name: Front Deployment
 on:
   push:
     branches:
-      - main
+      - dev
 
 # 위의 이벤트가 트리거되면 실행할 목록입니다.
 jobs:
@@ -69,4 +69,4 @@ jobs:
           CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID}}
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id $CLOUD_FRONT_ID --paths /*
+            --distribution-id $CLOUD_FRONT_ID --paths /index.html

@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Modal from "@mui/material/Modal";
 import theme from "../../styles/theme";
+import DynamicSVG from "../DynamicSVG/DynamicSVG";
+import CloseIcon from "../../assets/svg/close-circle.svg";
 
 const Container = styled.div`
   width: ${({ $large }) => ($large ? `800px` : `550px`)};
@@ -17,23 +19,25 @@ const TitleArea = styled.div`
   position: fixed;
   border-bottom: 1px solid ${theme.colors.neutral200};
 
-  font-size: ${theme.fontSizes.h2};
-  font-weight: ${theme.fontWeight.header};
+  font-size: ${theme.fontSizes.title};
+  font-weight: ${theme.fontWeight.bold};
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: #fff;
-  border-radius: 30px 30px 0 0;
+  background-color: ${({ $reviewModal }) =>
+    $reviewModal ? `${theme.colors.review}` : "#fff"};
+  border-radius: ${theme.borderRadius.md} ${theme.borderRadius.md} 0 0;
   z-index: 9999;
 `;
 
 const ContentArea = styled.div`
   margin-top: 100px;
   max-height: 400px;
-  padding: 28px 36px;
+  min-height: 100px;
+  padding: 20px 36px 0 36px;
   overflow-y: auto;
-  background-color: #fff;
-  border-radius: 0 0 30px 30px;
+  background-color: ${({ $reviewModal }) =>
+    $reviewModal ? `${theme.colors.review}` : "#fff"};
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -49,6 +53,13 @@ const ContentArea = styled.div`
   }
 `;
 
+const BottomArea = styled.div`
+  border-radius: 0 0 ${theme.borderRadius.md} ${theme.borderRadius.md};
+  height: 20px;
+  background-color: ${({ $reviewModal }) =>
+    $reviewModal ? `${theme.colors.review}` : "#fff"};
+`;
+
 const CloseButton = styled.div`
   position: absolute;
   right: 36px;
@@ -59,7 +70,14 @@ const CloseButton = styled.div`
   }
 `;
 
-function CustomModal({ modal, modalClose, large, title, children }) {
+function CustomModal({
+  modal,
+  modalClose,
+  large,
+  title,
+  children,
+  reviewModal,
+}) {
   return (
     <Modal
       open={modal}
@@ -78,13 +96,15 @@ function CustomModal({ modal, modalClose, large, title, children }) {
       }}
     >
       <Container $large={large}>
-        <TitleArea $large={large}>
+        <TitleArea $large={large} $reviewModal={reviewModal}>
           <div>{title}</div>
           <CloseButton onClick={modalClose}>
-            <img src="/close-circle.svg" alt="" />
+            <DynamicSVG color={theme.colors.black} svgUrl={CloseIcon} />
+            {/* <img src="../../assets/svg/close-circle.svg" /> */}
           </CloseButton>
         </TitleArea>
-        <ContentArea>{children}</ContentArea>
+        <ContentArea $reviewModal={reviewModal}>{children}</ContentArea>
+        <BottomArea $reviewModal={reviewModal} />
       </Container>
     </Modal>
   );
