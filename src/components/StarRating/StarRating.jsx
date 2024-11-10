@@ -14,22 +14,22 @@ function StarRating({ rate, readOnly, setRating }) {
         value={rate}
         precision={readOnly ? 0.1 : 0.5}
         readOnly={readOnly}
-        // icon={
-        //   <DynamicSVG
-        //     svgUrl={StarIcon}
-        //     width={24}
-        //     height={24}
-        //     color={theme.colors.primary}
-        //   />
-        // }
-        // emptyIcon={
-        //   <DynamicSVG
-        //     svgUrl={StarIcon}
-        //     width={24}
-        //     height={24}
-        //     color={theme.colors.gray2}
-        //   />
-        // }
+        icon={
+          <DynamicSVG
+            svgUrl={StarIcon}
+            width={24}
+            height={24}
+            color={theme.colors.primary}
+          />
+        }
+        emptyIcon={
+          <DynamicSVG
+            svgUrl={StarIcon}
+            width={24}
+            height={24}
+            color={theme.colors.gray2}
+          />
+        }
       />
       {!readOnly && (
         <div
