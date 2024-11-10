@@ -12,6 +12,7 @@ import CustomModal from "../../components/CustomModal/CustomModal";
 import RatingChart from "../../components/RatingChart/RatingChart";
 import StarRating from "../../components/StarRating/StarRating";
 
+
 const Container = styled.div``;
 
 const ProfileImg = styled.img`
@@ -133,6 +134,7 @@ function Main() {
           </div>
         </>
       )}
+      
     </Container>
   );
 }
