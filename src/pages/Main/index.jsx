@@ -9,6 +9,7 @@ import CustomLoading from "./template/CustomLoading";
 import { useNavigate } from "react-router-dom";
 import theme from "../../styles/theme";
 
+
 const Container = styled.div`
   background-color: ${theme.colors.black};
 `;
@@ -112,6 +113,7 @@ function Main() {
           </div>
         </>
       )}
+      
     </Container>
   );
 }
