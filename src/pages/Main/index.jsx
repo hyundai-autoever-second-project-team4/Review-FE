@@ -43,6 +43,7 @@ function Main() {
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [modal, setModal] = useState(false);
+  const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -68,9 +69,10 @@ function Main() {
 
   return (
     <Container>
-      <StarRating />
+      <StarRating rate={rating} setRating={setRating} />
+      <StarRating rate={3.3} readOnly />
       <RatingChart
-        level="movieGod"
+        level="master"
         ratingArray={[5, 7, 0, 3, 8, 7, 16, 24, 15, 18]}
       />
       <br></br>
