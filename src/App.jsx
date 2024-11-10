@@ -10,6 +10,8 @@ import Search from "./pages/Search/index.";
 import MyReview from "./pages/MyReview";
 import UserPage from "./pages/UserPage";
 
+import Test from "./pages/Test";
+
 function App() {
   return (
     <div>
@@ -23,6 +25,8 @@ function App() {
         <Route path="/search/:searchTerm" element={<Search />} />
         <Route path="/myReview" element={<MyReview />} />
         <Route path="/userPage/:userId" element={<UserPage />} />
+        {/* test 추가 */}
+        <Route path="/test" element={<Test />} />
       </Routes>
       <ReactQueryDevtools initialIsOpen={true} />
     </div>
