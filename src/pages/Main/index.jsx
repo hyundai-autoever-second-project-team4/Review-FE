@@ -9,6 +9,8 @@ import CustomLoading from "./template/CustomLoading";
 import { useNavigate } from "react-router-dom";
 import theme from "../../styles/theme";
 import CustomModal from "../../components/CustomModal/CustomModal";
+import RatingChart from "../../components/RatingChart/RatingChart";
+import StarRating from "../../components/StarRating/StarRating";
 
 const Container = styled.div``;
 
@@ -66,7 +68,12 @@ function Main() {
 
   return (
     <Container>
-      asdjkshjashdsajdhaskjsadhj
+      <StarRating />
+      <RatingChart
+        level="movieGod"
+        ratingArray={[5, 7, 0, 3, 8, 7, 16, 24, 15, 18]}
+      />
+      <br></br>
       <button onClick={() => setModal(true)}>모달 열기</button>
       <CustomModal
         modal={modal}
