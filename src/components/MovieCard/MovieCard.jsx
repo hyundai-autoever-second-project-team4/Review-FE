@@ -12,13 +12,20 @@ const Container = styled.div`
     box-sizing: border-box;
     width: calc(33.33% - 32px);
 
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.01);
+    }
+    
+
+
 `;
 
 const Poster = styled.img`
     width:120px ;
     height: 180px;
     border-radius: ${theme.borderRadius.md};
-    // border-radius: ${theme.borderRadius.sm};
+    
 `;
 
 const Info = styled.div`
