@@ -5,8 +5,7 @@ import theme from '../../styles/theme';
 const Container = styled.div`
     display: inline-flex;
     align-items: center;
-    // align-items: flex-start;
-    border-bottom: 1px solid ${theme.colors.gray3};
+    //border-bottom: 1px solid ${theme.colors.gray3};
     gap: 16px;
     margin: 16px 16px;
     box-sizing: border-box;
@@ -28,11 +27,14 @@ const Poster = styled.img`
     
 `;
 
+
 const Info = styled.div`
     display: flex;
     flex-direction:column ;
     justify-content: center;
-    
+    height: 180px;
+    border-bottom:1px solid ${theme.colors.gray2};
+    width:100%;
     
 `;
 const Title = styled.h4`
@@ -45,7 +47,6 @@ const Data =styled.p`
     font-weight: ${theme.fontWeight.regular};
     color: ${theme.colors.gray3};
     margin: 4px 0;
-
 
 `
 const Genre = styled.p`
@@ -61,11 +62,11 @@ function MovieCard({title, poster, year, country, genre}){
     <>
     <Container>
         <Poster src={poster}/>
-        <Info>
-            <Title>{title}</Title>
-            <Data>{year} • {country}</Data>
-            {genre&&genre.length>0&&<Genre>{genre.join(' / ')}</Genre>}
-        </Info>
+            <Info>
+                <Title>{title}</Title>
+                <Data>{year} • {country}</Data>
+                {genre&&genre.length>0&&<Genre>{genre.join(' / ')}</Genre>}
+            </Info>
     </Container>
     </>
   )

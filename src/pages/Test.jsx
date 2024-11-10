@@ -1,5 +1,6 @@
 import React from 'react'
 import MovieCard from '../components/MovieCard/MovieCard'
+import Button from '../components/Button/Button'
 
 function Test (){
     const img = "https://i.namu.wiki/i/AzwNiCjLoso4kGNVLOaOXMAomI2hn_44R4NiDfCb1y2fy-z_GvZy_hnvWhh-bxQnGgXcXlhWIpufoZA6wfDz9g.webp"
@@ -11,13 +12,12 @@ function Test (){
   return (
     <>
     
-    
     <MovieCard title={title} poster={img} year={year} country={country}/>
     <MovieCard title={title} poster={img} year={year} country={country} genre={genre}/>
     <MovieCard title={title} poster={img} year={year} country={country} genre={genre}/>
+    <MovieCard title={title} poster={img} year={year} country={country} genre={genre}/>
     
-    {/* <MovieCard title={ㄴㄹㄴㅇㄹ} poster={"https://i.namu.wiki/i/AzwNiCjLoso4kGNVLOaOXMAomI2hn_44R4NiDfCb1y2fy-z_GvZy_hnvWhh-bxQnGgXcXlhWIpufoZA6wfDz9g.webp"}/>
-    <MovieCard title={"sfd"} poster={"https://i.namu.wiki/i/AzwNiCjLoso4kGNVLOaOXMAomI2hn_44R4NiDfCb1y2fy-z_GvZy_hnvWhh-bxQnGgXcXlhWIpufoZA6wfDz9g.webp"}/> */}
+    
     </>
   )
 }
