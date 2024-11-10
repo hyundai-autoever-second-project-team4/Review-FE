@@ -8,11 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 import CustomLoading from "./template/CustomLoading";
 import { useNavigate } from "react-router-dom";
 import theme from "../../styles/theme";
+import CustomModal from "../../components/CustomModal/CustomModal";
+import RatingChart from "../../components/RatingChart/RatingChart";
+import StarRating from "../../components/StarRating/StarRating";
 
 
-const Container = styled.div`
-  background-color: ${theme.colors.black};
-`;
+const Container = styled.div``;
 
 const ProfileImg = styled.img`
   width: 36px;
@@ -42,7 +43,13 @@ function Main() {
   });
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
+  const [modal, setModal] = useState(false);
+  const [rating, setRating] = useState(0);
   const navigate = useNavigate();
+
+  const handleClose = () => {
+    setModal(false);
+  };
 
   const handleLogin = async () => {
     const response = await login({
@@ -63,7 +70,21 @@ function Main() {
 
   return (
     <Container>
-      asdjkshjashdsajdhaskjsadhj
+      <StarRating rate={rating} setRating={setRating} />
+      <StarRating rate={3.3} readOnly />
+      <RatingChart
+        level="master"
+        ratingArray={[5, 7, 0, 3, 8, 7, 16, 24, 15, 18]}
+      />
+      <br></br>
+      <button onClick={() => setModal(true)}>모달 열기</button>
+      <CustomModal
+        modal={modal}
+        modalClose={handleClose}
+        title="뱃지 획득 조건"
+        reviewModal
+        large
+      ></CustomModal>
       <button onClick={() => navigate("/detail")}>디테일 페이지로</button>
       {user.userId === null ? (
         <div>
