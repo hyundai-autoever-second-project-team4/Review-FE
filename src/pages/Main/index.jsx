@@ -7,10 +7,10 @@ import { convertToKoreanFormat } from "../../utils/time";
 import { useQuery } from "@tanstack/react-query";
 import CustomLoading from "./template/CustomLoading";
 import { useNavigate } from "react-router-dom";
-import theme from "../../styles/theme";
 import CustomModal from "../../components/CustomModal/CustomModal";
 import RatingChart from "../../components/RatingChart/RatingChart";
 import StarRating from "../../components/StarRating/StarRating";
+import Review from "../../components/Review/Review";
 
 const Container = styled.div``;
 
@@ -69,6 +69,33 @@ function Main() {
 
   return (
     <Container>
+      <Review
+        level="couchCritic"
+        width="260px"
+        proflieImg="./src/assets/images/default-image.png"
+        profileName="사용자1"
+        upCnt={15}
+        downCnt={6}
+        content={
+          <div>
+            병들어버린 마블이 자기비하적 반성과 함께 스스로에게 매콤한 불주사를
+            한 방! 역대 마블 시리즈 중 가장 폭력적이고 잔인한 영화가 탄생했다.
+            데드풀이 실사화 되는 순간부터 팬들이 기대했던 데드풀과 울버린의
+            만남도 성사되었다. 하지만 이번 시리즈를 온전히 즐기려면 마블의 열혈
+            팬이어야 한다는 진입장벽이 존재한다. 어벤져스,엑스맨, 판타스틱4,
+            블레이드, 로키 시리즈와 더불어 디즈니와 20세기폭스의 관계, MCU의
+            현재상황 등을 빠삭하게 알고 있어야 즐길 수 있는 웃음과 감동이 넘치기
+            때문에 라이트 마블 팬에겐 그냥 산만하고 정신없는 영화로 느껴질 수
+            있다. #엑스맨..그리고 MCU에 끼지 못한 잊혀진 과거 마블 캐릭터들에
+            대한 헌정영화. #스파이더맨: 어크로스 더 유니버스의 멀티버스와 더
+            수어사이드 스쿼드(2021)의 잔인함이 떠오르는.. #숀 레비 감독이 이렇게
+            미친ㄴ이였나? ㅋ #엔딩 크레딧 이후 쿠키영상은 1개! 영화가 끝난
+            후에도 귀에 맴도는 엔싱크의 "Bye Bye Bye" 오프닝과 미친듯이 웃긴
+            쿠키 영상이 이 영화의 가장 인상적인 장면이기 때문에 꼭 봐야 한다!
+          </div>
+        }
+        isBlur
+      />
       <StarRating rate={rating} setRating={setRating} />
       <StarRating rate={3.3} readOnly />
       <RatingChart
