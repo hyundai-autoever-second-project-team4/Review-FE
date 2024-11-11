@@ -12,6 +12,7 @@ import RatingChart from "../../components/RatingChart/RatingChart";
 import StarRating from "../../components/StarRating/StarRating";
 import Review from "../../components/Review/Review";
 
+
 const Container = styled.div``;
 
 const ProfileImg = styled.img`
@@ -160,6 +161,7 @@ function Main() {
           </div>
         </>
       )}
+      
     </Container>
   );
 }
