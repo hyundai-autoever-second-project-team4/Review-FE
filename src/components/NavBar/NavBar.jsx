@@ -4,20 +4,26 @@ import theme from '../../styles/theme'
 import Button from '../Button/Button';
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import SearchIcon from "../../assets/svg/search.svg";
-import Logo from "../../assets/images/Logo.png"
+import pnglogo from "../../assets/images/Logo.png"
+import svglogo from "../../assets/svg/logo.svg"
 import { useNavigate } from 'react-router-dom';
 
 
 const Container =styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: 60px;
     background-color: ${({ variant }) => (variant === 'dark' ? `${theme.colors.black}4C` : '#ffffff')};
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 
 `;
+const InerContainer=styled.div`
+  display: flex;
+  width: 1320px;
+  justify-content:space-between;
 
+`
 const LeftWrap=styled.div`
     display: flex;
     align-items: center;
@@ -38,7 +44,7 @@ const NavItem=styled.a`
 `;
 
 const SearchInput=styled.input`
-    width: 300px;
+    width: 500px;
     padding: 8px 16px 8px 32px;
     margin-right: 16px;
     border-radius: ${theme.borderRadius.sm};
@@ -57,8 +63,12 @@ function NavBar({variant}) {
   const navigate = useNavigate();
   return (
     <Container variant={variant}>
+      <InerContainer>
+
+
         <LeftWrap>
-            <img src={Logo}/>
+            <img src={pnglogo}/>
+            {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
             <NavItem onClick={()=>navigate("/")} variant={variant}>현재상영작</NavItem>
             <NavItem variant={variant}>인기영화</NavItem>
             <NavItem onClick={()=>navigate("/ranking")} variant={variant}>랭킹</NavItem>
@@ -70,6 +80,7 @@ function NavBar({variant}) {
                 <Button>로그인</Button>
             </div>
         </div>
+      </InerContainer>
 
     </Container>
   )
