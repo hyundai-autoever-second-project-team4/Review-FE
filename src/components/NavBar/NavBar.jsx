@@ -7,6 +7,8 @@ import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Container = styled.div`
+  position: fixed;
+  z-index: 1000;
   display: flex;
   align-items: center;
   width: 100%;

@@ -13,6 +13,8 @@ import UserPage from "./pages/UserPage";
 import Test from "./pages/Test";
 import NavBar from "./components/NavBar/NavBar";
 import styled from "styled-components";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Container = styled.div`
   font-family: "Noto Sans KR", sans-serif;
@@ -21,7 +23,11 @@ const Container = styled.div`
 function App() {
   return (
     <Container
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
     >
       <NavBar />
       <Routes>
