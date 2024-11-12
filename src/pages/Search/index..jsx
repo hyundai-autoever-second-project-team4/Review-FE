@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Pagination from '@mui/material/Pagination';
 import styled from "styled-components";
@@ -6,22 +6,15 @@ import theme from "../../styles/theme";
 import { useLocation } from "react-router-dom";
 
 
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   width: 1320px;
   @media (max-width: 1320px) {
     width: 100%;
   }
-
 `;
 
 const Title = styled.div`
@@ -51,18 +44,44 @@ const KeywordBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  width: 100%;
+  height: 50px;
   background: linear-gradient(
     to right,
     ${theme.colors.primaryColor3},
     ${theme.colors.primary}
   );
-
-  top: 61px;
-  
-  width: 100%;
-  height: 50px;
 `
+//탭
+const TabContainer = styled.div`
+  width: 1224px;
+  margin: 0 40px 0 40px;
+`;
+
+const TabTextWrap = styled.div`
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const TabText = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  font-size: ${theme.fontSizes.lg}; 
+  font-weight: ${(props) =>
+    props.$isClicked ? theme.fontWeight.bold : theme.fontWeight.regular};
+  border-bottom: ${(props) =>
+    props.$isClicked
+      ? "2px solid" + theme.colors.black
+      : "2px solid transparent"};
+  &:hover {
+    font-weight: ${theme.fontWeight.bold};
+    border-bottom: 2px solid ${theme.colors.black};
+  }
+`;
+
 const CardWrapper = styled.div`
   flex-basis: calc((100% - 32px) / 3); /* 기본 너비 설정 */
   /* 작은 화면일 때 카드 크기 변경 */
@@ -73,6 +92,7 @@ const CardWrapper = styled.div`
     flex-basis: 100%; /* 화면 너비가 480px 이하일 때 1열 */
   }
 `;
+
 
 const movieData = [
   {
@@ -92,8 +112,6 @@ const movieData = [
   }),
 ];
 
-
-
 function Search() {
   
 
@@ -101,33 +119,26 @@ function Search() {
   const searchParams = new URLSearchParams(location.search);
   const searchKeyword = searchParams.get("query");
 
-  const [value, setValue] = React.useState('1');
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const [tab, setTab] = useState(1);
+  const handleTabClick = (tabIndex) => {
+    setTab(tabIndex);
   };
 
   return (
     <>
       <KeywordBar><Title>"{searchKeyword}"의 검색결과</Title></KeywordBar>
-      {/* <KeywordBar><Title>{keyword}</Title></KeywordBar> */}
+      <Container>
+      <TabContainer>
+          <TabTextWrap>
+            <TabText onClick={() => handleTabClick(1)} $isClicked={tab == 1}>
+              제목
+            </TabText>
+            <TabText onClick={() => handleTabClick(2)} $isClicked={tab == 2}>
+              장르
+            </TabText>
+          </TabTextWrap>
+      </TabContainer>  
 
-      <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Item One" value="1" />
-            <Tab label="Item Two" value="2" />
-            <Tab label="Item Three" value="3" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">Item One</TabPanel>
-        <TabPanel value="2">Item Two</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
-      </TabContext>
-    </Box>
-
-      <Container>  
       <MovieContainer>
         {movieData.map((movie, index) => (
           <CardWrapper key={index}>
@@ -142,11 +153,12 @@ function Search() {
         ))}
       </MovieContainer>
 
-      <Pagination count={10}  sx={{ ".MuiPaginationItem-root.Mui-selected": {
-            backgroundColor: "#F2B705",  
-          },}} 
-      />
       </Container>
+      <Pagination count={10}  sx={{ ".MuiPaginationItem-root.Mui-selected": {
+        backgroundColor: "#F2B705",  
+      },}} 
+      />
+      
   
 
     
