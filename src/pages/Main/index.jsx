@@ -50,9 +50,7 @@ function Main() {
   const [pw, setPw] = useState("");
   const [modal, setModal] = useState(false);
   const [rating, setRating] = useState(0);
-  const [upCnt, setUpCnt] = useState(15);
   const [isUp, setIsUp] = useState(true);
-  const [downCnt, setDownCnt] = useState(6);
   const [isDown, setIsDown] = useState(false);
   const navigate = useNavigate();
 
@@ -84,14 +82,13 @@ function Main() {
         width="560px"
         proflieImg="./src/assets/images/default-image.png"
         profileName="사용자1asdadsadds"
-        upCnt={upCnt}
-        downCnt={downCnt}
+        theUpCnt={15}
+        theDownCnt={7}
         isUp={isUp}
         isDown={isDown}
-        setUpCnt={setUpCnt}
-        setDownCnt={setDownCnt}
         setIsUp={setIsUp}
         setIsDown={setIsDown}
+        commentCnt={12}
         content={
           <div>
             병들어버린 마블이 자기비하적 반성과 함께 스스로에게 매콤한 불주사를
