@@ -1,6 +1,6 @@
 /* reset css */
 
-@font-face {
+/* @font-face {
   font-family: "Noto Sans KR";
   font-weight: 300;
   src: url("./styles/fonts/NotoSansKR-Light.ttf") format("woff2"),
@@ -27,7 +27,7 @@
   src: url("./styles/fonts/NotoSansKR-Bold.ttf") format("woff2"),
     url("./styles/fonts/NotoSansKR-Bold.ttf") format("woff"),
     url("./styles/fonts/NotoSansKR-Bold.ttf") format("truetype");
-}
+} */
 
 * {
   margin: 0;

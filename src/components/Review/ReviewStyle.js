@@ -3,6 +3,7 @@ import theme from "../../styles/theme";
 
 export const Container = styled.div`
   width: ${({ width }) => width};
+  min-width: 180px;
   background-color: ${theme.colors.review};
   border-radius: ${theme.borderRadius.md};
   height: 160px;
@@ -16,12 +17,14 @@ export const TopArea = styled.div`
   padding-bottom: 4px;
   height: 22px;
   border-bottom: 1px solid ${theme.colors.gray2};
+  width: 100%;
 `;
 
 export const ContentArea = styled.div`
   padding: 9px 0;
   border-bottom: 1px solid ${theme.colors.gray2};
   height: 92px;
+  width: 100%;
 
   font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.regular};
@@ -55,9 +58,10 @@ export const BottomArea = styled.div`
 
 export const ProfileWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 4px;
+  width: calc(100% - 49px);
+  cursor: pointer;
 `;
 
 export const ProfileImg = styled.img`
@@ -65,12 +69,15 @@ export const ProfileImg = styled.img`
   height: 18px;
   border-radius: 50%;
   background-color: ${theme.colors.gray2};
-  cursor: pointer;
 `;
 
 export const ProfileName = styled.p`
+  width: calc(100% - 46px);
   font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.regular};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StarRate = styled.div`
@@ -86,4 +93,21 @@ export const StarRate = styled.div`
 
   font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.bold};
+`;
+
+export const ThumbWrapper = styled.div`
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: ${theme.fontSizes.sub2};
+  font-weight: ${theme.fontWeight.bold};
+  transition: 0.2s;
+`;
+
+export const BlurArea = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 32px;
+  display: flex;
+  justify-content: center;
 `;
