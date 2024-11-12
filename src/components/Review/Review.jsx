@@ -9,30 +9,35 @@ import ChatLogo from "/src/assets/svg/ChatBubble.svg";
 function Review({
   width,
   level,
-  proflieImg,
+  starRate,
+  profileImg,
   profileName,
   content,
   isBlur,
   theUpCnt,
   theDownCnt,
-  isUp,
-  isDown,
-  setIsUp,
-  setIsDown,
+  theIsUp,
+  theIsDown,
   commentCnt,
+  upClick,
+  downClick,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const [upCnt, setUpCnt] = useState(theUpCnt);
   const [downCnt, setDownCnt] = useState(theDownCnt);
+  const [isUp, setIsUp] = useState(theIsUp);
+  const [isDown, setIsDown] = useState(theIsDown);
 
   const toggleUpVote = () => {
     setIsUp((prev) => !prev);
     setUpCnt((prev) => (isUp ? prev - 1 : prev + 1));
+    upClick();
   };
 
   const toggleDownVote = () => {
     setIsDown((prev) => !prev);
     setDownCnt((prev) => (isDown ? prev - 1 : prev + 1));
+    downClick();
   };
 
   return (
@@ -40,18 +45,17 @@ function Review({
       <S.TopArea>
         <S.ProfileWrapper>
           <DynamicSVG
-            svgUrl={`./src/assets/svg/levels/${level}.svg`}
+            svgUrl={`/src/assets/svg/levels/${level}.svg`}
             width={18}
             height={18}
             color={theme.colors.super[level]}
           />
-
-          <S.ProfileImg src={proflieImg} alt="" />
+          <S.ProfileImg src={profileImg} alt="" />
           <S.ProfileName>{profileName}</S.ProfileName>
         </S.ProfileWrapper>
         <S.StarRate>
           <img src={StarIcon} width={12} height={12} />
-          <p>3.5</p>
+          <p>{starRate}</p>
         </S.StarRate>
       </S.TopArea>
       <div style={{ position: "relative" }}>
@@ -71,7 +75,7 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="./src/assets/svg/up.svg"
+              svgUrl="/src/assets/svg/up.svg"
               color={isUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
@@ -82,7 +86,7 @@ function Review({
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="./src/assets/svg/down.svg"
+              svgUrl="/src/assets/svg/down.svg"
               color={isDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}

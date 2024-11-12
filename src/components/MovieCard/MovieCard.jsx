@@ -49,10 +49,10 @@ const Genre = styled.p`
   margin: 4px 0;
 `;
 
-function MovieCard({ title, poster, year, country, genre }) {
+function MovieCard({ title, poster, year, country, genre, onClick }) {
   return (
     <>
-      <Container>
+      <Container onClick={onClick}>
         <Poster src={poster} />
         <Info>
           <Title>{title}</Title>
