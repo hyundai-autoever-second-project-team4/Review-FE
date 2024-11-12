@@ -4,6 +4,7 @@ import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import StarIcon from "../../assets/svg/star.svg";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
+import ChatLogo from "/src/assets/svg/ChatBubble.svg";
 
 function Review({
   width,
@@ -12,16 +13,17 @@ function Review({
   profileName,
   content,
   isBlur,
-  upCnt,
-  downCnt,
+  theUpCnt,
+  theDownCnt,
   isUp,
   isDown,
-  setUpCnt,
-  setDownCnt,
   setIsUp,
   setIsDown,
+  commentCnt,
 }) {
   const [blur, setBlur] = useState(isBlur);
+  const [upCnt, setUpCnt] = useState(theUpCnt);
+  const [downCnt, setDownCnt] = useState(theDownCnt);
 
   const toggleUpVote = () => {
     setIsUp((prev) => !prev);
@@ -90,7 +92,17 @@ function Review({
             <p>{downCnt}</p>
           </S.ThumbWrapper>
         </S.ThumbWrapper>
-        <div></div>
+        <S.ThumbWrapper>
+          <S.ThumbWrapper>
+            <DynamicSVG
+              svgUrl={ChatLogo}
+              color={theme.colors.gray3}
+              width={18}
+              height={18}
+            />
+            <p>{commentCnt}</p>
+          </S.ThumbWrapper>
+        </S.ThumbWrapper>
       </S.BottomArea>
     </S.Container>
   );
