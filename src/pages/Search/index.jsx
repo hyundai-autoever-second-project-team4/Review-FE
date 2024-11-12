@@ -43,6 +43,7 @@ const MovieContainer = styled.div`
 const KeywordBar = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 60px;
   justify-content: center;
   width: 100%;
   height: 50px;
