@@ -1,7 +1,29 @@
 import React from "react";
 import MovieCard from "../../components/MovieCard/MovieCard";
+import Pagination from '@mui/material/Pagination';
 import styled from "styled-components";
+import theme from "../../styles/theme";
+import { useParams } from "react-router-dom";
 
+
+
+const Title = styled.div`
+display: flex;
+font-size:28px;
+font-weight: ${theme.fontWeight.bold};
+color: ${theme.colors.black};
+`;
+
+const TitleWrap = styled.div`
+  display: flex;
+  width: 1320px;
+  justify-items: flex-start;
+  align-items: flex-start;
+  margin: 32px 0 16px 0;
+  @media (max-width: 1320px) {
+    width: 90%;
+  }
+`
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -45,9 +67,17 @@ const movieData = [
   }),
 ];
 function MovieList() {
+  const {type} = useParams();
+  console.log(type)
+  
+  
   return (
     <>
+      <TitleWrap>
+        <Title>{type==='nowPlaying'? '현재상영작' : '인기영화'}</Title>
+      </TitleWrap>
       <Container>
+
         {movieData.map((movie, index) => (
           <CardWrapper key={index}>
             <MovieCard
@@ -60,6 +90,13 @@ function MovieList() {
           </CardWrapper>
         ))}
       </Container>
+      
+      
+      <Pagination count={10}  sx={{ ".MuiPaginationItem-root.Mui-selected": {
+              backgroundColor: "#F2B705",  
+            },}} 
+      />
+      
     </>
   );
 }
