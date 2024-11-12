@@ -3,8 +3,7 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
-
-import pnglogo from "../../assets/images/Logo.png";
+import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -78,21 +77,39 @@ const StyledDynamicSvg = styled(DynamicSVG)`
   }
 `;
 
-function NavBar({ variant }) {
+function NavBar() {
   const navigate = useNavigate();
+
+  const moveToMain = () => {
+    navigate("/");
+  };
+
+  const moveToPlaying = () => {
+    navigate("/movieList/nowPlaying");
+  };
+
+  const moveToPopular = () => {
+    navigate("/movieList/popular");
+  };
+
+  const moveToRanking = () => {
+    navigate("/ranking");
+  };
+
   return (
-    <Container variant={variant}>
+    <Container>
       <InerContainer>
         <LeftWrap>
-          <img src={pnglogo} />
+          <img
+            src={svgLogo}
+            alt=""
+            onClick={moveToMain}
+            style={{ cursor: "pointer" }}
+          />
           {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
-          <NavItem onClick={() => navigate("/")} variant={variant}>
-            현재상영작
-          </NavItem>
-          <NavItem variant={variant}>인기영화</NavItem>
-          <NavItem onClick={() => navigate("/ranking")} variant={variant}>
-            랭킹
-          </NavItem>
+          <NavItem onClick={moveToPlaying}>현재상영작</NavItem>
+          <NavItem onClick={moveToPopular}>인기영화</NavItem>
+          <NavItem onClick={moveToRanking}>랭킹</NavItem>
         </LeftWrap>
         <div>
           <div style={{ position: "relative", width: "100%" }}>
