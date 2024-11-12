@@ -9,30 +9,35 @@ import ChatLogo from "/src/assets/svg/ChatBubble.svg";
 function Review({
   width,
   level,
+  starRate,
   profileImg,
   profileName,
   content,
   isBlur,
   theUpCnt,
   theDownCnt,
-  isUp,
-  isDown,
-  setIsUp,
-  setIsDown,
+  theIsUp,
+  theIsDown,
   commentCnt,
+  upClick,
+  downClick,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const [upCnt, setUpCnt] = useState(theUpCnt);
   const [downCnt, setDownCnt] = useState(theDownCnt);
+  const [isUp, setIsUp] = useState(theIsUp);
+  const [isDown, setIsDown] = useState(theIsDown);
 
   const toggleUpVote = () => {
     setIsUp((prev) => !prev);
     setUpCnt((prev) => (isUp ? prev - 1 : prev + 1));
+    upClick();
   };
 
   const toggleDownVote = () => {
     setIsDown((prev) => !prev);
     setDownCnt((prev) => (isDown ? prev - 1 : prev + 1));
+    downClick();
   };
 
   return (
@@ -50,7 +55,7 @@ function Review({
         </S.ProfileWrapper>
         <S.StarRate>
           <img src={StarIcon} width={12} height={12} />
-          <p>3.5</p>
+          <p>{starRate}</p>
         </S.StarRate>
       </S.TopArea>
       <div style={{ position: "relative" }}>
