@@ -50,7 +50,6 @@ function Review({
             height={18}
             color={theme.colors.super[level]}
           />
-
           <S.ProfileImg src={profileImg} alt="" />
           <S.ProfileName>{profileName}</S.ProfileName>
         </S.ProfileWrapper>
@@ -76,7 +75,7 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="./src/assets/svg/up.svg"
+              svgUrl="/src/assets/svg/up.svg"
               color={isUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
@@ -87,7 +86,7 @@ function Review({
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="./src/assets/svg/down.svg"
+              svgUrl="/src/assets/svg/down.svg"
               color={isDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}

@@ -30,6 +30,7 @@ const Info = styled.div`
   border-bottom: 1px solid ${theme.colors.gray2};
   width: 100%;
 `;
+
 const Title = styled.h4`
   font-weight: ${theme.fontWeight.bold};
   color: ${theme.colors.black};
