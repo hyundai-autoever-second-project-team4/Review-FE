@@ -6,7 +6,7 @@ import MovieList from "./pages/MovieList";
 import MovieReview from "./pages/MovieReview";
 import MyPage from "./pages/MyPage";
 import Ranking from "./pages/Ranking";
-import Search from "./pages/Search/index.";
+import Search from "./pages/Search";
 import MyReview from "./pages/MyReview";
 import UserPage from "./pages/UserPage";
 
