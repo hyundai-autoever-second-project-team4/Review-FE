@@ -9,6 +9,7 @@ const Container = styled.div`
   gap: 16px;
   box-sizing: border-box;
   width: 100%;
+  transition: 0.2s;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);

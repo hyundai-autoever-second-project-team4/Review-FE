@@ -127,7 +127,9 @@ function Main() {
         reviewModal
         large
       ></CustomModal>
-      <button onClick={() => navigate("/detail")}>디테일 페이지로</button>
+      <button onClick={() => navigate("/movieDetail/1")}>
+        디테일 페이지로
+      </button>
       {user.userId === null ? (
         <div>
           <input

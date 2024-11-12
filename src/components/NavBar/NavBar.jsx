@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import svgLogo from "/src/assets/svg/svgLogo.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -12,8 +12,8 @@ const Container = styled.div`
   width: 100%;
   justify-content: center;
   height: 60px;
-  background-color: ${({ variant }) =>
-    variant === "dark" ? `${theme.colors.black}1C` : "#ffffff"};
+  background-color: ${({ $variant }) =>
+    $variant ? `${theme.colors.black}1C` : "#ffffff"};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 `;
 const InerContainer = styled.div`
@@ -34,14 +34,13 @@ const LeftWrap = styled.div`
 const NavItem = styled.a`
   font-size: 16px;
   font-weight: ${theme.fontWeight.bold};
-  color: ${({ variant }) =>
-    variant === "dark" ? "#ffffff" : theme.colors.gray3};
-  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease;
+  color: ${({ $variant }) => ($variant ? "#ffffff" : theme.colors.gray3)};
+  text-shadow: ${({ $variant }) =>
+    $variant && `0px 0px 4px rgba(0, 0, 0, 0.25);`};
+  /* transition: color 0.3s ease; */
 
   &:hover {
-    /* text-shadow: 1px 1px 3px rgba(188, 183, 183, 0.1); */
-    transform: scale(1.05);
+    transform: scale(1.03);
     cursor: pointer;
   }
 `;
@@ -56,11 +55,13 @@ const SearchInput = styled.input`
   }
   transition: 0.3s;
   width: 500px;
-  padding: 8px 16px 8px 32px;
+  padding: 8px 16px 8px 36px;
   margin-right: 16px;
   border-radius: ${theme.borderRadius.sm};
   border: none;
   background-color: ${theme.colors.review};
+  font-size: ${theme.fontSizes.sub1};
+  opacity: ${({ $variant }) => $variant && `0.8`};
 
   &:focus {
     outline: none;
@@ -69,7 +70,7 @@ const SearchInput = styled.input`
 `;
 const StyledDynamicSvg = styled(DynamicSVG)`
   position: absolute;
-  left: 4px;
+  left: 8px;
   top: 50%;
   transform: translateY(-50%);
   @media (max-width: 640px) {
@@ -77,8 +78,18 @@ const StyledDynamicSvg = styled(DynamicSVG)`
   }
 `;
 
+const StyledButton = styled(Button)`
+  opacity: ${({ $variant }) => $variant && `0.6`};
+`;
+
 function NavBar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isVariant, setIsVariant] = useState(false);
+
+  useEffect(() => {
+    setIsVariant(location.pathname.split("/")[1] === "movieDetail");
+  }, [location]);
 
   const moveToMain = () => {
     navigate("/");
@@ -97,7 +108,7 @@ function NavBar() {
   };
 
   return (
-    <Container>
+    <Container $variant={isVariant}>
       <InerContainer>
         <LeftWrap>
           <img
@@ -107,18 +118,24 @@ function NavBar() {
             style={{ cursor: "pointer" }}
           />
           {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
-          <NavItem onClick={moveToPlaying}>현재상영작</NavItem>
-          <NavItem onClick={moveToPopular}>인기영화</NavItem>
-          <NavItem onClick={moveToRanking}>랭킹</NavItem>
+          <NavItem onClick={moveToPlaying} $variant={isVariant}>
+            현재상영작
+          </NavItem>
+          <NavItem onClick={moveToPopular} $variant={isVariant}>
+            인기영화
+          </NavItem>
+          <NavItem onClick={moveToRanking} $variant={isVariant}>
+            랭킹
+          </NavItem>
         </LeftWrap>
         <div>
           <div style={{ position: "relative", width: "100%" }}>
             <StyledDynamicSvg
               svgUrl="/src/assets/svg/search.svg"
-              color={theme.colors.primary}
+              color={theme.colors.gray3}
             />
-            <SearchInput />
-            <Button>로그인</Button>
+            <SearchInput $variant={isVariant} />
+            <StyledButton $variant={isVariant}>로그인</StyledButton>
           </div>
         </div>
       </InerContainer>

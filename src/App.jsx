@@ -12,10 +12,15 @@ import UserPage from "./pages/UserPage";
 
 import Test from "./pages/Test";
 import NavBar from "./components/NavBar/NavBar";
+import styled from "styled-components";
+
+const Container = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+`;
 
 function App() {
   return (
-    <div
+    <Container
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <NavBar />
@@ -33,7 +38,7 @@ function App() {
         <Route path="/test" element={<Test />} />
       </Routes>
       <ReactQueryDevtools initialIsOpen={true} />
-    </div>
+    </Container>
   );
 }
 
