@@ -11,10 +11,14 @@ import MyReview from "./pages/MyReview";
 import UserPage from "./pages/UserPage";
 
 import Test from "./pages/Test";
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/movieDetail/:movieiId" element={<MovieDetail />} />
