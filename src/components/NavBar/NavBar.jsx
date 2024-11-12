@@ -86,6 +86,7 @@ function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isVariant, setIsVariant] = useState(false);
+  const [searchKey, setSearchKey] = useState('');
 
   useEffect(() => {
     setIsVariant(location.pathname.split("/")[1] === "movieDetail");
@@ -106,6 +107,28 @@ function NavBar() {
   const moveToRanking = () => {
     navigate("/ranking");
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && searchKey.trim() !== '') {
+      navigate(`/search/search?query=${searchKey}`,{
+        state:{keyword:searchKey}
+      }
+      );
+      setSearchKey('')
+    }
+  };
+
+  // const handleKeyDown = (e) => {
+  //   if (e.key === 'Enter' && searchKey.trim() !== '') {
+  //     navigate(`/search/search?query=${searchKey}`
+  //     //   ,{
+
+  //     //   state:{keyword:searchKey}
+  //     // }
+    
+  //   );
+  //   }
+  // };
 
   return (
     <Container $variant={isVariant}>
@@ -134,7 +157,9 @@ function NavBar() {
               svgUrl="/src/assets/svg/search.svg"
               color={theme.colors.gray3}
             />
-            <SearchInput $variant={isVariant} />
+            <SearchInput $variant={isVariant} value={searchKey}
+              onChange={(e) => setSearchKey(e.target.value)}
+              onKeyDown={handleKeyDown} />
             <StyledButton $variant={isVariant}>로그인</StyledButton>
           </div>
         </div>
