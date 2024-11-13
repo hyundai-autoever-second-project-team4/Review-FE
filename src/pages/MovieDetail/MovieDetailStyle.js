@@ -212,3 +212,18 @@ export const ProfileInfo=styled.div`
   justify-content: center;
 `;
 
+export const ReviewCont = styled.div`
+  display: flex; 
+  margin-top: 20px;
+ /* align-self: flex-start; */
+ /* justify-content: space-between; */
+ flex-direction: column;
+ /* height: 160px; */
+`;
+
+export const ReviewWrap = styled.div`
+  display: flex;
+ width: 1320px;
+ justify-content: space-between;
+ overflow-x: auto;
+`

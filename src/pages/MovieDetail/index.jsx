@@ -4,7 +4,7 @@ import * as S from "./MovieDetailStyle";
 import Button from "../../components/Button/Button";
 import StarRating from "../../components/StarRating/StarRating";
 import RatingChart from "../../components/RatingChart/RatingChart";
-
+import Review from "../../components/Review/Review";
 const profileData = [
   {
     name: "노윤서",
@@ -18,6 +18,42 @@ const profileData = [
    
   }),
 ];
+
+const reviewData=[
+  {
+    width: "100%",
+    level: "newbie",
+    proflieImg: "https://via.placeholder.com/50",
+    profileName: "User1",
+    content: "Great movie with unexpected twists!",
+    isBlur: true,
+    theUpCnt: 23,
+    theDownCnt: 3,
+    theIsUp: false,
+    theIsDown: false,
+    commentCnt: 5,
+    starRate: 3.5,
+    upClick: () => console.log("Upvote clicked for User1"),
+    downClick: () => console.log("Downvote clicked for User1"),
+  },
+  ...Array(4).fill({
+    width: "100%",
+    level: "newbie",
+    proflieImg: "https://via.placeholder.com/50",
+    profileName: "User1",
+    content: "Great movie with unexpected twists!",
+    isBlur: false,
+    theUpCnt: 23,
+    theDownCnt: 3,
+    theIsUp: true,
+    theIsDown: false,
+    commentCnt: 5,
+    starRate: 3.5,
+    upClick: () => console.log("Upvote clicked for User1"),
+    downClick: () => console.log("Downvote clicked for User1"),
+  }),
+]
+
 
 function MovieDetail() {
   const navigate = useNavigate();
@@ -93,8 +129,34 @@ function MovieDetail() {
               </S.Profile>
             ))}
           </S.ProfileWrap>
-          
         </S.ProfileCont>
+        
+        <S.ReviewCont>
+          <S.Title>리뷰</S.Title>
+          <S.ReviewWrap>
+          {reviewData.map((review, index) => (
+            <Review
+              key={index}
+              level={review.level}
+              starRate={review.starRate}
+              profileName={review.profileName}
+              profileImg={review.profileImg}
+              content={review.content}
+              isBlur={review.isBlur}
+              theUpCnt={review.theUpCnt}
+              theDownCnt={review.theDownCnt}
+              theIsUp={review.theIsUp}
+              theIsDown={review.theIsDown}
+              commentCnt={review.commentCnt}
+              upClick={review.upClick}
+              downClick={review.downClick}
+            />
+            ))}
+
+          </S.ReviewWrap>
+        </S.ReviewCont>
+
+
       </S.Content>
       </S.Container>  
       
