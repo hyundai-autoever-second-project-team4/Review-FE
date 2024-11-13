@@ -35,10 +35,38 @@ const CardWrapper = styled.div`
   }
 `;
 
+const StyledButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: ${theme.colors.primary};
+  font-size: ${theme.fontSizes.sub1};
+  font-weight: 600;
+  padding: 4px 8px;
+
+  transition: 0.4s;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+`;
+
 function MyReviewsList({ reviews }) {
   return (
     <Container>
-      <Title>내가 작성한 리뷰</Title>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Title>내가 작성한 리뷰</Title>
+        <StyledButton>더보기</StyledButton>
+      </div>
+
       <ReviewWrapper>
         {reviews.map((review, index) => {
           return (
