@@ -7,13 +7,13 @@ import { Navigation } from "swiper/modules";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
 
 const Container = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 const Title = styled.p`
   font-size: ${theme.fontSizes.title};
   font-weight: ${theme.fontWeight.bold};
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 
   @media (max-width: 960px) {
     font-size: 24px;
@@ -86,7 +86,7 @@ const ButtonWrapper = styled.div`
   position: absolute;
   top: 0px;
   width: 100%;
-  height: calc(100% - 42px);
+  height: 100%;
 `;
 
 function HotComment({ reviewData }) {

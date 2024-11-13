@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const Poster = styled.img`
   width: 100%;
-  height: calc(100% * 1.5);
+  aspect-ratio: 1 / 1.5;
   border-radius: ${theme.borderRadius.md};
 `;
 

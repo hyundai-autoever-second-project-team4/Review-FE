@@ -8,13 +8,15 @@ import movieData from "../../utils/data";
 import MovieAwards from "./template/MovieAwards";
 import dummyReviews from "../../utils/DummyReview";
 import HotComment from "./template/HotComment";
+import FaceMovieList from "./template/FaceMovieList";
 
 const Container = styled.div`
-  margin-top: 60px;
-  padding: 20px;
+  margin-top: 72px;
+  padding: 20px 0;
   width: 1320px;
   @media (max-width: 1320px) {
     width: 100%;
+    padding: 20px;
   }
 `;
 
@@ -37,6 +39,7 @@ function Main() {
   return (
     <>
       <Container>
+        <FaceMovieList movieData={movieData} />
         {user.userId !== null && (
           <MovieSlider
             title={`"${user.name}" 님의 위한 추천 영화`}
