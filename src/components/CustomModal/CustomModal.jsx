@@ -17,7 +17,7 @@ const TitleArea = styled.div`
   min-width: ${({ $large }) => ($large ? `800px` : `550px`)};
   padding: 0 40px;
   position: fixed;
-  border-bottom: 1px solid ${theme.colors.neutral200};
+  border-bottom: 1px solid ${theme.colors.gray2};
 
   font-size: ${theme.fontSizes.title};
   font-weight: ${theme.fontWeight.bold};
@@ -32,7 +32,7 @@ const TitleArea = styled.div`
 
 const ContentArea = styled.div`
   margin-top: 100px;
-  max-height: 400px;
+  max-height: 500px;
   min-height: 100px;
   padding: 20px 36px 0 36px;
   overflow-y: auto;
