@@ -28,6 +28,13 @@ function Review({
   const [isUp, setIsUp] = useState(theIsUp);
   const [isDown, setIsDown] = useState(theIsDown);
 
+  const svgFiles = import.meta.glob("/src/assets/svg/levels/*.svg");
+
+  function getSvgUrl(level) {
+    // `svgFiles` 객체에서 동적으로 필요한 경로를 선택합니다.
+    return svgFiles[`/src/assets/svg/levels/${level}.svg`];
+  }
+
   const toggleUpVote = () => {
     setIsUp((prev) => !prev);
     setUpCnt((prev) => (isUp ? prev - 1 : prev + 1));
@@ -45,7 +52,7 @@ function Review({
       <S.TopArea>
         <S.ProfileWrapper>
           <DynamicSVG
-            svgUrl={`/src/assets/svg/levels/${level}.svg`}
+            svgUrl={getSvgUrl(level)}
             width={18}
             height={18}
             color={theme.colors.super[level]}
