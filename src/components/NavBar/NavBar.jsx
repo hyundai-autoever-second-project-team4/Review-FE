@@ -5,6 +5,12 @@ import Button from "../Button/Button";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
+import searchLogo from "../../assets/svg/search.svg";
+import { Tooltip } from "@mui/material";
+import { setCookies, deleteAllCookies } from "../../api/cookie";
+import useUserStore from "../../store/userStore";
+import { useGetUserInfo } from "../../hooks/useGetUserInfo";
+import ProfileTooltip from "./ProfileTooltip";
 
 const Container = styled.div`
   position: fixed;
@@ -84,11 +90,32 @@ const StyledButton = styled(Button)`
   opacity: ${({ $variant }) => $variant && `0.6`};
 `;
 
+const ProfileImg = styled.img`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+
 function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isVariant, setIsVariant] = useState(false);
-  const [searchKey, setSearchKey] = useState('');
+  const [searchKey, setSearchKey] = useState("");
+  const { data, isLoading, refetch } = useGetUserInfo();
+  const { user, setUser, logOut } = useUserStore();
+
+  useEffect(() => {
+    setCookies(
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoi7Jik7KCV7ZmYIiwic29jaWFsIjoia2FrYW8iLCJlbWFpbCI6IndqZGdoa3MwMzE2QG5hdmVyLmNvbSIsInByb2ZpbGVJbWFnZSI6Imh0dHA6Ly9pbWcxLmtha2FvY2RuLm5ldC90aHVtYi9SNjQweDY0MC5xNzAvP2ZuYW1lPWh0dHA6Ly90MS5rYWthb2Nkbi5uZXQvYWNjb3VudF9pbWFnZXMvZGVmYXVsdF9wcm9maWxlLmpwZWciLCJyb2xlIjoiTUVNQkVSIiwiaWF0IjoxNzMxNDc0NTQzLCJleHAiOjE3MzE0NzgxNDN9.5GyVN3RXfQiUcryzX7I6mTEW2jt_YMhLOP5HjEuL3XU",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzE0NzQ1NDMsImV4cCI6MTczMjA3OTM0MywiZW1haWwiOiJ3amRnaGtzMDMxNkBuYXZlci5jb20ifQ.wzsRVHHHNUCah-fNTNjatSltAMKYeauXO4yL661JrSQ",
+      60
+    );
+  }, []);
+
+  useEffect(() => {
+    setUser(data);
+  }, [data]);
 
   useEffect(() => {
     setIsVariant(location.pathname.split("/")[1] === "movieDetail");
@@ -110,27 +137,29 @@ function NavBar() {
     navigate("/ranking");
   };
 
+  const moveToMyPage = () => {
+    navigate("/myPage");
+  };
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && searchKey.trim() !== '') {
-      navigate(`/search/search?query=${searchKey}`,{
-        state:{keyword:searchKey}
-      }
-      );
-      setSearchKey('')
+    if (e.key === "Enter" && searchKey.trim() !== "") {
+      navigate(`/search/search?query=${searchKey}`, {
+        state: { keyword: searchKey },
+      });
+      setSearchKey("");
     }
   };
 
-  // const handleKeyDown = (e) => {
-  //   if (e.key === 'Enter' && searchKey.trim() !== '') {
-  //     navigate(`/search/search?query=${searchKey}`
-  //     //   ,{
+  const handleLogin = () => {
+    //  https://api.theaterup.site/oauth2/authorization/kakao 으로 이동시켜줘.
+    window.location.href =
+      "https://api.theaterup.site/oauth2/authorization/kakao";
+  };
 
-  //     //   state:{keyword:searchKey}
-  //     // }
-    
-  //   );
-  //   }
-  // };
+  const handleLogOut = () => {
+    alert("로그아웃 되었습니다.");
+    logOut();
+    deleteAllCookies();
+  };
 
   return (
     <Container $variant={isVariant}>
@@ -154,15 +183,58 @@ function NavBar() {
           </NavItem>
         </LeftWrap>
         <div>
-          <div style={{ position: "relative", width: "100%" }}>
-            <StyledDynamicSvg
-              svgUrl="/src/assets/svg/search.svg"
-              color={theme.colors.gray3}
-            />
-            <SearchInput $variant={isVariant} value={searchKey}
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <StyledDynamicSvg svgUrl={searchLogo} color={theme.colors.gray3} />
+            <SearchInput
+              $variant={isVariant}
+              value={searchKey}
               onChange={(e) => setSearchKey(e.target.value)}
-              onKeyDown={handleKeyDown} />
-            <StyledButton $variant={isVariant}>로그인</StyledButton>
+              onKeyDown={handleKeyDown}
+            />
+            {user?.id === null ? (
+              <StyledButton $variant={isVariant} onClick={handleLogin}>
+                로그인
+              </StyledButton>
+            ) : (
+              <Tooltip
+                title={
+                  <ProfileTooltip
+                    name={user?.name}
+                    img={user?.profileImage}
+                    level="movieGod"
+                    primaryBadge="unbreakable"
+                    moveToMyPage={moveToMyPage}
+                    handleLogOut={handleLogOut}
+                  />
+                }
+                placement="bottom-end"
+                // open={true}
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      padding: "0px",
+                      backgroundColor: "#fff",
+                      color: "black",
+                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                      borderRadius: theme.borderRadius.sm,
+                    },
+                  },
+                }}
+              >
+                <ProfileImg
+                  onClick={moveToMyPage}
+                  src={user?.profileImage}
+                  alt=""
+                />
+              </Tooltip>
+            )}
           </div>
         </div>
       </InerContainer>

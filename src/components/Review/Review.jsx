@@ -5,9 +5,12 @@ import StarIcon from "../../assets/svg/star.svg";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
+import upLogo from "/src/assets/svg/up.svg";
+import downLogo from "/src/assets/svg/down.svg";
 
 function Review({
   width,
+  id,
   level,
   starRate,
   profileImg,
@@ -21,6 +24,7 @@ function Review({
   commentCnt,
   upClick,
   downClick,
+  contentClick,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const [upCnt, setUpCnt] = useState(theUpCnt);
@@ -45,7 +49,7 @@ function Review({
       <S.TopArea>
         <S.ProfileWrapper>
           <DynamicSVG
-            svgUrl={`/src/assets/svg/levels/${level}.svg`}
+            svgUrl={`/levels/${level}.svg`}
             width={18}
             height={18}
             color={theme.colors.super[level]}
@@ -59,7 +63,9 @@ function Review({
         </S.StarRate>
       </S.TopArea>
       <div style={{ position: "relative" }}>
-        <S.ContentArea $isBlur={blur}>{content}</S.ContentArea>
+        <S.ContentArea onClick={() => contentClick(id)} $isBlur={blur}>
+          {content}
+        </S.ContentArea>
         {blur && (
           <S.BlurArea>
             <Button
@@ -75,7 +81,7 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="/src/assets/svg/up.svg"
+              svgUrl={upLogo}
               color={isUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
@@ -86,7 +92,7 @@ function Review({
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="/src/assets/svg/down.svg"
+              svgUrl={downLogo}
               color={isDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}

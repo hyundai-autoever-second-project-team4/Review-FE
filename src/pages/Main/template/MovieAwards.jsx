@@ -2,6 +2,9 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import theme from "../../../styles/theme";
 import MovieSlider from "./MovieSlider";
+import svgLogo from "../../../assets/svg/svgLogo.svg";
+import leftWing from "../../../assets/images/왼.png";
+import rightWing from "../../../assets/images/오.png";
 
 const wingFlapRight = keyframes`
   0% {
@@ -26,6 +29,18 @@ const wingFlapLeft = keyframes`
 100% {
   transform: translateY(0) rotate(-5deg);
 }`;
+
+const upDown = keyframes`
+  0% {
+    transform: translateY(0) ;
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }`;
 
 const Container = styled.div`
   margin-top: 60px;
@@ -83,6 +98,10 @@ const RightWing = styled.img`
   animation: ${wingFlapRight} 2s ease-in-out infinite;
 `;
 
+const LogoImg = styled.img`
+  animation: ${upDown} 4s ease-in-out infinite;
+`;
+
 function MovieAwards({ movieData }) {
   return (
     <MovieAwardsContainer>
@@ -95,10 +114,10 @@ function MovieAwards({ movieData }) {
           flexDirection: "column",
         }}
       >
-        <img src="/src/assets/svg/svgLogo.svg" alt="" width={240} />
+        <LogoImg src={svgLogo} alt="" width={240} />
         <WingWrapper>
-          <LeftWing src="/src/assets/images/왼.png" />
-          <RightWing src="/src/assets/images/오.png" />
+          <LeftWing src={leftWing} />
+          <RightWing src={rightWing} />
           <MovieAwardsText>명예의 전당</MovieAwardsText>
         </WingWrapper>
         <Container style={{ marginTop: "0px" }}>

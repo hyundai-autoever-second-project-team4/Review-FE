@@ -5,15 +5,17 @@ import theme from "../../../styles/theme";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
+import arrowLeft from "../../../assets/svg/arrow-left.svg";
+import arrowRight from "../../../assets/svg/arrow-right.svg";
 
 const Container = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 const Title = styled.p`
   font-size: ${theme.fontSizes.title};
   font-weight: ${theme.fontWeight.bold};
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 
   @media (max-width: 960px) {
     font-size: 24px;
@@ -86,7 +88,7 @@ const ButtonWrapper = styled.div`
   position: absolute;
   top: 0px;
   width: 100%;
-  height: calc(100% - 42px);
+  height: calc(100% - 44px);
 `;
 
 function MovieSlider({ title, movieData, cnt }) {
@@ -162,7 +164,7 @@ function MovieSlider({ title, movieData, cnt }) {
             <DynamicSVG
               width={18}
               color={theme.colors.black}
-              svgUrl="/src/assets/svg/arrow-left.svg"
+              svgUrl={arrowLeft}
             />
           </PrevButton>
 
@@ -170,7 +172,7 @@ function MovieSlider({ title, movieData, cnt }) {
             <DynamicSVG
               width={18}
               color={theme.colors.black}
-              svgUrl="/src/assets/svg/arrow-right.svg"
+              svgUrl={arrowRight}
             />
           </NextButton>
         </ButtonWrapper>

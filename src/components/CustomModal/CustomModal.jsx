@@ -12,12 +12,12 @@ const Container = styled.div`
 `;
 
 const TitleArea = styled.div`
-  height: 100px;
+  height: ${({ $titleHeight }) => ($titleHeight ? `${$titleHeight}` : `100px`)};
   width: ${({ $large }) => ($large ? `800px` : `550px`)};
   min-width: ${({ $large }) => ($large ? `800px` : `550px`)};
   padding: 0 40px;
   position: fixed;
-  border-bottom: 1px solid ${theme.colors.neutral200};
+  border-bottom: 1px solid ${theme.colors.gray2};
 
   font-size: ${theme.fontSizes.title};
   font-weight: ${theme.fontWeight.bold};
@@ -31,8 +31,8 @@ const TitleArea = styled.div`
 `;
 
 const ContentArea = styled.div`
-  margin-top: 100px;
-  max-height: 400px;
+  margin-top: ${({ $titleHeight }) => ($titleHeight ? `48px` : `100px`)};
+  max-height: 500px;
   min-height: 100px;
   padding: 20px 36px 0 36px;
   overflow-y: auto;
@@ -77,12 +77,14 @@ function CustomModal({
   title,
   children,
   reviewModal,
+  titleHeight,
 }) {
   return (
     <Modal
       open={modal}
       onClose={modalClose}
       sx={{
+        fontFamily: "Noto Sans KR",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -96,14 +98,20 @@ function CustomModal({
       }}
     >
       <Container $large={large}>
-        <TitleArea $large={large} $reviewModal={reviewModal}>
+        <TitleArea
+          $large={large}
+          $reviewModal={reviewModal}
+          $titleHeight={titleHeight}
+        >
           <div>{title}</div>
           <CloseButton onClick={modalClose}>
             <DynamicSVG color={theme.colors.black} svgUrl={CloseIcon} />
             {/* <img src="../../assets/svg/close-circle.svg" /> */}
           </CloseButton>
         </TitleArea>
-        <ContentArea $reviewModal={reviewModal}>{children}</ContentArea>
+        <ContentArea $titleHeight={titleHeight} $reviewModal={reviewModal}>
+          {children}
+        </ContentArea>
         <BottomArea $reviewModal={reviewModal} />
       </Container>
     </Modal>
