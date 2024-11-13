@@ -5,6 +5,8 @@ import theme from "../../../styles/theme";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
+import arrowLeft from "../../../assets/svg/arrow-left.svg";
+import arrowRight from "../../../assets/svg/arrow-right.svg";
 
 const Container = styled.div`
   margin-bottom: 40px;
@@ -162,7 +164,7 @@ function MovieSlider({ title, movieData, cnt }) {
             <DynamicSVG
               width={18}
               color={theme.colors.black}
-              svgUrl="/src/assets/svg/arrow-left.svg"
+              svgUrl={arrowLeft}
             />
           </PrevButton>
 
@@ -170,7 +172,7 @@ function MovieSlider({ title, movieData, cnt }) {
             <DynamicSVG
               width={18}
               color={theme.colors.black}
-              svgUrl="/src/assets/svg/arrow-right.svg"
+              svgUrl={arrowRight}
             />
           </NextButton>
         </ButtonWrapper>

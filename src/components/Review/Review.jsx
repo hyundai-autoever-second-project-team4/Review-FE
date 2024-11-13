@@ -5,6 +5,8 @@ import StarIcon from "../../assets/svg/star.svg";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
+import upLogo from "/src/assets/svg/up.svg";
+import downLogo from "/src/assets/svg/down.svg";
 
 function Review({
   width,
@@ -45,7 +47,7 @@ function Review({
       <S.TopArea>
         <S.ProfileWrapper>
           <DynamicSVG
-            svgUrl={`/src/assets/svg/levels/${level}.svg`}
+            svgUrl={`/levels/${level}.svg`}
             width={18}
             height={18}
             color={theme.colors.super[level]}
@@ -75,7 +77,7 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="/src/assets/svg/up.svg"
+              svgUrl={upLogo}
               color={isUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
@@ -86,7 +88,7 @@ function Review({
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="/src/assets/svg/down.svg"
+              svgUrl={downLogo}
               color={isDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}

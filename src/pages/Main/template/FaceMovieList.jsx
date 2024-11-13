@@ -5,6 +5,8 @@ import theme from "../../../styles/theme";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
+import arrowLeft from "../../../assets/svg/arrow-left.svg";
+import arrowRight from "../../../assets/svg/arrow-right.svg";
 
 const Container = styled.div`
   width: 100%;
@@ -129,7 +131,7 @@ function FaceMovieList({ movieData }) {
             <DynamicSVG
               width={18}
               color={theme.colors.black}
-              svgUrl="/src/assets/svg/arrow-left.svg"
+              svgUrl={arrowLeft}
             />
           </PrevButton>
 
@@ -137,7 +139,7 @@ function FaceMovieList({ movieData }) {
             <DynamicSVG
               width={18}
               color={theme.colors.black}
-              svgUrl="/src/assets/svg/arrow-right.svg"
+              svgUrl={arrowRight}
             />
           </NextButton>
         </ButtonWrapper>

@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
+import searchLogo from "../../assets/svg/search.svg";
 
 const Container = styled.div`
   position: fixed;
@@ -160,10 +161,7 @@ function NavBar() {
         </LeftWrap>
         <div>
           <div style={{ position: "relative", width: "100%" }}>
-            <StyledDynamicSvg
-              svgUrl="/src/assets/svg/search.svg"
-              color={theme.colors.gray3}
-            />
+            <StyledDynamicSvg svgUrl={searchLogo} color={theme.colors.gray3} />
             <SearchInput
               $variant={isVariant}
               value={searchKey}

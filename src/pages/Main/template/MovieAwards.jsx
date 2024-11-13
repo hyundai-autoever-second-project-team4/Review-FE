@@ -2,6 +2,9 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import theme from "../../../styles/theme";
 import MovieSlider from "./MovieSlider";
+import svgLogo from "../../../assets/svg/svgLogo.svg";
+import leftWing from "../../../assets/images/왼.png";
+import rightWing from "../../../assets/images/오.png";
 
 const wingFlapRight = keyframes`
   0% {
@@ -111,10 +114,10 @@ function MovieAwards({ movieData }) {
           flexDirection: "column",
         }}
       >
-        <LogoImg src="/src/assets/svg/svgLogo.svg" alt="" width={240} />
+        <LogoImg src={svgLogo} alt="" width={240} />
         <WingWrapper>
-          <LeftWing src="/src/assets/images/왼.png" />
-          <RightWing src="/src/assets/images/오.png" />
+          <LeftWing src={leftWing} />
+          <RightWing src={rightWing} />
           <MovieAwardsText>명예의 전당</MovieAwardsText>
         </WingWrapper>
         <Container style={{ marginTop: "0px" }}>

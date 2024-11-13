@@ -4,9 +4,9 @@ import { getPostingList, login } from "../../api/api";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import MovieSlider from "./template/MovieSlider";
-import movieData from "../../utils/data";
+import movieData from "../../utils/data.js";
 import MovieAwards from "./template/MovieAwards";
-import dummyReviews from "../../utils/DummyReview";
+import dummyReviews from "../../utils/dummyReview.js";
 import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
 
