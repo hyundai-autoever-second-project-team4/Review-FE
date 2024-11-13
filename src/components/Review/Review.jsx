@@ -10,6 +10,7 @@ import downLogo from "/src/assets/svg/down.svg";
 
 function Review({
   width,
+  id,
   level,
   starRate,
   profileImg,
@@ -23,6 +24,7 @@ function Review({
   commentCnt,
   upClick,
   downClick,
+  contentClick,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const [upCnt, setUpCnt] = useState(theUpCnt);
@@ -61,7 +63,9 @@ function Review({
         </S.StarRate>
       </S.TopArea>
       <div style={{ position: "relative" }}>
-        <S.ContentArea $isBlur={blur}>{content}</S.ContentArea>
+        <S.ContentArea onClick={() => contentClick(id)} $isBlur={blur}>
+          {content}
+        </S.ContentArea>
         {blur && (
           <S.BlurArea>
             <Button
