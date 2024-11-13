@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useUserStore from "../../store/userStore";
-import { getPostingList, login } from "../../api/api";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
 import MovieSlider from "./template/MovieSlider";
 import movieData from "../../utils/data.js";
 import MovieAwards from "./template/MovieAwards";
@@ -22,27 +20,14 @@ const Container = styled.div`
 
 function Main() {
   const { user, setUser, logOut } = useUserStore((state) => state);
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ["postingList"],
-  //   queryFn: () =>
-  //     getPostingList({
-  //       nationCode: "",
-  //       cityCode: "",
-  //       writerNickname: "",
-  //       title: "",
-  //       page: 0,
-  //     }),
-  //   staleTime: 5000, // 1분 // 데이터가 신선함을 유지하는 시간. 유지되는 기간동안 다시 마운트 될 때, 데이터를 재요청하지 않음. 해당 시간이 지나게 되면 stale 상태가 됨.
-  //   enabled: user.userId !== null, // 해당 조건일 경우에만 실행되도록
-  // });
 
   return (
     <>
       <Container>
         <FaceMovieList movieData={movieData} />
-        {user.userId !== null && (
+        {user?.id !== null && (
           <MovieSlider
-            title={`"${user.name}" 님의 위한 추천 영화`}
+            title={`"${user?.name}" 님의 위한 추천 영화`}
             movieData={movieData}
             cnt={1}
           />
