@@ -6,6 +6,7 @@ import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import searchLogo from "../../assets/svg/search.svg";
+import { Tooltip } from "@mui/material";
 
 const Container = styled.div`
   position: fixed;
