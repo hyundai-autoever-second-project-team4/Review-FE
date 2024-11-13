@@ -222,8 +222,15 @@ export const ReviewCont = styled.div`
 `;
 
 export const ReviewWrap = styled.div`
-  display: flex;
+ display: flex;
  width: 1320px;
  justify-content: space-between;
  overflow-x: auto;
 `
+
+export const GalleryCont = styled.div`
+ display: flex;
+ flex-direction: column;
+ width: 1320px;
+ justify-content: space-between;
+`;

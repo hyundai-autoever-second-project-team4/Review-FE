@@ -5,6 +5,10 @@ import Button from "../../components/Button/Button";
 import StarRating from "../../components/StarRating/StarRating";
 import RatingChart from "../../components/RatingChart/RatingChart";
 import Review from "../../components/Review/Review";
+import MovieSlider from "../Main/template/MovieSlider";
+import movieData from "../../utils/data";
+import PhotoList from "./PhotoList";
+
 const profileData = [
   {
     name: "노윤서",
@@ -108,7 +112,7 @@ function MovieDetail() {
             <S.AvgRating>
               <div>평균별점<strong>3.3</strong>(1369명)</div>
             </S.AvgRating>
-            {/* <div>평균별점 3.3 (1369)</div> */}
+            
           <RatingChart ratingArray={[1,2,3,3,3,5,5,5,5,5]} level={"movieGod"}></RatingChart>
           </S.ChartSection>
         
@@ -134,28 +138,33 @@ function MovieDetail() {
         <S.ReviewCont>
           <S.Title>리뷰</S.Title>
           <S.ReviewWrap>
-          {reviewData.map((review, index) => (
-            <Review
-              key={index}
-              level={review.level}
-              starRate={review.starRate}
-              profileName={review.profileName}
-              profileImg={review.profileImg}
-              content={review.content}
-              isBlur={review.isBlur}
-              theUpCnt={review.theUpCnt}
-              theDownCnt={review.theDownCnt}
-              theIsUp={review.theIsUp}
-              theIsDown={review.theIsDown}
-              commentCnt={review.commentCnt}
-              upClick={review.upClick}
-              downClick={review.downClick}
-            />
-            ))}
-
+            {reviewData.map((review, index) => (
+              <Review
+                key={index}
+                level={review.level}
+                starRate={review.starRate}
+                profileName={review.profileName}
+                profileImg={review.profileImg}
+                content={review.content}
+                isBlur={review.isBlur}
+                theUpCnt={review.theUpCnt}
+                theDownCnt={review.theDownCnt}
+                theIsUp={review.theIsUp}
+                theIsDown={review.theIsDown}
+                commentCnt={review.commentCnt}
+                upClick={review.upClick}
+                downClick={review.downClick}
+              />
+              ))}
           </S.ReviewWrap>
         </S.ReviewCont>
 
+        
+        <S.GalleryCont>
+          <S.Title>갤러리</S.Title>
+          <PhotoList></PhotoList>
+        </S.GalleryCont>
+        
 
       </S.Content>
       </S.Container>  
