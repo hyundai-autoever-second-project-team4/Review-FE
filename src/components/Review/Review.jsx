@@ -5,6 +5,8 @@ import StarIcon from "../../assets/svg/star.svg";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
+import upLogo from "/src/assets/svg/up.svg";
+import downLogo from "/src/assets/svg/down.svg";
 
 function Review({
   width,
@@ -28,13 +30,6 @@ function Review({
   const [isUp, setIsUp] = useState(theIsUp);
   const [isDown, setIsDown] = useState(theIsDown);
 
-  const svgFiles = import.meta.glob("/src/assets/svg/levels/*.svg");
-
-  function getSvgUrl(level) {
-    // `svgFiles` 객체에서 동적으로 필요한 경로를 선택합니다.
-    return svgFiles[`/src/assets/svg/levels/${level}.svg`];
-  }
-
   const toggleUpVote = () => {
     setIsUp((prev) => !prev);
     setUpCnt((prev) => (isUp ? prev - 1 : prev + 1));
@@ -52,7 +47,7 @@ function Review({
       <S.TopArea>
         <S.ProfileWrapper>
           <DynamicSVG
-            svgUrl={getSvgUrl(level)}
+            svgUrl={`/levels/${level}.svg`}
             width={18}
             height={18}
             color={theme.colors.super[level]}
@@ -82,7 +77,7 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="/src/assets/svg/up.svg"
+              svgUrl={upLogo}
               color={isUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
@@ -93,7 +88,7 @@ function Review({
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl="/src/assets/svg/down.svg"
+              svgUrl={downLogo}
               color={isDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}
