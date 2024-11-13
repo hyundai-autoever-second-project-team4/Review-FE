@@ -4,10 +4,13 @@ import { devtools, persist } from "zustand/middleware";
 const StorageKey = "storage-key";
 
 const UserInit = {
-  userId: null,
-  name: "",
-  profile: null,
-  email: "",
+  id: null,
+  email: null,
+  name: null,
+  profileImage: null,
+  social: null,
+  badge: null,
+  tier: null,
 };
 
 const useUserStore = create(

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "./cookie";
+import { getCookie, getRefresh } from "./cookie";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -8,6 +8,7 @@ export const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${getCookie()}`,
+    RefreshToken: `Bearer ${getRefresh()}`,
   },
 });
 
