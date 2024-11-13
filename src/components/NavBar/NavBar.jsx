@@ -11,6 +11,7 @@ import { setCookies, deleteAllCookies } from "../../api/cookie";
 import useUserStore from "../../store/userStore";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import ProfileTooltip from "./ProfileTooltip";
+import LoginModal from "../LoginModal/LoginModal";
 
 const Container = styled.div`
   position: fixed;
@@ -104,6 +105,7 @@ function NavBar() {
   const [searchKey, setSearchKey] = useState("");
   const { data, isLoading, refetch } = useGetUserInfo();
   const { user, setUser, logOut } = useUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setCookies(
@@ -153,12 +155,21 @@ function NavBar() {
     //  https://api.theaterup.site/oauth2/authorization/kakao 으로 이동시켜줘.
     window.location.href =
       "https://api.theaterup.site/oauth2/authorization/kakao";
+    handleModalClose();
   };
 
   const handleLogOut = () => {
     alert("로그아웃 되었습니다.");
     logOut();
     deleteAllCookies();
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -199,7 +210,7 @@ function NavBar() {
               onKeyDown={handleKeyDown}
             />
             {user?.id === null ? (
-              <StyledButton $variant={isVariant} onClick={handleLogin}>
+              <StyledButton $variant={isVariant} onClick={handleModalOpen}>
                 로그인
               </StyledButton>
             ) : (
@@ -238,6 +249,11 @@ function NavBar() {
           </div>
         </div>
       </InerContainer>
+      <LoginModal
+        modalOpen={isModalOpen}
+        modalClose={handleModalClose}
+        handleLogin={handleLogin}
+      />
     </Container>
   );
 }
