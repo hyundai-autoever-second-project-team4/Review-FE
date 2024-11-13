@@ -43,7 +43,8 @@ const LeftWrap = styled.div`
 const NavItem = styled.a`
   font-size: 16px;
   font-weight: ${theme.fontWeight.bold};
-  color: ${({ $variant }) => ($variant ? "#ffffff" : theme.colors.gray3)};
+  color: ${({ $variant, $isSelected }) =>
+    $variant ? "#ffffff" : $isSelected ? theme.colors.black : "#A1A1A1"};
   text-shadow: ${({ $variant }) =>
     $variant && `0px 0px 4px rgba(0, 0, 0, 0.25);`};
   /* transition: color 0.3s ease; */
@@ -106,6 +107,7 @@ function NavBar() {
   const { data, isLoading, refetch } = useGetUserInfo();
   const { user, setUser, logOut } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNav, setSelectedNav] = useState(""); // 현재 선택된 Nav 상태 추가
 
   useEffect(() => {
     setCookies(
@@ -142,6 +144,11 @@ function NavBar() {
   const moveToMyPage = () => {
     navigate("/myPage");
   };
+
+  const isPlayingSelected = location.pathname === "/movieList/nowPlaying";
+  const isPopularSelected = location.pathname === "/movieList/popular";
+  const isRankingSelected = location.pathname === "/ranking";
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
       navigate(`/search/search?query=${searchKey}`, {
@@ -183,13 +190,25 @@ function NavBar() {
             style={{ cursor: "pointer" }}
           />
           {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
-          <NavItem onClick={moveToPlaying} $variant={isVariant}>
+          <NavItem
+            onClick={moveToPlaying}
+            $variant={isVariant}
+            $isSelected={isPlayingSelected}
+          >
             현재상영작
           </NavItem>
-          <NavItem onClick={moveToPopular} $variant={isVariant}>
+          <NavItem
+            onClick={moveToPopular}
+            $variant={isVariant}
+            $isSelected={isPopularSelected}
+          >
             인기영화
           </NavItem>
-          <NavItem onClick={moveToRanking} $variant={isVariant}>
+          <NavItem
+            onClick={moveToRanking}
+            $variant={isVariant}
+            $isSelected={isRankingSelected}
+          >
             랭킹
           </NavItem>
         </LeftWrap>
