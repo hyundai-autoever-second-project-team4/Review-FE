@@ -7,13 +7,13 @@ import theme from "../../styles/theme";
 
 function RatingChart({ ratingArray, level }) {
   const [max, setMax] = useState(Math.max(...ratingArray));
-  const [heights, setHeights] = useState(Array(ratingArray.length).fill(0));
+  const [heights, setHeights] = useState(Array(ratingArray?.length).fill(0));
 
   useEffect(() => {
     setMax(Math.max(...ratingArray));
 
     setTimeout(() => {
-      setHeights(ratingArray.map((rate) => 100 * (rate / max)));
+      setHeights(ratingArray?.map((rate) => 100 * (rate / max)));
     }, 300);
   }, [ratingArray]);
 

@@ -16,7 +16,7 @@ export const getRefresh = () => {
   const refreshToken = cookieArray.find((cookie) =>
     cookie.startsWith("refreshToken=")
   );
-  console.log(refreshToken);
+  console.log(decodedCookie);
   return refreshToken ? refreshToken.split("=")[1] : null;
 };
 
