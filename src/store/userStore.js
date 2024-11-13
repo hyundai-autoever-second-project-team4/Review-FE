@@ -5,7 +5,7 @@ const StorageKey = "storage-key";
 
 const UserInit = {
   userId: null,
-  nickName: "",
+  name: "",
   profile: null,
   email: "",
 };
