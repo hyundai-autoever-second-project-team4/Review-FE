@@ -31,7 +31,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/movieDetail/:movieiId" element={<MovieDetail />} />
+        <Route path="/movieDetail/:movieId" element={<MovieDetail />} />
         <Route path="/movieList/:type" element={<MovieList />} />
         <Route path="/movieReview/:movieId" element={<MovieReview />} />
         <Route path="/ranking" element={<Ranking />} />

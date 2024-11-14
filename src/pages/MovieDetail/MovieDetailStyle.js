@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import theme from "../../styles/theme";
 
-
 export const Container = styled.div`
   width: 100%;
   display: flex;
@@ -10,10 +9,8 @@ export const Container = styled.div`
   padding-bottom: 40px;
 `;
 
-
-
 export const BackImg = styled.div`
-  width: 1536px;
+  width: 100vw;
   height: 550px;
   overflow: hidden;
 
@@ -23,11 +20,6 @@ export const BackImg = styled.div`
   background-repeat: no-repeat;
 
   background-position: 50%;
-  
- 
-
-  
-  
 `;
 
 export const Content = styled.div`
@@ -36,18 +28,18 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+
   gap: 16px;
-  
 `;
 
 export const MovieWrap = styled.div`
-    display: flex;
-    width: 1320px;
-    justify-content: space-between;
-    gap:16px;
+  display: flex;
+  margin-top: 20px;
+  width: 1320px;
+  justify-content: space-between;
 
-`
+  gap: 16px;
+`;
 export const PosterSection = styled.div`
   display: flex;
   gap: 16px;
@@ -62,33 +54,33 @@ export const Poster = styled.img`
 `;
 
 export const MovieInfo = styled.div`
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  justify-content: center; */
+  gap: 16px;
   //justify-content: space-between;
-  
 `;
 
 export const MainInfo = styled.div`
-    display: flex;
-    /* height: 1px; */
-    justify-content: space-between;
-    flex-direction: column;
-
-`
+  width: "100%";
+  display: flex;
+  /* height: 1px; */
+  justify-content: space-between;
+  flex-direction: row;
+`;
 export const StarInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: space-between;
-    min-width: 600px;
-    
-`
-
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-width: 600px;
+  position: relative;
+`;
 
 export const Title = styled.h1`
   font-size: ${theme.fontSizes.h2};
+  line-height: 32px;
   font-weight: bold;
+  width: 60%;
   margin-bottom: 16px;
 `;
 
@@ -99,14 +91,13 @@ export const SubInfo = styled.div`
   color: ${theme.colors.black};
   font-weight: bold;
   gap: 8px;
-  
 `;
 
 export const SubText = styled.div`
-    font-size: ${theme.fontSizes.md};
+  font-size: ${theme.fontSizes.md};
   color: ${theme.colors.black};
   font-weight: bold;
-`
+`;
 
 export const Description = styled.p`
   font-size: ${theme.fontSizes.sub1};
@@ -116,9 +107,11 @@ export const Description = styled.p`
 `;
 
 export const Tags = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 0;
   display: flex;
   gap: 16px;
-  margin-bottom: 16px;
 `;
 
 export const Tag = styled.span`
@@ -149,10 +142,8 @@ export const ReviewButton = styled.button`
   cursor: pointer;
 `;
 
-
-
 export const AvgRating = styled.div`
-  font-size:20px;
+  font-size: 20px;
   color: ${theme.colors.black};
   strong {
     font-size: ${theme.fontSizes.h3};
@@ -169,30 +160,32 @@ export const ChartSection = styled.div`
   justify-content: center;
   align-items: center;
   width: 560px;
-  
+
   /* margin-top: 10px; */
   border-radius: 10px;
 `;
 
 export const ProfileCont = styled.div`
- display: flex; 
- /* align-self: flex-start; */
- justify-content: space-between;
- flex-direction: column;
- height: 160px;
- `;
+  display: flex;
+  /* align-self: flex-start; */
+  justify-content: space-between;
+  flex-direction: column;
+  height: 160px;
+  margin-top: 20px;
+  margin-bottom: 24px;
+`;
 export const ProfileWrap = styled.div`
- display: flex;
- width: 1320px;
- justify-content: space-between;
- overflow-x: auto;
-`
+  display: flex;
+  width: 1320px;
+  justify-content: space-between;
+  overflow-x: auto;
+`;
 export const Profile = styled.div`
-   display: flex;
-   width: 240px;
-   margin-right: 16px;
-   position: relative; 
-  
+  display: flex;
+  width: 240px;
+  margin-right: 16px;
+  position: relative;
+
   &::after {
     content: "";
     position: absolute;
@@ -211,36 +204,49 @@ export const ProfileImg = styled.img`
   border-radius: 8px;
 `;
 
-export const Role=styled.div`
+export const Role = styled.div`
   font-weight: 500;
 `;
 
-export const ProfileInfo=styled.div`
+export const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
   justify-content: center;
 `;
 
+// 리뷰 영역
+
 export const ReviewCont = styled.div`
-  display: flex; 
+  display: flex;
   margin-top: 20px;
- /* align-self: flex-start; */
- /* justify-content: space-between; */
- flex-direction: column;
- /* height: 160px; */
+  /* align-self: flex-start; */
+  /* justify-content: space-between; */
+  flex-direction: column;
+  margin-bottom: 24px;
+  /* height: 160px; */
+`;
+
+export const ReviewTitleWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
 `;
 
 export const ReviewWrap = styled.div`
- display: flex;
- width: 1320px;
- justify-content: space-between;
- overflow-x: auto;
-`
+  display: flex;
+  width: 1320px;
+  justify-content: space-between;
+  overflow-x: auto;
+`;
 
 export const GalleryCont = styled.div`
- display: flex;
- flex-direction: column;
- width: 1320px;
- justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  gap: 16px;
+  margin-top: 20px;
+  width: 1320px;
+  justify-content: space-between;
 `;
