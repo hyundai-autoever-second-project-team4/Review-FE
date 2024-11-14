@@ -7,7 +7,7 @@ import {
   getUserRecommendMovies,
 } from "../api/api";
 
-export function useMainPageApi() {
+export function useMainPageApi(user) {
   const {
     data: userRecommendMovies,
     isLoading: recommendLoading,
@@ -17,6 +17,7 @@ export function useMainPageApi() {
     queryFn: getUserRecommendMovies,
     staleTime: 60000, // 1분
     select: (data) => data.data.movies,
+    enabled: user?.id !== null,
   });
 
   const {

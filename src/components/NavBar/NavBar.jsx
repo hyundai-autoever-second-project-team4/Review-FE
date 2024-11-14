@@ -121,13 +121,10 @@ function NavBar() {
   }, []);
 
   useEffect(() => {
-    setUser(data);
+    if (data) {
+      setUser(data);
+    }
   }, [data]);
-
-  // useEffect(() => {
-  //   setIsVariant(location.pathname.split("/")[1] === "movieDetail");
-  //   window.scrollTo(0, 0);
-  // }, [location]);
 
   useEffect(() => {
     // 페이지 로드 시, 스크롤을 최상단으로 설정

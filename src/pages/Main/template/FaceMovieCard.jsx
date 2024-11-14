@@ -61,6 +61,7 @@ const Title = styled.p`
   text-align: center;
   position: absolute;
   bottom: -20%;
+  padding: 0 12px;
 
   @media (max-width: 960px) {
     font-size: 18px;
