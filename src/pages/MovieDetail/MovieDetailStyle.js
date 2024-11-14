@@ -20,7 +20,6 @@ export const BackImg = styled.div`
   background-repeat: no-repeat;
 
   background-position: 50%;
-
 `;
 
 export const Content = styled.div`
@@ -100,10 +99,10 @@ export const SubInfo = styled.div`
 `;
 
 export const SubText = styled.div`
-    font-size: ${theme.fontSizes.md};
+  font-size: ${theme.fontSizes.md};
   color: ${theme.colors.black};
   font-weight: bold;
-`
+`;
 
 export const Description = styled.p`
   font-size: ${theme.fontSizes.sub1};
@@ -148,10 +147,8 @@ export const ReviewButton = styled.button`
   cursor: pointer;
 `;
 
-
-
 export const AvgRating = styled.div`
-  font-size:20px;
+  font-size: 20px;
   color: ${theme.colors.black};
   strong {
     font-size: ${theme.fontSizes.h3};
@@ -189,7 +186,7 @@ export const ProfileWrap = styled.div`
   display: flex;
   justify-content: space-between;
   overflow-x: auto;
-  /* width: 1320px; */
+  width: 1320px;
 
   width: 100%;
   max-width: 1320px;
@@ -197,7 +194,7 @@ export const ProfileWrap = styled.div`
 
   @media (max-width: 960px) {
     gap: 16px; /* 작은 화면에서 간격 추가 */
-    justify-content: center; /* 가운데 정렬 */
+    //justify-content: center; /* 가운데 정렬 */
   }
 `;
 export const Profile = styled.div`
@@ -206,6 +203,12 @@ export const Profile = styled.div`
   margin-right: 16px;
   position: relative;
 
+  /* max-width: 240px; */
+
+  /* @media (max-width: 960px) {
+    flex-basis: calc(50% - 16px);
+    max-width: 100%;
+  } */
 
   &::after {
     content: "";
