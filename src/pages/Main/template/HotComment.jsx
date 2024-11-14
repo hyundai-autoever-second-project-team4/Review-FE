@@ -118,7 +118,7 @@ function HotComment({ reviewData }) {
     // 정리 작업
     return () => window.removeEventListener("resize", updateGroupSize);
   }, []);
-
+  console.log(reviewData);
   return (
     <Container>
       <Title>오늘 HOT한 리뷰</Title>
@@ -159,7 +159,7 @@ function HotComment({ reviewData }) {
                   commentCnt={review.commentCount}
                   upClick={1} //나중에 업 하는 함수 넘겨줄것
                   downClick={1} //나중에 다운 하는 함수 넘겨줄것
-                  movieName={review.movieName}
+                  movieName={review.movieTitle}
                 />
               </SwiperSlide>
             ))}

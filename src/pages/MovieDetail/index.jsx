@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./MovieDetailStyle";
 import Button from "../../components/Button/Button";
@@ -6,23 +6,10 @@ import StarRating from "../../components/StarRating/StarRating";
 import RatingChart from "../../components/RatingChart/RatingChart";
 import Review from "../../components/Review/Review";
 import MovieSlider from "../Main/template/MovieSlider";
-import movieData from "../../utils/data";
 import PhotoList from "./PhotoList";
-
-const profileData = [
-  {
-    name: "노윤서",
-    role: "출연",
-    imageUrl:
-      "https://search.pstatic.net/common?type=b&size=216&expire=1&refresh=true&quality=100&direct=true&src=http%3A%2F%2Fsstatic.naver.net%2Fpeople%2Fportrait%2F202207%2F20220719140508638.jpg",
-  },
-  ...Array(4).fill({
-    name: "노윤서",
-    role: "출연",
-    imageUrl:
-      "https://search.pstatic.net/common?type=b&size=216&expire=1&refresh=true&quality=100&direct=true&src=http%3A%2F%2Fsstatic.naver.net%2Fpeople%2Fportrait%2F202207%2F20220719140508638.jpg",
-  }),
-];
+import { axiosInstance } from "../../api/axiosInstance";
+const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
+const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
 const reviewData = [
   {
@@ -57,24 +44,75 @@ const reviewData = [
     upClick: () => console.log("Upvote clicked for User1"),
     downClick: () => console.log("Downvote clicked for User1"),
   }),
-]
-
+];
 
 function MovieDetail() {
   const navigate = useNavigate();
-
   const { movieId } = useParams();
-  const handleBtnClick = () => {
-    navigate(-1);
-  };
-  console.log(movieId);
+  const [movieData, setMovieData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMovieDetailData = async () => {
+      try {
+        const response = await axiosInstance.get(`/movie/${movieId}`);
+        setMovieData(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMovieDetailData();
+  }, [movieId]); // movieId가 변경될 때마다 데이터 가져오기
+
+  const movieTitle = "베놈 : 더 라스트 댄스";
   const handleMoreClick = () => {
-    navigate(`/movieReview/${movieId}`);
+    navigate(`/movieReview/${movieId}`, {
+      state: { movieTitle: movieData.movieInfo.title },
+    });
   };
+  console.log(movieData);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching movie data: {error.message}</div>;
+  }
+  //releaseDate의 포멧 바꾸기
+  const releaseDate = new Date(movieData.movieInfo.releaseDate);
+  const formattedDate = `${releaseDate.getFullYear()}.${String(
+    releaseDate.getMonth() + 1
+  ).padStart(2, "0")}.${String(releaseDate.getDate()).padStart(2, "0")}`;
+
+  // 감독과 출연진 정보를 통합하는 함수
+  const combinedProfiles = [
+    ...movieData.directorInfoList.directors.map((director) => ({
+      id: director.directorId,
+      name: director.name,
+      imageUrl: director.profilePath,
+      role: "감독", // 역할을 '감독'으로 설정
+    })),
+    ...movieData.actorInfoList.actors.map((actor) => ({
+      id: actor.actorId,
+      name: actor.name,
+      imageUrl: actor.profilePath,
+      role: actor.characterName, // 역할을 캐릭터 이름으로 설정
+    })),
+  ];
+
   return (
     <div>
       <S.Container>
-        <S.BackImg backgroundImage="https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F10%2F29%2F6955135%2Fhigh.jpg&w=1920&q=75" />
+        <S.BackImg
+          backgroundImage={
+            IMG_BACK_BASE_URL + `${movieData.movieInfo.backdropPath}`
+          }
+        />
         <S.Content>
           <div
             style={{
@@ -95,7 +133,7 @@ function MovieDetail() {
               >
                 <S.PosterSection>
                   <S.Poster
-                    src="https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F11%2F7%2F6971176%2Fhigh.jpg&w=1920&q=75"
+                    src={IMG_BASE_URL + `${movieData.movieInfo.posterPath}`}
                     alt="Poster"
                   />
                 </S.PosterSection>
@@ -110,10 +148,7 @@ function MovieDetail() {
                     }}
                   >
                     <S.MainInfo>
-                      <S.Title>
-                        Upside Down, Inside Out: An Appreciation of the Films of
-                        Quentin Dupieux by Elena Lazic
-                      </S.Title>
+                      <S.Title>{movieData.movieInfo.title}</S.Title>
                       <div
                         style={{
                           display: "flex",
@@ -130,9 +165,22 @@ function MovieDetail() {
                     </S.MainInfo>
                     <S.StarInfo>
                       <S.SubInfo>
-                        <S.SubText>{"2024.11.06"}</S.SubText>
-                        <S.SubText>{"로맨스"}</S.SubText>
-                        <S.SubText>{"한국"}</S.SubText>
+                        <S.SubText>{formattedDate}</S.SubText>
+                        <S.SubText>
+                          {movieData.genreInfoList.genres.map(
+                            (genre, index) => (
+                              <span key={genre.genreId}>
+                                {genre.name}
+                                {index <
+                                  movieData.genreInfoList.genres.length - 1 &&
+                                  " / "}
+                              </span>
+                            )
+                          )}
+                        </S.SubText>
+                        <S.SubText>
+                          {movieData.movieInfo.originCountry}
+                        </S.SubText>
                       </S.SubInfo>
                       <S.Tags>
                         <S.Tag>🏠 집에서 보기 좋은</S.Tag>
@@ -141,29 +189,7 @@ function MovieDetail() {
                       </S.Tags>
                     </S.StarInfo>
                   </div>
-                  <S.Description>
-                    LoremLorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Nostrum veritatis pariatur nam voluptate vitae non
-                    fugit quod cum quibusdam officia inventore maxime
-                    consectetur aperiam, consequatur ipsam minima, odio suscipit
-                    voluptatem.Lorem, ipsum dolor sit amet consectetur
-                    adipisicing elit. Nostrum veritatis pariatur nam voluptate
-                    vitae non fugit quod cum quibusdam officia inventore maxime
-                    consectetur aperiam, consequatur ipsam minima, odio suscipit
-                    voluptatem.Lorem, ipsum dolor sit amet consectetur
-                    adipisicing elit. Nostrum veritatis pariatur nam voluptate
-                    vitae non fugit quod cum quibusdam officia inventore maxime
-                    consectetur aperiam, consequatur ipsam minima, odio suscipit
-                    voluptatem.Lorem, ipsum dolor sit amet consectetur
-                    adipisicing elit. Nostrum veritatis pariatur nam voluptate
-                    vitae non fugit quod cum quibusdam officia inventore maxime
-                    consectetur aperiam, consequatur ipsam minima, odio suscipit
-                    voluptatem., ipsum dolor sit amet consectetur adipisicing
-                    elit. Nostrum veritatis pariatur nam voluptate vitae non
-                    fugit quod cum quibusdam officia inventore maxime
-                    consectetur aperiam, consequatur ipsam minima, odio suscipit
-                    voluptatem.
-                  </S.Description>
+                  <S.Description>{movieData.movieInfo.overview}</S.Description>
                 </S.MovieInfo>
               </div>
               <S.ChartSection>
@@ -185,11 +211,18 @@ function MovieDetail() {
             <S.Title>출연/제작</S.Title>
 
             <S.ProfileWrap>
-              {profileData.map((profile, index) => (
+              {combinedProfiles.map((profile, index) => (
                 <S.Profile key={index}>
-                  <S.ProfileImg src={profile.imageUrl} alt={profile.name} />
+                  {profile.imageUrl ? (
+                    <S.ProfileImg
+                      src={IMG_BASE_URL + `${profile.imageUrl}`}
+                      alt={profile.name}
+                    />
+                  ) : (
+                    <S.ProfileImg src="/images/no_img.png" alt={profile.name} />
+                  )}
                   <S.ProfileInfo>
-                    <S.SubText>{profile.name}</S.SubText>
+                    <S.SubTextMargin>{profile.name}</S.SubTextMargin>
                     <S.Role>{profile.role}</S.Role>
                   </S.ProfileInfo>
                 </S.Profile>
@@ -228,7 +261,7 @@ function MovieDetail() {
 
           <S.GalleryCont>
             <S.Title>갤러리</S.Title>
-            <PhotoList></PhotoList>
+            <PhotoList photos={movieData.galleryInfoList.galleries}></PhotoList>
           </S.GalleryCont>
         </S.Content>
       </S.Container>

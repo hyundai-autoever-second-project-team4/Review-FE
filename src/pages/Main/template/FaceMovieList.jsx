@@ -107,20 +107,19 @@ function FaceMovieList({ movieData }) {
             onReachBeginning={() => setIsBeginning(true)}
             onReachEnd={() => setIsEnd(true)}
           >
-            {movieData.map((movie, index) => (
-              <SwiperSlide key={index}>
-                <FaceMovieCard
-                  key={index}
-                  index={index}
-                  title={movie.title}
-                  poster={movie.img}
-                  year={movie.year}
-                  country={movie.country}
-                  genre={movie.genre}
-                  type={"별점 높은 영화"}
-                />
-              </SwiperSlide>
-            ))}
+            {movieData.map((movie, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <FaceMovieCard
+                    index={index}
+                    title={movie.title}
+                    poster={movie.posterPath}
+                    backdropPath={movie.backdropPath}
+                    type={"별점 높은 영화"}
+                  />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </Slide>
         <ButtonWrapper>

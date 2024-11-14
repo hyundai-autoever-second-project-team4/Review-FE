@@ -104,6 +104,13 @@ export const SubText = styled.div`
   font-weight: bold;
 `;
 
+export const SubTextMargin = styled.div`
+  font-size: ${theme.fontSizes.md};
+  color: ${theme.colors.black};
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
 export const Description = styled.p`
   font-size: ${theme.fontSizes.sub1};
   color: ${theme.colors.gray3};
@@ -178,15 +185,16 @@ export const ProfileCont = styled.div`
   /* align-self: flex-start; */
   justify-content: space-between;
   flex-direction: column;
-  height: 160px;
+  height: 300px;
   margin-top: 20px;
   margin-bottom: 24px;
 `;
 export const ProfileWrap = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow-x: auto;
-  width: 1320px;
+  overflow-y: auto;
+  /* width: 1320px; */
 
   width: 100%;
   max-width: 1320px;
@@ -202,13 +210,7 @@ export const Profile = styled.div`
   width: 240px;
   margin-right: 16px;
   position: relative;
-
-  /* max-width: 240px; */
-
-  /* @media (max-width: 960px) {
-    flex-basis: calc(50% - 16px);
-    max-width: 100%;
-  } */
+  margin-bottom: 10px;
 
   &::after {
     content: "";
@@ -226,6 +228,8 @@ export const ProfileImg = styled.img`
   margin-right: 16px;
   object-fit: cover;
   border-radius: 8px;
+  background-color: #d3d3d3; /* 회색 배경 */
+  display: block; /* 이미지가 없을 때 배경이 보이도록 설정 */
 `;
 
 export const Role = styled.div`
