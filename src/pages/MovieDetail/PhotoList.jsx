@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/swiper-bundle.min.css"; // Swiper 스타일 추가
@@ -9,6 +8,7 @@ import DynamicSVG from "../../components/DynamicSVG/DynamicSVG";
 import arrowLeft from "../../assets/svg/arrow-left.svg";
 import arrowRight from "../../assets/svg/arrow-right.svg";
 import theme from "../../styles/theme";
+const IMG_GALLERY_BASE_URL = "https://image.tmdb.org/t/p/w780"; // 이미지 베이스 URL
 
 const phots = [
   {
@@ -87,7 +87,7 @@ const PhotoCard = styled.div`
   background-position: center;
 `;
 
-function PhotoList() {
+function PhotoList({ photos }) {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
@@ -115,9 +115,11 @@ function PhotoList() {
             onReachBeginning={() => setIsBeginning(true)}
             onReachEnd={() => setIsEnd(true)}
           >
-            {phots.map((photo, index) => (
+            {photos.map((photoURL, index) => (
               <SwiperSlide key={index} style={{ width: "300px" }}>
-                <PhotoCard photourl={photo.imageUrl} />
+                <PhotoCard
+                  photourl={IMG_GALLERY_BASE_URL + `${photoURL.galleryPath}`}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
