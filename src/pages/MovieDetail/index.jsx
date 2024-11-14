@@ -81,9 +81,9 @@ function MovieDetail() {
           <S.Poster src="https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F11%2F7%2F6971176%2Fhigh.jpg&w=1920&q=75" alt="Poster" />
         </S.PosterSection>
           <S.MovieInfo>
-            <div style={{width:"100%",display:"flex", height:"160px", justifyContent:"space-between"}}>
+            <div style={{width:"100%",display:"flex", height:"160px", justifyContent:"space-between",marginBottom: '12px'}}>
               <S.MainInfo>
-                <S.Title>청설</S.Title>
+                <S.Title>Upside Down, Inside Out: An Appreciation of the Films of Quentin Dupieux by Elena Lazic</S.Title>
                 <S.SubInfo>
                   <S.SubText>{"2024.11.06"}</S.SubText>
                   <S.SubText>{"로맨스"}</S.SubText>
@@ -103,7 +103,7 @@ function MovieDetail() {
               </S.StarInfo>
             </div>
             <S.Description>
-              대학생활을 끝냈지만 하고 싶은 것도, 되고 싶은 것도 없어 고민하던 용준. 엄마의 등쌀에 떠밀려 억지로 도시락 배달 알바를 한 장으로 완벽한 이상형 여름을 마주친다...
+              LoremLorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum veritatis pariatur nam voluptate vitae non fugit quod cum quibusdam officia inventore maxime consectetur aperiam, consequatur ipsam minima, odio suscipit voluptatem.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum veritatis pariatur nam voluptate vitae non fugit quod cum quibusdam officia inventore maxime consectetur aperiam, consequatur ipsam minima, odio suscipit voluptatem.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum veritatis pariatur nam voluptate vitae non fugit quod cum quibusdam officia inventore maxime consectetur aperiam, consequatur ipsam minima, odio suscipit voluptatem.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum veritatis pariatur nam voluptate vitae non fugit quod cum quibusdam officia inventore maxime consectetur aperiam, consequatur ipsam minima, odio suscipit voluptatem., ipsum dolor sit amet consectetur adipisicing elit. Nostrum veritatis pariatur nam voluptate vitae non fugit quod cum quibusdam officia inventore maxime consectetur aperiam, consequatur ipsam minima, odio suscipit voluptatem.
             </S.Description>
           </S.MovieInfo>
         

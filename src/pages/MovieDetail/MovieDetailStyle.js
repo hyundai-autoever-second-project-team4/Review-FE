@@ -14,7 +14,7 @@ export const Container = styled.div`
 
 export const BackImg = styled.div`
   width: 1536px;
-  height: 422px;
+  height: 550px;
   overflow: hidden;
   img {
     width: 100%;
@@ -54,10 +54,11 @@ export const Poster = styled.img`
 `;
 
 export const MovieInfo = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
   //justify-content: space-between;
+  
 `;
 
 export const MainInfo = styled.div`
@@ -72,6 +73,7 @@ export const StarInfo = styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
+    min-width: 600px;
     
 `
 
