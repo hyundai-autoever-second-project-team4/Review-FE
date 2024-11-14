@@ -5,21 +5,26 @@ export const getUserInfo = async () => {
 };
 
 export const getUserRecommendMovies = async () => {
-  return await axiosInstance.get("/movie/recommend");
+  const response = await axiosInstance.get("/movie/recommend");
+  return response.data.movies;
 };
 
 export const getTopRatedMovies = async () => {
-  return await axiosInstance.get("/movie/top-rated/weekly");
+  const response = await axiosInstance.get("/movie/top-rated/weekly");
+  return response.data.movies;
 };
 
 export const getTopReviewedMovies = async () => {
-  return await axiosInstance.get("/movie/honor-board");
+  const response = await axiosInstance.get("/movie/honor-board");
+  return response.data.movies;
 };
 
 export const getHotReview = async () => {
-  return await axiosInstance.get("/review/hot");
+  const response = await axiosInstance.get("/review/hot");
+  return response.data.reviewInfos;
 };
 
 export const getThearupHonorMovies = async () => {
-  return await axiosInstance.get("/movie/most-reviewed/weekly");
+  const response = await axiosInstance.get("/movie/most-reviewed/weekly");
+  return response.data.movies;
 };
