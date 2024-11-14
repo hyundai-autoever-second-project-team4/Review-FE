@@ -4,27 +4,22 @@ export const getUserInfo = async () => {
   return await axiosInstance.get("/member");
 };
 
-export const fetchUserRecommendMovies = async () => {
-  const response = await axiosInstance.get("/movie/recommend");
-  return response.data.movies;
+export const getUserRecommendMovies = async () => {
+  return await axiosInstance.get("/movie/recommend");
 };
 
-export const fetchTopRatedMovies = async () => {
-  const response = await axiosInstance.get("/movie/top-rated/weekly");
-  return response.data.movies;
+export const getTopRatedMovies = async () => {
+  return await axiosInstance.get("/movie/top-rated/weekly");
 };
 
-export const fetchTopReviewedMovies = async () => {
-  const response = await axiosInstance.get("/movie/honor-board");
-  return response.data.movies;
+export const getTopReviewedMovies = async () => {
+  return await axiosInstance.get("/movie/honor-board");
 };
 
-export const fetchHotReview = async () => {
-  const response = await axiosInstance.get("/review/hot");
-  return response.data.reviewInfos;
+export const getHotReview = async () => {
+  return await axiosInstance.get("/review/hot");
 };
 
-export const fetchThearupHonorMovies = async () => {
-  const response = await axiosInstance.get("/movie/most-reviewed/weekly");
-  return response.data.movies;
+export const getThearupHonorMovies = async () => {
+  return await axiosInstance.get("/movie/most-reviewed/weekly");
 };

@@ -39,11 +39,11 @@ export function useMainPageApi() {
   });
 
   return {
-    userRecommendMovies: userRecommendMoviesQuery.data,
-    topRatedMovies: topRatedMoviesQuery.data,
-    topReviewedMovies: topReviewedMoviesQuery.data,
-    hotReview: hotReviewQuery.data,
-    thearupHonorMovies: thearupHonorMoviesQuery.data,
+    userRecommendMovies: userRecommendMoviesQuery.data.movies,
+    topRatedMovies: topRatedMoviesQuery.data.movies,
+    topReviewedMovies: topReviewedMoviesQuery.data.movies,
+    hotReview: hotReviewQuery.data.movies,
+    thearupHonorMovies: thearupHonorMoviesQuery.data.movies,
     loading:
       userRecommendMoviesQuery.isLoading ||
       topRatedMoviesQuery.isLoading ||
