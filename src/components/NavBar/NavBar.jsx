@@ -11,6 +11,7 @@ import { setCookies, deleteAllCookies } from "../../api/cookie";
 import useUserStore from "../../store/userStore";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import ProfileTooltip from "./ProfileTooltip";
+import Fade from "@mui/material/Fade";
 import LoginModal from "../LoginModal/LoginModal";
 
 const Container = styled.div`
@@ -123,6 +124,7 @@ function NavBar() {
 
   useEffect(() => {
     setIsVariant(location.pathname.split("/")[1] === "movieDetail");
+    window.scrollTo(0, 0);
   }, [location]);
 
   const moveToMain = () => {
@@ -142,7 +144,7 @@ function NavBar() {
   };
 
   const moveToMyPage = () => {
-    navigate("/myPage");
+    navigate(`/userPage/${user.id}`);
   };
 
   const isPlayingSelected = location.pathname === "/movieList/nowPlaying";
@@ -169,6 +171,7 @@ function NavBar() {
     alert("로그아웃 되었습니다.");
     logOut();
     deleteAllCookies();
+    navigate("/");
   };
 
   const handleModalOpen = () => {
@@ -245,6 +248,8 @@ function NavBar() {
                   />
                 }
                 placement="bottom-end"
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 650 }}
                 // open={true}
                 componentsProps={{
                   tooltip: {
@@ -258,11 +263,18 @@ function NavBar() {
                   },
                 }}
               >
-                <ProfileImg
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                   onClick={moveToMyPage}
-                  src={user?.profileImage}
-                  alt=""
-                />
+                >
+                  <ProfileImg src={user?.profileImage} alt="" />
+                </div>
               </Tooltip>
             )}
           </div>
