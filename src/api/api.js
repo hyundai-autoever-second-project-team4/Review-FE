@@ -13,13 +13,11 @@ export const postThearDown = async (id) => {
 };
 
 export const getUserRecommendMovies = async () => {
-  const response = await axiosInstance.get("/movie/recommend");
-  return response.data.movies;
+  return await axiosInstance.get("/movie/recommend");
 };
 
 export const getTopRatedMovies = async () => {
-  const response = await axiosInstance.get("/movie/top-rated/weekly");
-  return response.data.movies;
+  return await axiosInstance.get("/movie/top-rated/weekly");
 };
 
 export const getTopReviewedMovies = async () => {
