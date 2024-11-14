@@ -21,16 +21,13 @@ export const getTopRatedMovies = async () => {
 };
 
 export const getTopReviewedMovies = async () => {
-  const response = await axiosInstance.get("/movie/honor-board");
-  return response.data.movies;
+  return await axiosInstance.get("/movie/honor-board");
 };
 
 export const getHotReview = async () => {
-  const response = await axiosInstance.get("/review/hot");
-  return response.data.reviewInfos;
+  return await axiosInstance.get("/review/hot");
 };
 
 export const getThearupHonorMovies = async () => {
-  const response = await axiosInstance.get("/movie/most-reviewed/weekly");
-  return response.data.movies;
+  return await axiosInstance.get("/movie/most-reviewed/weekly");
 };
