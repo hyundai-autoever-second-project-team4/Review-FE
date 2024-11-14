@@ -1,49 +1,49 @@
 import { useQuery } from "@tanstack/react-query";
 import {
-  fetchHotReview,
-  fetchThearupHonorMovies,
-  fetchTopRatedMovies,
-  fetchTopReviewedMovies,
-  fetchUserRecommendMovies,
+  getHotReview,
+  getThearupHonorMovies,
+  getTopRatedMovies,
+  getTopReviewedMovies,
+  getUserRecommendMovies,
 } from "../api/api";
 
 export function useMainPageApi() {
   const userRecommendMoviesQuery = useQuery({
     queryKey: ["userRecommendMovies"],
-    queryFn: fetchUserRecommendMovies,
+    queryFn: getUserRecommendMovies,
     staleTime: 10000, // 10초
   });
 
   const topRatedMoviesQuery = useQuery({
     queryKey: ["topRatedMovies"],
-    queryFn: fetchTopRatedMovies,
+    queryFn: getTopRatedMovies,
     staleTime: 10000, // 10초
   });
 
   const topReviewedMoviesQuery = useQuery({
     queryKey: ["topReviewedMovies"],
-    queryFn: fetchTopReviewedMovies,
+    queryFn: getTopReviewedMovies,
     staleTime: 10000, // 10초
   });
 
   const hotReviewQuery = useQuery({
     queryKey: ["hotReview"],
-    queryFn: fetchHotReview,
+    queryFn: getHotReview,
     staleTime: 10000, // 10초
   });
 
   const thearupHonorMoviesQuery = useQuery({
     queryKey: ["thearupHonorMovies"],
-    queryFn: fetchThearupHonorMovies,
+    queryFn: getThearupHonorMovies,
     staleTime: 10000, // 10초
   });
 
   return {
-    userRecommendMovies: userRecommendMoviesQuery.data.movies,
-    topRatedMovies: topRatedMoviesQuery.data.movies,
-    topReviewedMovies: topReviewedMoviesQuery.data.movies,
-    hotReview: hotReviewQuery.data.movies,
-    thearupHonorMovies: thearupHonorMoviesQuery.data.movies,
+    userRecommendMovies: userRecommendMoviesQuery.data,
+    topRatedMovies: topRatedMoviesQuery.data,
+    topReviewedMovies: topReviewedMoviesQuery.data,
+    hotReview: hotReviewQuery.data,
+    thearupHonorMovies: thearupHonorMoviesQuery.data,
     loading:
       userRecommendMoviesQuery.isLoading ||
       topRatedMoviesQuery.isLoading ||
