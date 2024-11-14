@@ -69,9 +69,9 @@ function MovieDetail() {
     <div>
       
       <S.Container>
-        <S.BackImg>
-        <img src="https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F10%2F29%2F6955135%2Fhigh.jpg&w=1920&q=75"/>
-          
+        <S.BackImg backgroundImage>
+        {/* <img src="https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F10%2F29%2F6955135%2Fhigh.jpg&w=1920&q=75"/> */}
+        <div style="background-image: url('https://www.news1.kr/_next/image?url=https%3A%2F%2Fi3n.news1.kr%2Fsystem%2Fphotos%2F2024%2F10%2F29%2F6955135%2Fhigh.jpg&w=1920&q=75')"></div> 
         </S.BackImg>
         <S.Content>
         <S.MovieWrap>

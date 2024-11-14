@@ -16,11 +16,18 @@ export const BackImg = styled.div`
   width: 1536px;
   height: 550px;
   overflow: hidden;
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
+
+  background-image: ${(props) => `url(${props.backgroundImage})`};
+  background-position: center; /* 이미지를 중앙에 위치 */
+  background-size: cover; /* 이미지를 전체에 꽉 채움 */
+  background-repeat: no-repeat;
+
+  background-position: 50%;
+  
+ 
+
+  
+  
 `;
 
 export const Content = styled.div`
@@ -28,6 +35,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-top: 20px;
   gap: 16px;
   
