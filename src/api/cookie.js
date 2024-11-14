@@ -3,7 +3,7 @@ export const getCookie = () => {
   const cookieArray = decodedCookie.split("; ");
 
   const accessToken = cookieArray.find((cookie) =>
-    cookie.startsWith("accessToken=")
+    cookie.startsWith("accessToken")
   );
 
   return accessToken ? accessToken.split("=")[1] : null;
@@ -14,7 +14,7 @@ export const getRefresh = () => {
   const cookieArray = decodedCookie.split("; ");
 
   const refreshToken = cookieArray.find((cookie) =>
-    cookie.startsWith("refreshToken=")
+    cookie.startsWith("refreshToken")
   );
   console.log(decodedCookie);
   return refreshToken ? refreshToken.split("=")[1] : null;

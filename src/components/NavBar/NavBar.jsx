@@ -12,6 +12,7 @@ import useUserStore from "../../store/userStore";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import ProfileTooltip from "./ProfileTooltip";
 import Fade from "@mui/material/Fade";
+import LoginModal from "../LoginModal/LoginModal";
 
 const Container = styled.div`
   position: fixed;
@@ -43,7 +44,8 @@ const LeftWrap = styled.div`
 const NavItem = styled.a`
   font-size: 16px;
   font-weight: ${theme.fontWeight.bold};
-  color: ${({ $variant }) => ($variant ? "#ffffff" : theme.colors.gray3)};
+  color: ${({ $variant, $isSelected }) =>
+    $variant ? "#ffffff" : $isSelected ? theme.colors.black : "#A1A1A1"};
   text-shadow: ${({ $variant }) =>
     $variant && `0px 0px 4px rgba(0, 0, 0, 0.25);`};
   /* transition: color 0.3s ease; */
@@ -105,6 +107,8 @@ function NavBar() {
   const [searchKey, setSearchKey] = useState("");
   const { data, isLoading, refetch } = useGetUserInfo();
   const { user, setUser, logOut } = useUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNav, setSelectedNav] = useState(""); // 현재 선택된 Nav 상태 추가
 
   useEffect(() => {
     setCookies(
@@ -143,6 +147,10 @@ function NavBar() {
     navigate(`/userPage/${user.id}`);
   };
 
+  const isPlayingSelected = location.pathname === "/movieList/nowPlaying";
+  const isPopularSelected = location.pathname === "/movieList/popular";
+  const isRankingSelected = location.pathname === "/ranking";
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
       navigate(`/search/search?query=${searchKey}`, {
@@ -156,6 +164,7 @@ function NavBar() {
     //  https://api.theaterup.site/oauth2/authorization/kakao 으로 이동시켜줘.
     window.location.href =
       "https://api.theaterup.site/oauth2/authorization/kakao";
+    handleModalClose();
   };
 
   const handleLogOut = () => {
@@ -163,6 +172,14 @@ function NavBar() {
     logOut();
     deleteAllCookies();
     navigate("/");
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -176,13 +193,25 @@ function NavBar() {
             style={{ cursor: "pointer" }}
           />
           {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
-          <NavItem onClick={moveToPlaying} $variant={isVariant}>
+          <NavItem
+            onClick={moveToPlaying}
+            $variant={isVariant}
+            $isSelected={isPlayingSelected}
+          >
             현재상영작
           </NavItem>
-          <NavItem onClick={moveToPopular} $variant={isVariant}>
+          <NavItem
+            onClick={moveToPopular}
+            $variant={isVariant}
+            $isSelected={isPopularSelected}
+          >
             인기영화
           </NavItem>
-          <NavItem onClick={moveToRanking} $variant={isVariant}>
+          <NavItem
+            onClick={moveToRanking}
+            $variant={isVariant}
+            $isSelected={isRankingSelected}
+          >
             랭킹
           </NavItem>
         </LeftWrap>
@@ -203,7 +232,7 @@ function NavBar() {
               onKeyDown={handleKeyDown}
             />
             {user?.id === null ? (
-              <StyledButton $variant={isVariant} onClick={handleLogin}>
+              <StyledButton $variant={isVariant} onClick={handleModalOpen}>
                 로그인
               </StyledButton>
             ) : (
@@ -251,6 +280,11 @@ function NavBar() {
           </div>
         </div>
       </InerContainer>
+      <LoginModal
+        modalOpen={isModalOpen}
+        modalClose={handleModalClose}
+        handleLogin={handleLogin}
+      />
     </Container>
   );
 }
