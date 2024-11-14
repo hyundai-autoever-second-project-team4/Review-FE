@@ -7,54 +7,59 @@ import {
   getUserRecommendMovies,
 } from "../api/api";
 
-export function useMainPageApi() {
-  const userRecommendMoviesQuery = useQuery({
-    queryKey: ["userRecommendMovies"],
-    queryFn: getUserRecommendMovies,
-    staleTime: 10000, // 10초
-  });
+const {
+  data: movies,
+  isLoading,
+  isError,
+} = useQuery({
+  queryKey: ["userRecommendMovies"],
+  queryFn: fetchUserRecommendMovies,
+  staleTime: 10000, // 10초
+  select: (data) => data.data.movies,
+});
 
-  const topRatedMoviesQuery = useQuery({
-    queryKey: ["topRatedMovies"],
-    queryFn: getTopRatedMovies,
-    staleTime: 10000, // 10초
-  });
+// export function useMainPageApi() {
+//   const topRatedMoviesQuery = useQuery({
+//     queryKey: ["topRatedMovies"],
+//     queryFn: fetchTopRatedMovies,
+//     staleTime: 10000, // 10초
+//   });
 
-  const topReviewedMoviesQuery = useQuery({
-    queryKey: ["topReviewedMovies"],
-    queryFn: getTopReviewedMovies,
-    staleTime: 10000, // 10초
-  });
+//   const topReviewedMoviesQuery = useQuery({
+//     queryKey: ["topReviewedMovies"],
+//     queryFn: fetchTopReviewedMovies,
+//     staleTime: 10000, // 10초
+//   });
 
-  const hotReviewQuery = useQuery({
-    queryKey: ["hotReview"],
-    queryFn: getHotReview,
-    staleTime: 10000, // 10초
-  });
+//   const hotReviewQuery = useQuery({
+//     queryKey: ["hotReview"],
+//     queryFn: fetchHotReview,
+//     staleTime: 10000, // 10초
+//   });
 
-  const thearupHonorMoviesQuery = useQuery({
-    queryKey: ["thearupHonorMovies"],
-    queryFn: getThearupHonorMovies,
-    staleTime: 10000, // 10초
-  });
+//   const thearupHonorMoviesQuery = useQuery({
+//     queryKey: ["thearupHonorMovies"],
+//     queryFn: fetchThearupHonorMovies,
+//     staleTime: 10000, // 10초
+//   });
 
-  return {
-    userRecommendMovies: userRecommendMoviesQuery.data,
-    topRatedMovies: topRatedMoviesQuery.data,
-    topReviewedMovies: topReviewedMoviesQuery.data,
-    hotReview: hotReviewQuery.data,
-    thearupHonorMovies: thearupHonorMoviesQuery.data,
-    loading:
-      userRecommendMoviesQuery.isLoading ||
-      topRatedMoviesQuery.isLoading ||
-      topReviewedMoviesQuery.isLoading ||
-      hotReviewQuery.isLoading ||
-      thearupHonorMoviesQuery.isLoading,
-    error:
-      userRecommendMoviesQuery.error ||
-      topRatedMoviesQuery.error ||
-      topReviewedMoviesQuery.error ||
-      hotReviewQuery.error ||
-      thearupHonorMoviesQuery.error,
-  };
-}
+//   return {
+//     userRecommendMovies: userRecommendMoviesQuery,
+//     topRatedMovies: topRatedMoviesQuery,
+//     topReviewedMovies: topReviewedMoviesQuery,
+//     hotReview: hotReviewQuery,
+//     thearupHonorMovies: thearupHonorMoviesQuery,
+//     loading:
+//       userRecommendMoviesQuery.isLoading ||
+//       topRatedMoviesQuery.isLoading ||
+//       topReviewedMoviesQuery.isLoading ||
+//       hotReviewQuery.isLoading ||
+//       thearupHonorMoviesQuery.isLoading,
+//     error:
+//       userRecommendMoviesQuery.error ||
+//       topRatedMoviesQuery.error ||
+//       topReviewedMoviesQuery.error ||
+//       hotReviewQuery.error ||
+//       thearupHonorMoviesQuery.error,
+//   };
+// }

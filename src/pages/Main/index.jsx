@@ -8,7 +8,8 @@ import dummyReviews from "../../utils/dummyReview.js";
 import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
 import { axiosInstance } from "../../api/axiosInstance.js";
-import { useMainPageApi } from "../../hooks/useMainPageAPI.jsx";
+import { fetchUserRecommendMovies } from "../../api/api.js";
+import { useQuery } from "@tanstack/react-query";
 
 const Container = styled.div`
   margin-top: 72px;
@@ -23,24 +24,19 @@ const Container = styled.div`
 function Main() {
   const { user, setUser, logOut } = useUserStore((state) => state);
   const {
-    userRecommendMovies,
-    topRatedMovies,
-    topReviewedMovies,
-    hotReview,
-    thearupHonorMovies,
-    loading,
-    error,
-  } = useMainPageApi();
+    data: movies,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["userRecommendMovies"],
+    queryFn: fetchUserRecommendMovies,
+    staleTime: 10000, // 10초
+    select: (data) => data.data.movies,
+  });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  console.log(
-    userRecommendMovies,
-    topRatedMovies,
-    topReviewedMovies,
-    hotReview,
-    thearupHonorMovies
-  );
+  console.log(movies);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {isError.message}</div>;
 
   return (
     <>
@@ -49,23 +45,23 @@ function Main() {
         {user?.id !== null && (
           <MovieSlider
             title={`"${user?.name}" 님의 위한 추천 영화`}
-            movieData={userRecommendMovies}
+            movieData={movies}
             cnt={1}
           />
         )}
         <MovieSlider
           title={"이번주 별점 높은 영화"}
-          movieData={topRatedMovies}
+          movieData={movies}
           cnt={2}
         />
         <MovieSlider
           title={"이번주 리뷰 많이 달린 영화"}
-          movieData={topReviewedMovies}
+          movieData={movies}
           cnt={3}
         />
-        <HotComment reviewData={hotReview} />
+        {/* <HotComment reviewData={hotReview} /> */}
       </Container>
-      <MovieAwards movieData={thearupHonorMovies} />
+      <MovieAwards movieData={movies} />
     </>
   );
 }
