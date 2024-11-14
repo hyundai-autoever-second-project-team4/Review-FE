@@ -6,7 +6,8 @@ export const Container = styled.div`
   min-width: 180px;
   background-color: ${theme.colors.review};
   border-radius: ${theme.borderRadius.md};
-  height: 160px;
+  height: ${({ $hasMovieName, $isMine }) =>
+    $hasMovieName ? ($isMine ? "175px;" : "190px") : "160px;"};
   padding: 12px 20px;
 `;
 
@@ -18,6 +19,18 @@ export const TopArea = styled.div`
   height: 22px;
   border-bottom: 1px solid ${theme.colors.gray2};
   width: 100%;
+`;
+export const MovieNameArea = styled.div`
+  height: 30px;
+  font-size: ${theme.fontSizes.sub1};
+  font-weight: ${theme.fontWeight.bold};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid ${theme.colors.gray2};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const ContentArea = styled.div`

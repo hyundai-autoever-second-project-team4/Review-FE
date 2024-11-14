@@ -4,7 +4,6 @@ import Main from "./pages/Main";
 import MovieDetail from "./pages/MovieDetail";
 import MovieList from "./pages/MovieList";
 import MovieReview from "./pages/MovieReview";
-import MyPage from "./pages/MyPage";
 import Ranking from "./pages/Ranking";
 import Search from "./pages/Search";
 import MyReview from "./pages/MyReview";
@@ -35,7 +34,6 @@ function App() {
         <Route path="/movieDetail/:movieiId" element={<MovieDetail />} />
         <Route path="/movieList/:type" element={<MovieList />} />
         <Route path="/movieReview/:movieId" element={<MovieReview />} />
-        <Route path="/myPage" element={<MyPage />} />
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/search/:searchTerm" element={<Search />} />
         <Route path="/myReview" element={<MyReview />} />

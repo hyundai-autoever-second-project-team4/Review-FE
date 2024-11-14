@@ -146,7 +146,6 @@ function HotComment({ reviewData }) {
             {reviewData.map((review, index) => (
               <SwiperSlide key={index}>
                 <Review
-                  key={index}
                   level={review.level}
                   starRate={review.starRate}
                   profileName={review.profileName}
@@ -160,6 +159,7 @@ function HotComment({ reviewData }) {
                   commentCnt={review.commentCnt}
                   upClick={review.upClick}
                   downClick={review.downClick}
+                  movieName={review.movieName}
                 />
               </SwiperSlide>
             ))}

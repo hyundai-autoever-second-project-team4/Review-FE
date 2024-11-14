@@ -7,6 +7,8 @@ import Button from "../Button/Button";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
 import upLogo from "/src/assets/svg/up.svg";
 import downLogo from "/src/assets/svg/down.svg";
+import up2Logo from "/src/assets/svg/up2.svg";
+import down2Logo from "/src/assets/svg/down2.svg";
 
 function Review({
   width,
@@ -25,6 +27,8 @@ function Review({
   upClick,
   downClick,
   contentClick,
+  movieName,
+  isMine,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const [upCnt, setUpCnt] = useState(theUpCnt);
@@ -45,23 +49,40 @@ function Review({
   };
 
   return (
-    <S.Container width={width}>
-      <S.TopArea>
-        <S.ProfileWrapper>
-          <DynamicSVG
-            svgUrl={`/levels/${level}.svg`}
-            width={18}
-            height={18}
-            color={theme.colors.super[level]}
-          />
-          <S.ProfileImg src={profileImg} alt="" />
-          <S.ProfileName>{profileName}</S.ProfileName>
-        </S.ProfileWrapper>
-        <S.StarRate>
-          <img src={StarIcon} width={12} height={12} />
-          <p>{starRate}</p>
-        </S.StarRate>
-      </S.TopArea>
+    <S.Container
+      width={width}
+      $hasMovieName={movieName !== undefined}
+      $isMine={isMine}
+    >
+      {!isMine && (
+        <S.TopArea>
+          <S.ProfileWrapper>
+            <DynamicSVG
+              svgUrl={`/levels/${level}.svg`}
+              width={18}
+              height={18}
+              color={theme.colors.super[level]}
+            />
+            <S.ProfileImg src={profileImg} alt="" />
+            <S.ProfileName>{profileName}</S.ProfileName>
+          </S.ProfileWrapper>
+          <S.StarRate>
+            <img src={StarIcon} width={12} height={12} />
+            <p>{starRate}</p>
+          </S.StarRate>
+        </S.TopArea>
+      )}
+      {movieName !== undefined && (
+        <S.MovieNameArea>
+          <p>{movieName}</p>
+          {isMine && (
+            <S.StarRate>
+              <img src={StarIcon} width={12} height={12} />
+              <p>{starRate}</p>
+            </S.StarRate>
+          )}
+        </S.MovieNameArea>
+      )}
       <div style={{ position: "relative" }}>
         <S.ContentArea onClick={() => contentClick(id)} $isBlur={blur}>
           {content}
@@ -81,7 +102,7 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl={upLogo}
+              svgUrl={isUp ? upLogo : up2Logo}
               color={isUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
@@ -92,7 +113,7 @@ function Review({
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl={downLogo}
+              svgUrl={isDown ? downLogo : down2Logo}
               color={isDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}

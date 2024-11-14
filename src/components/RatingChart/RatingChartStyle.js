@@ -2,20 +2,19 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 
 export const Container = styled.div`
-  width: 495px;
   height: 120px;
-
+  width: 427px;
   display: flex;
-  gap: 5px;
+  gap: 3px;
   align-items: flex-end;
 `;
 
 export const Bar = styled.div`
-  width: 45px;
+  width: 40px;
   height: ${({ height }) => (height ? `${height + 1}px` : "1px")};
   background-color: ${({ $isMax, level }) =>
     $isMax ? `${theme.colors.super[level]}` : `${theme.colors.sub[level]}`};
-  transition: height 0.6s;
+  transition: height 1s;
   border-radius: 4px 4px 0 0;
 
   &:hover {
