@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import useUserStore from "../../store/userStore";
 import styled from "styled-components";
 import MovieSlider from "./template/MovieSlider";
-import movieData from "../../utils/data.js";
 import MovieAwards from "./template/MovieAwards";
-import dummyReviews from "../../utils/dummyReview.js";
 import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
-import { axiosInstance } from "../../api/axiosInstance.js";
 import { useMainPageApi } from "../../hooks/useMainPageAPI.jsx";
 
 const Container = styled.div`
@@ -34,18 +31,11 @@ function Main() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  console.log(
-    userRecommendMovies,
-    topRatedMovies,
-    topReviewedMovies,
-    hotReview,
-    thearupHonorMovies
-  );
 
   return (
     <>
       <Container>
-        <FaceMovieList movieData={movieData} />
+        <FaceMovieList movieData={userRecommendMovies} />
         {user?.id !== null && (
           <MovieSlider
             title={`"${user?.name}" 님의 위한 추천 영화`}
