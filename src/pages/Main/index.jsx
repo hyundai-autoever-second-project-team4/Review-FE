@@ -7,6 +7,7 @@ import MovieAwards from "./template/MovieAwards";
 import dummyReviews from "../../utils/dummyReview.js";
 import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
+import { axiosInstance } from "../../api/axiosInstance.js";
 
 const Container = styled.div`
   margin-top: 72px;
@@ -20,6 +21,91 @@ const Container = styled.div`
 
 function Main() {
   const { user, setUser, logOut } = useUserStore((state) => state);
+  const [userRecommendMovies, setUserRecommendMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [topReviewedMovies, setTopReviewedMovies] = useState([]);
+  const [hotReview, setHotReview] = useState([]);
+  const [thearupHonorMovies, setThearupHonorMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserRecommendMovies = async () => {
+      try {
+        const response = await axiosInstance.get("/movie/recommend");
+        setUserRecommendMovies(response.data.movies); // API 응답 데이터
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserRecommendMovies();
+  }, []);
+
+  useEffect(() => {
+    const fetchTopRatedMovies = async () => {
+      try {
+        const response = await axiosInstance.get("/movie/top-rated/weekly");
+        setTopRatedMovies(response.data.movies); // API 응답 데이터
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopRatedMovies();
+  }, []);
+
+  useEffect(() => {
+    const fetchTopReviewedMovies = async () => {
+      try {
+        const response = await axiosInstance.get("/movie/honor-board");
+        setTopReviewedMovies(response.data.movies); // API 응답 데이터
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTopReviewedMovies();
+  }, []);
+
+  useEffect(() => {
+    const fetchHotReview = async () => {
+      try {
+        const response = await axiosInstance.get("/review/hot");
+        setHotReview(response.data.reviewInfos); // API 응답 데이터
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHotReview();
+  }, []);
+
+  useEffect(() => {
+    const fetchThearupHonorMovies = async () => {
+      try {
+        const response = await axiosInstance.get("/movie/most-reviewed/weekly");
+        setThearupHonorMovies(response.data.movies); // API 응답 데이터
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchThearupHonorMovies();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
@@ -28,23 +114,23 @@ function Main() {
         {user?.id !== null && (
           <MovieSlider
             title={`"${user?.name}" 님의 위한 추천 영화`}
-            movieData={movieData}
+            movieData={userRecommendMovies}
             cnt={1}
           />
         )}
         <MovieSlider
           title={"이번주 별점 높은 영화"}
-          movieData={movieData}
+          movieData={topRatedMovies}
           cnt={2}
         />
         <MovieSlider
           title={"이번주 리뷰 많이 달린 영화"}
-          movieData={movieData}
+          movieData={topReviewedMovies}
           cnt={3}
         />
-        <HotComment reviewData={dummyReviews} />
+        <HotComment reviewData={hotReview} />
       </Container>
-      <MovieAwards movieData={movieData} />
+      <MovieAwards movieData={thearupHonorMovies} />
     </>
   );
 }

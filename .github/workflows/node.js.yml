@@ -42,6 +42,7 @@ jobs:
         run: yarn run build
         env:
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+          VITE_TMDB_API_KEY: ${{ secrets.VITE_TMDB_API_KEY }}
 
       # aws에 접근하기 위한 권한을 받아옵니다.
       - name: Configure AWS credentials

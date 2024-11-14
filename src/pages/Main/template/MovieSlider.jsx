@@ -146,11 +146,11 @@ function MovieSlider({ title, movieData, cnt }) {
                 <MainMovieCard
                   key={index}
                   index={index}
+                  movieId={movie.movieId}
                   title={movie.title}
-                  poster={movie.img}
-                  year={movie.year}
-                  country={movie.country}
-                  genre={movie.genre}
+                  poster={movie.posterPath}
+                  year={movie.releaseDate}
+                  country={movie.originCountry}
                 />
               </SwiperSlide>
             ))}
