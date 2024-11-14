@@ -34,6 +34,13 @@ function Main() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+  console.log(
+    userRecommendMovies,
+    topRatedMovies,
+    topReviewedMovies,
+    hotReview,
+    thearupHonorMovies
+  );
 
   return (
     <>
