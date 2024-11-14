@@ -271,7 +271,7 @@ function NavBar() {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                  onClick={moveToMyPage}
+                  // onClick={moveToMyPage}
                 >
                   <ProfileImg src={user?.profileImage} alt="" />
                 </div>

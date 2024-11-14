@@ -97,6 +97,7 @@ const initState = {
   level: "newbie",
   xp: 160,
   allXp: 300,
+  primaryBadgeId: 12,
   badges: [
     {
       id: 1,
@@ -315,8 +316,10 @@ function UserPage() {
         )}
         {editProfileModal && (
           <EditProfileModal
+            userDetail={userDetail}
             modal={editProfileModal}
             modalClose={editProfileModalClose}
+            user={user}
           />
         )}
       </Container>
