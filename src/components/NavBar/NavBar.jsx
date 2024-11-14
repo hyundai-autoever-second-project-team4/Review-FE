@@ -25,6 +25,8 @@ const Container = styled.div`
   background-color: ${({ $variant }) =>
     $variant ? `${theme.colors.black}1C` : "#ffffff"};
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+
+  transition: 0.5s;
 `;
 const InerContainer = styled.div`
   display: flex;
@@ -119,12 +121,34 @@ function NavBar() {
   }, []);
 
   useEffect(() => {
-    setUser(data);
+    if (data) {
+      setUser(data);
+    }
   }, [data]);
 
   useEffect(() => {
-    setIsVariant(location.pathname.split("/")[1] === "movieDetail");
+    // 페이지 로드 시, 스크롤을 최상단으로 설정
     window.scrollTo(0, 0);
+
+    const handleScroll = () => {
+      // 스크롤 위치가 100px 이상이면 NavBar를 밝게 설정
+      if (
+        location.pathname.split("/")[1] === "movieDetail" &&
+        window.scrollY > 200
+      ) {
+        setIsVariant(false);
+      } else if (location.pathname.split("/")[1] === "movieDetail") {
+        setIsVariant(true);
+      } else {
+        setIsVariant(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [location]);
 
   const moveToMain = () => {

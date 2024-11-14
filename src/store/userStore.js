@@ -3,7 +3,7 @@ import { devtools, persist } from "zustand/middleware";
 
 const StorageKey = "storage-key";
 
-const UserInit = {
+const userInit = {
   id: null,
   email: null,
   name: null,
@@ -16,10 +16,10 @@ const UserInit = {
 const useUserStore = create(
   persist(
     devtools((set) => ({
-      user: UserInit,
+      user: userInit,
 
       setUser: (newUser) => set({ user: newUser }),
-      logOut: () => set({ user: UserInit }),
+      logOut: () => set({ user: userInit }),
     }))
   ),
   {

@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 const DynamicSVG = ({ svgUrl, color, width = 24, height = 24, ...props }) => {
   const [svgContent, setSvgContent] = useState("");
 
+  const toBase64 = (str) => {
+    return window.btoa(unescape(encodeURIComponent(str)));
+  };
+
   useEffect(() => {
     fetch(svgUrl)
       .then((response) => response.text())
@@ -11,7 +15,7 @@ const DynamicSVG = ({ svgUrl, color, width = 24, height = 24, ...props }) => {
           /(<path[^>]*\sfill=")[^"]*(")/g,
           `$1${color}$2`
         );
-        const encodedSvg = btoa(coloredSVG);
+        const encodedSvg = toBase64(coloredSVG);
         setSvgContent(`data:image/svg+xml;base64,${encodedSvg}`);
       });
   }, [svgUrl, color]);

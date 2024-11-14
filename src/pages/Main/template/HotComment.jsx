@@ -143,8 +143,8 @@ function HotComment({ reviewData }) {
             onReachBeginning={() => setIsBeginning(true)}
             onReachEnd={() => setIsEnd(true)}
           >
-            {reviewData.map((review, index) => (
-              <SwiperSlide key={index}>
+            {reviewData.map((review) => (
+              <SwiperSlide key={review.reviewId}>
                 <Review
                   level={review.memberTierImg}
                   starRate={review.starRate}
@@ -157,9 +157,9 @@ function HotComment({ reviewData }) {
                   theIsUp={review.isThearUp}
                   theIsDown={review.isThearDown}
                   commentCnt={review.commentCount}
-                  upClick={1} //나중에 업 하는 함수 넘겨줄것
-                  downClick={1} //나중에 다운 하는 함수 넘겨줄것
-                  movieName={review.movieName}
+                  upClick={() => console.log(review.reviewId)}
+                  downClick={() => console.log(review.reviewId)}
+                  movieName={review.movieTitle}
                 />
               </SwiperSlide>
             ))}

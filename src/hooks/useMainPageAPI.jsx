@@ -7,54 +7,80 @@ import {
   getUserRecommendMovies,
 } from "../api/api";
 
-export function useMainPageApi() {
-  const userRecommendMoviesQuery = useQuery({
+export function useMainPageApi(user) {
+  const {
+    data: userRecommendMovies,
+    isLoading: recommendLoading,
+    isError: recommendError,
+  } = useQuery({
     queryKey: ["userRecommendMovies"],
     queryFn: getUserRecommendMovies,
-    staleTime: 10000, // 10초
+    staleTime: 60000, // 1분
+    select: (data) => data.data.movies,
+    enabled: user?.id !== null,
   });
 
-  const topRatedMoviesQuery = useQuery({
+  const {
+    data: topRatedMovies,
+    isLoading: topRatedMoviesLoading,
+    isError: topRatedMoviesError,
+  } = useQuery({
     queryKey: ["topRatedMovies"],
     queryFn: getTopRatedMovies,
-    staleTime: 10000, // 10초
+    staleTime: 60000, // 1분
+    select: (data) => data.data.movies,
   });
 
-  const topReviewedMoviesQuery = useQuery({
+  const {
+    data: topReviewedMovies,
+    isLoading: topReviewedMoviesLoading,
+    isError: topReviewedMoviesError,
+  } = useQuery({
     queryKey: ["topReviewedMovies"],
     queryFn: getTopReviewedMovies,
-    staleTime: 10000, // 10초
+    staleTime: 60000, // 1분
+    select: (data) => data.data.movies,
   });
 
-  const hotReviewQuery = useQuery({
+  const {
+    data: hotReview,
+    isLoading: hotReviewLoading,
+    isError: hotReviewError,
+  } = useQuery({
     queryKey: ["hotReview"],
     queryFn: getHotReview,
-    staleTime: 10000, // 10초
+    staleTime: 60000, // 1분
+    select: (data) => data.data.reviewInfos,
   });
 
-  const thearupHonorMoviesQuery = useQuery({
+  const {
+    data: thearupHonorMovies,
+    isLoading: thearupHonorMoviesLoading,
+    isError: thearupHonorMoviesError,
+  } = useQuery({
     queryKey: ["thearupHonorMovies"],
     queryFn: getThearupHonorMovies,
-    staleTime: 10000, // 10초
+    staleTime: 60000, // 1분
+    select: (data) => data.data.movies,
   });
 
   return {
-    userRecommendMovies: userRecommendMoviesQuery.data,
-    topRatedMovies: topRatedMoviesQuery.data,
-    topReviewedMovies: topReviewedMoviesQuery.data,
-    hotReview: hotReviewQuery.data,
-    thearupHonorMovies: thearupHonorMoviesQuery.data,
+    userRecommendMovies: userRecommendMovies,
+    topRatedMovies: topRatedMovies,
+    topReviewedMovies: topReviewedMovies,
+    hotReview: hotReview,
+    thearupHonorMovies: thearupHonorMovies,
     loading:
-      userRecommendMoviesQuery.isLoading ||
-      topRatedMoviesQuery.isLoading ||
-      topReviewedMoviesQuery.isLoading ||
-      hotReviewQuery.isLoading ||
-      thearupHonorMoviesQuery.isLoading,
+      recommendLoading ||
+      topRatedMoviesLoading ||
+      topReviewedMoviesLoading ||
+      hotReviewLoading ||
+      thearupHonorMoviesLoading,
     error:
-      userRecommendMoviesQuery.error ||
-      topRatedMoviesQuery.error ||
-      topReviewedMoviesQuery.error ||
-      hotReviewQuery.error ||
-      thearupHonorMoviesQuery.error,
+      recommendError ||
+      topRatedMoviesError ||
+      topReviewedMoviesError ||
+      hotReviewError ||
+      thearupHonorMoviesError,
   };
 }

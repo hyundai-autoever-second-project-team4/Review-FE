@@ -10,6 +10,7 @@ import {
 import Review from "../../components/Review/Review";
 import { Pagination } from "@mui/material";
 import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
+import { useLocation } from "react-router-dom";
 
 const sortOptions = [
   { value: "up", label: "UP 순" },
@@ -19,6 +20,8 @@ const sortOptions = [
 ];
 
 function MovieReview() {
+  const location = useLocation();
+  const movieTitle = location.state?.movieTitle; // 상태에서 movieTitle을 가져옵니다.
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,7 +55,7 @@ function MovieReview() {
   return (
     <Container>
       <HeaderTextContainer>
-        <HeaderText>"청설" 리뷰 목록</HeaderText>
+        <HeaderText>"{movieTitle}" 리뷰 목록</HeaderText>
       </HeaderTextContainer>
       <HeaderBackground>
         <DropDownContainer>

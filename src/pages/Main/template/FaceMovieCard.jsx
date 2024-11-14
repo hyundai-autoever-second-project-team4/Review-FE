@@ -61,6 +61,7 @@ const Title = styled.p`
   text-align: center;
   position: absolute;
   bottom: -20%;
+  padding: 0 12px;
 
   @media (max-width: 960px) {
     font-size: 18px;
@@ -99,11 +100,14 @@ const Tag = styled.div`
     left: 6px;
   }
 `;
-function FaceMovieCard({ title, poster, onClick, type }) {
+function FaceMovieCard({ title, poster, onClick, type, backdropPath }) {
   return (
     <>
       <Container onClick={onClick}>
-        <BackPoster src={poster} alt="" />
+        <BackPoster
+          src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
+          alt=""
+        />
         <Blur />
         <InnerContainer>
           <div
@@ -115,7 +119,7 @@ function FaceMovieCard({ title, poster, onClick, type }) {
               justifyContent: "center",
             }}
           >
-            <Poster src={poster} alt="" />
+            <Poster src={`https://image.tmdb.org/t/p/w500${poster}`} alt="" />
             <Title>{title}</Title>
           </div>
           <Tag>{type}</Tag>
