@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: inline-flex;
@@ -77,26 +78,27 @@ const Number = styled.div`
   left: 10px;
 `;
 
-function MainMovieCard({
-  title,
-  poster,
-  year,
-  country,
-  genre,
-  index,
-  onClick,
-}) {
+const DB_IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
+
+function MainMovieCard({ movieId, title, poster, year, country, index }) {
+  const navigate = useNavigate();
+
+  const formattedYear = year ? year.substring(0, 4) : "";
+
+  const handleOnClick = () => {
+    navigate(`/movieDetail/${movieId}`);
+  };
+
   return (
     <>
-      <Container onClick={onClick}>
+      <Container onClick={handleOnClick}>
         <Number>{index + 1}</Number>
-        <Poster src={poster} />
+        <Poster src={`https://image.tmdb.org/t/p/w500${poster}`} />
         <Info>
           <Title>{title}</Title>
           <Data>
-            {year} • {country}
+            {formattedYear} • {country}
           </Data>
-          {/* {genre && genre.length > 0 && <Genre>{genre.join(" / ")}</Genre>} */}
         </Info>
       </Container>
     </>

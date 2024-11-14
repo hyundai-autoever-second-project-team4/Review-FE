@@ -20,6 +20,7 @@ export const BackImg = styled.div`
   background-repeat: no-repeat;
 
   background-position: 50%;
+
 `;
 
 export const Content = styled.div`
@@ -44,6 +45,7 @@ export const MovieWrap = styled.div`
     justify-content: flex-start; /// center냐 뭐냐 뭐가 맞냐
   }
 `;
+
 export const PosterSection = styled.div`
   display: flex;
   gap: 16px;
@@ -98,10 +100,10 @@ export const SubInfo = styled.div`
 `;
 
 export const SubText = styled.div`
-  font-size: ${theme.fontSizes.md};
+    font-size: ${theme.fontSizes.md};
   color: ${theme.colors.black};
   font-weight: bold;
-`;
+`
 
 export const Description = styled.p`
   font-size: ${theme.fontSizes.sub1};
@@ -146,8 +148,10 @@ export const ReviewButton = styled.button`
   cursor: pointer;
 `;
 
+
+
 export const AvgRating = styled.div`
-  font-size: 20px;
+  font-size:20px;
   color: ${theme.colors.black};
   strong {
     font-size: ${theme.fontSizes.h3};
@@ -201,6 +205,7 @@ export const Profile = styled.div`
   width: 240px;
   margin-right: 16px;
   position: relative;
+
 
   &::after {
     content: "";

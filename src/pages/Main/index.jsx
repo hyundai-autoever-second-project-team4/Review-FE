@@ -7,6 +7,8 @@ import MovieAwards from "./template/MovieAwards";
 import dummyReviews from "../../utils/dummyReview.js";
 import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
+import { axiosInstance } from "../../api/axiosInstance.js";
+import { useMainPageApi } from "../../hooks/useMainPageAPI.jsx";
 
 const Container = styled.div`
   margin-top: 72px;
@@ -20,6 +22,25 @@ const Container = styled.div`
 
 function Main() {
   const { user, setUser, logOut } = useUserStore((state) => state);
+  const {
+    userRecommendMovies,
+    topRatedMovies,
+    topReviewedMovies,
+    hotReview,
+    thearupHonorMovies,
+    loading,
+    error,
+  } = useMainPageApi();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  console.log(
+    userRecommendMovies,
+    topRatedMovies,
+    topReviewedMovies,
+    hotReview,
+    thearupHonorMovies
+  );
 
   return (
     <>
@@ -28,23 +49,23 @@ function Main() {
         {user?.id !== null && (
           <MovieSlider
             title={`"${user?.name}" 님의 위한 추천 영화`}
-            movieData={movieData}
+            movieData={userRecommendMovies}
             cnt={1}
           />
         )}
         <MovieSlider
           title={"이번주 별점 높은 영화"}
-          movieData={movieData}
+          movieData={topRatedMovies}
           cnt={2}
         />
         <MovieSlider
           title={"이번주 리뷰 많이 달린 영화"}
-          movieData={movieData}
+          movieData={topReviewedMovies}
           cnt={3}
         />
-        <HotComment reviewData={dummyReviews} />
+        <HotComment reviewData={hotReview} />
       </Container>
-      <MovieAwards movieData={movieData} />
+      <MovieAwards movieData={thearupHonorMovies} />
     </>
   );
 }

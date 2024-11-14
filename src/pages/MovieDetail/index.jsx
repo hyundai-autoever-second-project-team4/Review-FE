@@ -57,7 +57,8 @@ const reviewData = [
     upClick: () => console.log("Upvote clicked for User1"),
     downClick: () => console.log("Downvote clicked for User1"),
   }),
-];
+]
+
 
 function MovieDetail() {
   const navigate = useNavigate();

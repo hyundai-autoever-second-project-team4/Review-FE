@@ -1,7 +1,9 @@
+
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/swiper-bundle.min.css"; // Swiper 스타일 추가
 import styled from "styled-components";
+
 import { Navigation } from "swiper/modules";
 import DynamicSVG from "../../components/DynamicSVG/DynamicSVG";
 import arrowLeft from "../../assets/svg/arrow-left.svg";
@@ -141,5 +143,4 @@ function PhotoList() {
     </div>
   );
 }
-
 export default PhotoList;

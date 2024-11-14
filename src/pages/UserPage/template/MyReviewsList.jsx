@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
 import Review from "../../../components/Review/Review";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -53,6 +54,13 @@ const StyledButton = styled.button`
 `;
 
 function MyReviewsList({ reviews }) {
+  const navigate = useNavigate();
+  const { userId } = useParams();
+
+  const handleMoveReviewListPage = () => {
+    navigate(`/userReview/${userId}`);
+  };
+
   return (
     <Container>
       <div
@@ -63,8 +71,10 @@ function MyReviewsList({ reviews }) {
           justifyContent: "space-between",
         }}
       >
-        <Title>내가 작성한 리뷰</Title>
-        <StyledButton>더보기</StyledButton>
+        <Title>작성한 리뷰</Title>
+        <StyledButton onClick={() => handleMoveReviewListPage()}>
+          더보기
+        </StyledButton>
       </div>
 
       <ReviewWrapper>
