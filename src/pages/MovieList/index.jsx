@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Pagination from "@mui/material/Pagination";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import {
   BottomMargin,
   CardWrapper,
@@ -15,37 +16,33 @@ import axios from "axios";
 const apiKey = import.meta.env.VITE_TMDB_API_KEY; // Vite 환경 변수에서 API 키를 가져옴
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 
+const fetchMovies = async ({ urlType, pagination }) => {
+  const apiUrl = `https://api.themoviedb.org/3/movie/${urlType}?api_key=${apiKey}&language=ko-KR&page=${pagination}`;
+  const response = await axios.get(apiUrl);
+  return response.data;
+};
+
 function MovieList() {
   const { type } = useParams();
   const navigate = useNavigate();
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState(1); // 페이지 상태 추가
-  const [totalPages, setTotalPages] = useState(0); // 총 페이지 수 상태 추가
 
   const urlType = type === "nowPlaying" ? "now_playing" : "popular"; // URL 타입 결정
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        setLoading(true);
-        const apiUrl = `https://api.themoviedb.org/3/movie/${urlType}?api_key=${apiKey}&language=ko-KR&page=${pagination}`;
-        const response = await axios.get(apiUrl);
-        setMovies(response.data.results); // 영화 데이터 설정
-        setTotalPages(response.data.total_pages); // 총 페이지 수 설정
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // React Query로 데이터 fetching
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["movies", urlType, pagination],
+    queryFn: () => fetchMovies({ urlType, pagination }),
+    keepPreviousData: true, // 페이지네이션 시 이전 데이터 유지
+  });
 
-    fetchMovies();
-  }, [urlType, pagination]); // urlType과 pagination이 변경될 때마다 호출
-
+  // urlType이 변경될 때 pagination 초기화
   useEffect(() => {
-    setPagination(1); // urlType이 변경될 때 pagination을 1로 설정
+    setPagination(1);
   }, [urlType]);
+
+  const movies = data?.results || [];
+  const totalPages = data?.total_pages || 0;
 
   const handlePageChange = (event, value) => {
     setPagination(value); // 페이지 변경
@@ -75,6 +72,14 @@ function MovieList() {
 
     requestAnimationFrame(animateScroll); // 애니메이션 시작
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <EveryContainer>

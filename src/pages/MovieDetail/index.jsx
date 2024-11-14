@@ -57,8 +57,7 @@ const reviewData = [
     upClick: () => console.log("Upvote clicked for User1"),
     downClick: () => console.log("Downvote clicked for User1"),
   }),
-]
-
+];
 
 function MovieDetail() {
   const navigate = useNavigate();
@@ -67,10 +66,11 @@ function MovieDetail() {
   const handleBtnClick = () => {
     navigate(-1);
   };
-  console.log(movieId);
+  const movieTitle = "베놈 : 더 라스트 댄스";
   const handleMoreClick = () => {
-    navigate(`/movieReview/${movieId}`);
+    navigate(`/movieReview/${movieId}`, { state: { movieTitle } });
   };
+
   return (
     <div>
       <S.Container>
