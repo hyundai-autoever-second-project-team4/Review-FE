@@ -1,9 +1,11 @@
 import { axiosInstance } from "./axiosInstance";
 
+// 유저 정보
 export const getUserInfo = async () => {
   return await axiosInstance.get("/member");
 };
 
+// UP & DOWN
 export const postThearUp = async (id) => {
   return await axiosInstance.post(`/thearup/${id}`);
 };
@@ -12,6 +14,7 @@ export const postThearDown = async (id) => {
   return await axiosInstance.post(`/theardown/${id}`);
 };
 
+// Main
 export const getUserRecommendMovies = async () => {
   return await axiosInstance.get("/movie/recommend");
 };

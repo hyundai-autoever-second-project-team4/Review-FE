@@ -115,7 +115,7 @@ function FaceMovieList({ movieData }) {
                     title={movie.title}
                     poster={movie.posterPath}
                     backdropPath={movie.backdropPath}
-                    type={"별점 높은 영화"}
+                    type={movie.type}
                   />
                 </SwiperSlide>
               );
