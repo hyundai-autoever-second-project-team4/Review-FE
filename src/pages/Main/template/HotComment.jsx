@@ -146,19 +146,19 @@ function HotComment({ reviewData }) {
             {reviewData.map((review, index) => (
               <SwiperSlide key={index}>
                 <Review
-                  level={review.level}
+                  level={review.memberTierImg}
                   starRate={review.starRate}
-                  profileName={review.profileName}
-                  profileImg={review.profileImg}
+                  profileName={review.memberName}
+                  profileImg={review.memberProfileImg}
                   content={review.content}
-                  isBlur={review.isBlur}
-                  theUpCnt={review.theUpCnt}
-                  theDownCnt={review.theDownCnt}
-                  theIsUp={review.theIsUp}
-                  theIsDown={review.theIsDown}
-                  commentCnt={review.commentCnt}
-                  upClick={review.upClick}
-                  downClick={review.downClick}
+                  isBlur={review.spoiler}
+                  theUpCnt={review.ThearUpCount}
+                  theDownCnt={review.ThearDownCount}
+                  theIsUp={review.isThearUp}
+                  theIsDown={review.isThearDown}
+                  commentCnt={review.commentCount}
+                  upClick={1} //나중에 업 하는 함수 넘겨줄것
+                  downClick={1} //나중에 다운 하는 함수 넘겨줄것
                   movieName={review.movieName}
                 />
               </SwiperSlide>

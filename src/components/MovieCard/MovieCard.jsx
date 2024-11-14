@@ -79,7 +79,7 @@ function MovieCard({ title, poster, year, country, genre, onClick }) {
 
   const countryName = country ? countryMapping[country] : null;
 
-  const formattedYear = year ? year.substring(0, 4) + "년" : "";
+  const formattedYear = year ? year.substring(0, 4) : "";
 
   return (
     <>
