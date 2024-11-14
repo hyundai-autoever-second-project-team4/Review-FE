@@ -6,6 +6,7 @@ import MovieAwards from "./template/MovieAwards";
 import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
 import { useMainPageApi } from "../../hooks/useMainPageAPI.jsx";
+import Loading from "./template/Loading.jsx";
 
 const Container = styled.div`
   margin-top: 72px;
@@ -18,7 +19,8 @@ const Container = styled.div`
 `;
 
 function Main() {
-  const { user, setUser, logOut } = useUserStore((state) => state);
+  const { user } = useUserStore((state) => state);
+  const [faceList, setFaceList] = useState([]);
   const {
     userRecommendMovies,
     topRatedMovies,
@@ -27,15 +29,34 @@ function Main() {
     thearupHonorMovies,
     loading,
     error,
-  } = useMainPageApi();
+  } = useMainPageApi(user);
 
-  if (loading) return <div>Loading...</div>;
+  useEffect(() => {
+    const arr = [];
+    if (user.id !== null)
+      userRecommendMovies &&
+        arr.push({ type: "추천 영화", ...userRecommendMovies[0] });
+    topRatedMovies &&
+      arr.push({ type: "별점 높은 영화", ...topRatedMovies[0] });
+    topReviewedMovies &&
+      arr.push({ type: "리뷰 많은 영화", ...topReviewedMovies[0] });
+    thearupHonorMovies &&
+      arr.push({ type: "명예의 전당", ...thearupHonorMovies[0] });
+    setFaceList(arr);
+  }, [
+    userRecommendMovies,
+    topRatedMovies,
+    topReviewedMovies,
+    thearupHonorMovies,
+  ]);
+
+  if (loading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
       <Container>
-        <FaceMovieList movieData={userRecommendMovies} />
+        <FaceMovieList movieData={faceList} />
         {user?.id !== null && (
           <MovieSlider
             title={`"${user?.name}" 님의 위한 추천 영화`}

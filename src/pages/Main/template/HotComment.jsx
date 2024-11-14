@@ -118,7 +118,7 @@ function HotComment({ reviewData }) {
     // 정리 작업
     return () => window.removeEventListener("resize", updateGroupSize);
   }, []);
-  console.log(reviewData);
+
   return (
     <Container>
       <Title>오늘 HOT한 리뷰</Title>
