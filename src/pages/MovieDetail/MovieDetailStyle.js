@@ -37,8 +37,12 @@ export const MovieWrap = styled.div`
   margin-top: 20px;
   width: 1320px;
   justify-content: space-between;
-
   gap: 16px;
+
+  @media (max-width: 960px) {
+    flex-direction: column; /* 작은 화면에서 수직 배열 */
+    justify-content: flex-start; /// center냐 뭐냐 뭐가 맞냐
+  }
 `;
 export const PosterSection = styled.div`
   display: flex;
@@ -163,6 +167,9 @@ export const ChartSection = styled.div`
 
   /* margin-top: 10px; */
   border-radius: 10px;
+  @media (max-width: 960px) {
+    width: 100%; /* 작은 화면에서 전체 너비 사용 */
+  }
 `;
 
 export const ProfileCont = styled.div`
@@ -176,9 +183,18 @@ export const ProfileCont = styled.div`
 `;
 export const ProfileWrap = styled.div`
   display: flex;
-  width: 1320px;
   justify-content: space-between;
   overflow-x: auto;
+  /* width: 1320px; */
+
+  width: 100%;
+  max-width: 1320px;
+  flex-wrap: wrap; /* 줄어들면 아래로 배치 */
+
+  @media (max-width: 960px) {
+    gap: 16px; /* 작은 화면에서 간격 추가 */
+    justify-content: center; /* 가운데 정렬 */
+  }
 `;
 export const Profile = styled.div`
   display: flex;
@@ -239,6 +255,13 @@ export const ReviewWrap = styled.div`
   width: 1320px;
   justify-content: space-between;
   overflow-x: auto;
+
+  flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
+
+  @media (max-width: 960px) {
+    gap: 16px; /* 작은 화면에서 간격 추가 */
+    justify-content: center; /* 가운데 정렬 */
+  }
 `;
 
 export const GalleryCont = styled.div`
