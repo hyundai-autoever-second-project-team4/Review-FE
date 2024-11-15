@@ -9,8 +9,11 @@ import upLogo from "/src/assets/svg/up.svg";
 import downLogo from "/src/assets/svg/down.svg";
 import up2Logo from "/src/assets/svg/up2.svg";
 import down2Logo from "/src/assets/svg/down2.svg";
+import { useUpMutation } from "../../hooks/useUpMutation";
+import { useDownMutation } from "../../hooks/useDownMutation";
 
 function Review({
+  reviewId,
   width,
   id,
   level,
@@ -31,21 +34,14 @@ function Review({
   isMine,
 }) {
   const [blur, setBlur] = useState(isBlur);
-  const [upCnt, setUpCnt] = useState(theUpCnt);
-  const [downCnt, setDownCnt] = useState(theDownCnt);
-  const [isUp, setIsUp] = useState(theIsUp);
-  const [isDown, setIsDown] = useState(theIsDown);
+  const { mutate: thearup } = useUpMutation(reviewId);
+  const { mutate: theardown } = useDownMutation(reviewId);
 
-  const toggleUpVote = () => {
-    setIsUp((prev) => !prev);
-    setUpCnt((prev) => (isUp ? prev - 1 : prev + 1));
-    upClick();
+  const handleUpButtonClick = () => {
+    thearup(reviewId);
   };
-
-  const toggleDownVote = () => {
-    setIsDown((prev) => !prev);
-    setDownCnt((prev) => (isDown ? prev - 1 : prev + 1));
-    downClick();
+  const handleDownButtonClick = () => {
+    theardown(reviewId);
   };
 
   return (
@@ -102,25 +98,25 @@ function Review({
         <S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl={isUp ? upLogo : up2Logo}
-              color={isUp ? theme.colors.red : theme.colors.gray3}
+              svgUrl={theIsUp ? upLogo : up2Logo}
+              color={theIsUp ? theme.colors.red : theme.colors.gray3}
               width={18}
               height={18}
               style={{ cursor: "pointer" }}
-              onClick={toggleUpVote}
+              onClick={handleUpButtonClick}
             />
-            <p>{upCnt}</p>
+            <p>{theUpCnt}</p>
           </S.ThumbWrapper>
           <S.ThumbWrapper>
             <DynamicSVG
-              svgUrl={isDown ? downLogo : down2Logo}
-              color={isDown ? theme.colors.blue : theme.colors.gray3}
+              svgUrl={theIsDown ? downLogo : down2Logo}
+              color={theIsDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}
               style={{ cursor: "pointer" }}
-              onClick={toggleDownVote}
+              onClick={handleDownButtonClick}
             />
-            <p>{downCnt}</p>
+            <p>{theDownCnt}</p>
           </S.ThumbWrapper>
         </S.ThumbWrapper>
         <S.ThumbWrapper>

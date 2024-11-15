@@ -5,6 +5,10 @@ export const getUserInfo = async () => {
   return await axiosInstance.get("/member");
 };
 
+export const getUserMyPage = async () => {
+  return await axiosInstance.get("/member/mypage");
+};
+
 // UP & DOWN
 export const postThearUp = async (id) => {
   return await axiosInstance.post(`/thearup/${id}`);

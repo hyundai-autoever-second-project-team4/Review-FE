@@ -53,23 +53,23 @@ const Value = styled.p`
   font-weight: ${theme.fontWeight.bold};
 `;
 
-function MyRating({ ratingArray, level, rateInfo }) {
+function MyRating({ starRateList, level }) {
   return (
     <Container>
       <Title>별점 분포</Title>
       <Wrapepr>
-        <RatingChart ratingArray={ratingArray} level={level} />
+        <RatingChart ratingArray={starRateList?.starRate} level={level} />
         <InfoWrap>
           <Info>
-            <Value>{rateInfo.average}</Value>
+            <Value>{starRateList?.averageRate.toFixed(1)}</Value>
             <Name>별점 평균</Name>
           </Info>
           <Info>
-            <Value>{rateInfo.cnt}</Value>
+            <Value>{starRateList?.totalRateCount}</Value>
             <Name>별점 개수</Name>
           </Info>
           <Info>
-            <Value>{rateInfo.best}</Value>
+            <Value>{starRateList?.mostRated}</Value>
             <Name>많이 준 평점</Name>
           </Info>
         </InfoWrap>
