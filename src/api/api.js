@@ -38,3 +38,21 @@ export const getHotReview = async () => {
 export const getThearupHonorMovies = async () => {
   return await axiosInstance.get("/movie/most-reviewed/weekly");
 };
+
+//랭킹 페이지 함수
+export const getRankingData = async (endpoint, page) => {
+  return await axiosInstance.get(`/ranking/${endpoint}`, {
+    params: { page: page - 1 }, // page를 쿼리 파라미터로 추가
+  });
+};
+
+// 영화 상세 정보
+export const getMovieDetail = async (movieId) => {
+  return await axiosInstance.get(`/movie/${movieId}`);
+};
+
+export const getMovieReviewList = async (type, page) => {
+  return await axiosInstance.get(
+    `/movie/912649/reviews?type=${type}&page=${page - 1}`
+  );
+};

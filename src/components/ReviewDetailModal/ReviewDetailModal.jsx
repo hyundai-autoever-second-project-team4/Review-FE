@@ -64,7 +64,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
     }
   };
 
-  const reviewData = data[id];
+  const reviewData = data[0];
 
   // 더미 댓글 데이터 생성
   const comments = Array.from({ length: 10 }, (_, index) => ({

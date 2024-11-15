@@ -40,7 +40,7 @@ function RatingChart({ ratingArray, level }) {
               <S.Bar
                 height={heights[index]}
                 $isMax={max === rate}
-                level={level}
+                $level={level}
               />
             </Tooltip>
           </div>
