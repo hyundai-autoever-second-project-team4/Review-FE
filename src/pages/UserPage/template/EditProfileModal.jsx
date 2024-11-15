@@ -101,8 +101,8 @@ const Primary = styled(DynamicSVG)`
 `;
 
 function EditProfileModal({ modal, modalClose, user, userDetail }) {
-  const [profileImage, setProfileImage] = useState(user?.profileImage);
-  const [profileName, setProfileName] = useState(user?.name);
+  const [profileImage, setProfileImage] = useState(user?.memberProfileImg);
+  const [profileName, setProfileName] = useState(user?.memberName);
   const [mode, setMode] = useState("normal");
   const [primaryId, setPrimaryId] = useState(userDetail.primaryBadgeId);
   const fileInputRef = useRef();
