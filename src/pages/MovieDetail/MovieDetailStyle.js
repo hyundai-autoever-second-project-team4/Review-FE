@@ -39,9 +39,10 @@ export const MovieWrap = styled.div`
   justify-content: space-between;
   gap: 16px;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     flex-direction: column; /* 작은 화면에서 수직 배열 */
     justify-content: flex-start; /// center냐 뭐냐 뭐가 맞냐
+    padding-left: 20px;
   }
 `;
 
@@ -62,7 +63,25 @@ export const MovieInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  background-color: yellow;
+  /* margin-right: 16px; */
   //justify-content: space-between;
+`;
+
+export const MovieInfoWrap = styled.div`
+  /* max-width: 580px; */
+  display: flex;
+  gap: 16px;
+  background-color: greenyellow;
+  flex-direction: column;
+
+  @media (max-width: 1200px) {
+    /* flex: 1; // 화면이 줄어들면 가득 차도록
+    max-width: 100%; */
+
+    flex-basis: 100%;
+  }
 `;
 
 export const MainInfo = styled.div`
@@ -119,11 +138,14 @@ export const Description = styled.p`
 `;
 
 export const Tags = styled.div`
-  position: absolute;
+  position: absolute; //얘는 flex-end같은걸로 가야함. 안돼
   right: 0;
   bottom: 0;
+  top: 10px;
   display: flex;
   gap: 16px;
+
+  flex-direction: column; // 태그 세로배치
 `;
 
 export const Tag = styled.span`
@@ -178,7 +200,7 @@ export const ChartSection = styled.div`
 
   border-radius: 10px;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     width: 100%; /* 작은 화면에서 전체 너비 사용 */
   }
 `;
@@ -186,42 +208,48 @@ export const ChartSection = styled.div`
 export const ProfileCont = styled.div`
   display: flex;
   /* align-self: flex-start; */
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   flex-direction: column;
-  height: 300px;
   margin-top: 20px;
   margin-bottom: 24px;
+  padding-left: 20px;
+  margin: 0 auto;
+  max-width: 1320px;
+
+  @media (max-width: 1320px) {
+    width: 90%;
+    /* padding-left: 20px; */
+  }
 `;
 export const ProfileWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   overflow-x: auto;
-  /* overflow-y: auto; */
-  /* width: 1320px; */
-
   width: 100%;
   max-width: 1320px;
   flex-wrap: wrap; /* 줄어들면 아래로 배치 */
 
-  /* @media (max-width: 960px) {
-    flex-basis: calc((100% - 16px) / 3);
-  }
-  @media (max-width: 640px) {
-    flex-basis: calc((100% - 16px) / 2);
-  } */
+  margin: 0 auto;
 `;
 export const Profile = styled.div`
   display: flex;
   width: 240px;
   margin-right: 16px;
   position: relative;
-  margin-bottom: 10px;
+  margin-bottom: 32px;
 
+  @media (max-width: 1120px) {
+    flex-basis: calc((100% - 16px) / 4.5);
+  }
   @media (max-width: 960px) {
-    flex-basis: calc((100% - 16px) / 3);
+    flex-basis: calc((100% - 16px) / 3.5);
   }
   @media (max-width: 640px) {
     flex-basis: calc((100% - 16px) / 2);
+  }
+  @media (max-width: 400px) {
+    flex-basis: calc(100%);
   }
 
   &::after {
@@ -236,7 +264,8 @@ export const Profile = styled.div`
 `;
 export const ProfileImg = styled.img`
   width: 88px;
-  height: 108px;
+  /* height: 108px; */
+  aspect-ratio: 1/ 1.3;
   margin-right: 16px;
   object-fit: cover;
   border-radius: 8px;
