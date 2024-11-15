@@ -171,12 +171,16 @@ function MovieDetail() {
                     {`(${movieData.reviewCountInfo.totalReviewCount}명)`}
                   </div>
                 </S.AvgRating>
+
+               <div style={{ marginBottom: "16px" }}>
                 <RatingChart
                   ratingArray={movieData.reviewCountInfo.reviewCounts.map(
                     (review) => review.count
                   )}
                   level={"movieGod"}
                 ></RatingChart>
+               </div>
+
               </S.ChartSection>
             </S.MovieWrap>
           </div>
