@@ -13,7 +13,7 @@ function RatingChart({ ratingArray, level }) {
     setMax(Math.max(...ratingArray));
 
     setTimeout(() => {
-      setHeights(ratingArray?.map((rate) => 100 * (rate / max)));
+      setHeights(ratingArray?.map((rate) => 150 * (rate / max)));
     }, 300);
   }, [ratingArray]);
 
