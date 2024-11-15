@@ -32,16 +32,17 @@ function Review({
   contentClick,
   movieName,
   isMine,
+  queryKeyType,
 }) {
   const [blur, setBlur] = useState(isBlur);
-  const { mutate: thearup } = useUpMutation(reviewId);
-  const { mutate: theardown } = useDownMutation(reviewId);
+  const { mutate: thearup } = useUpMutation(reviewId, queryKeyType);
+  const { mutate: theardown } = useDownMutation(reviewId, queryKeyType);
 
   const handleUpButtonClick = () => {
-    thearup(reviewId);
+    thearup();
   };
   const handleDownButtonClick = () => {
-    theardown(reviewId);
+    theardown();
   };
 
   return (
@@ -53,12 +54,13 @@ function Review({
       {!isMine && (
         <S.TopArea>
           <S.ProfileWrapper>
-            <DynamicSVG
+            {/* <DynamicSVG
               svgUrl={`/levels/${level}.svg`}
               width={18}
               height={18}
               color={theme.colors.super[level]}
-            />
+            /> */}
+            <img src={level} width={18} height={18} alt="" />
             <S.ProfileImg src={profileImg} alt="" />
             <S.ProfileName>{profileName}</S.ProfileName>
           </S.ProfileWrapper>
@@ -113,7 +115,7 @@ function Review({
               color={theIsDown ? theme.colors.blue : theme.colors.gray3}
               width={18}
               height={18}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", position: "relative", top: "4px" }}
               onClick={handleDownButtonClick}
             />
             <p>{theDownCnt}</p>

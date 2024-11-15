@@ -7,6 +7,7 @@ import { Navigation } from "swiper/modules";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
 import arrowLeft from "../../../assets/svg/arrow-left.svg";
 import arrowRight from "../../../assets/svg/arrow-right.svg";
+import { matchToTier } from "../../../utils/matchToTier";
 
 const Container = styled.div`
   margin-bottom: 40px;
@@ -161,6 +162,7 @@ function HotComment({ reviewData }) {
                   upClick={() => console.log(review.reviewId)}
                   downClick={() => console.log(review.reviewId)}
                   movieName={review.movieTitle}
+                  queryKeyType={"hotReview"}
                 />
               </SwiperSlide>
             ))}
