@@ -64,7 +64,7 @@ export const MovieInfo = styled.div`
   flex-direction: column;
   gap: 16px;
   width: 100%;
-  background-color: yellow;
+  /* background-color: yellow; */
   /* margin-right: 16px; */
   //justify-content: space-between;
 `;
@@ -73,7 +73,7 @@ export const MovieInfoWrap = styled.div`
   /* max-width: 580px; */
   display: flex;
   gap: 16px;
-  background-color: greenyellow;
+  /* background-color: greenyellow; */
   flex-direction: column;
 
   @media (max-width: 1200px) {

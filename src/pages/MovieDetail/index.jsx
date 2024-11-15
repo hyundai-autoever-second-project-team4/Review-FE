@@ -94,7 +94,7 @@ function MovieDetail() {
                 style={{
                   // width: "50%",
                   display: "flex",
-                  backgroundColor: "skyblue",
+
                   gap: "20px",
                 }}
               >
