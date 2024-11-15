@@ -12,6 +12,8 @@ import { Pagination } from "@mui/material";
 import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
 import { useLocation } from "react-router-dom";
 import { axiosInstance } from "../../api/axiosInstance";
+import { getMovieReviewList } from "../../api/api";
+import { useQuery } from "@tanstack/react-query";
 
 const sortOptions = [
   { value: "likes", label: "UP 순" },
@@ -28,13 +30,18 @@ function MovieReview() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewId, setReviewId] = useState(null);
-  const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1); // 페이지 상태 추가
   const [totalpage, setTotalPage] = useState(1); // 페이지 상태 추가
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["reviews", selectedSort, page],
+    queryFn: () => getMovieReviewList(selectedSort, page),
+    select: (data) => data.data,
+    keepPreviousData: true, // 페이지 이동 시 이전 데이터를 유지
+  });
+
   const handleSortChange = (event) => {
     setSelectedSort(event.target.value);
-    fetchReviews(event.target.value, page); // 정렬 변경 시 리뷰를 다시 가져옵니다.
   };
 
   const handleResize = () => {
@@ -56,22 +63,6 @@ function MovieReview() {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-
-  const fetchReviews = async (type, page) => {
-    try {
-      const response = await axiosInstance.get(
-        `/movie/912649/reviews?type=${type}&page=${page - 1}`
-      );
-      setReviews(response.data.reviewInfos.content); // API 응답 데이터를 상태에 저장
-      setTotalPage(response.data.reviewInfos.totalPages);
-    } catch (error) {
-      console.error("리뷰를 가져오는 중 오류 발생:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchReviews(selectedSort, page); // 컴포넌트가 마운트될 때 리뷰를 가져옵니다.
-  }, [selectedSort, page]); // selectedSort와 page가 변경될 때마다 호출
 
   const handlePageChange = (event, value) => {
     setPage(value); // 페이지 변경
@@ -119,25 +110,29 @@ function MovieReview() {
         </DropDownContainer>
       </HeaderBackground>
       <ReviewContainer>
-        {reviews.map((review) => (
-          <Review
-            key={review.reviewId}
-            width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
-            id={review.reviewId}
-            level={review.memberTierImg}
-            starRate={review.starRate}
-            profileImg={review.memberProfileImg}
-            profileName={review.memberName}
-            content={review.content}
-            isBlur={review.spoiler}
-            theUpCnt={review.ThearUpCount}
-            theDownCnt={review.ThearDownCount}
-            commentCnt={review.commentCount}
-            theIsUp={review.isThearUp}
-            theIsDown={review.isThearDown}
-            contentClick={() => handleModalOpen(review.reviewId)}
-          />
-        ))}
+        {!isLoading
+          ? data?.reviewInfos?.content.map((review) => (
+              <Review
+                key={review.reviewId}
+                width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
+                id={review.reviewId}
+                level={review.memberTierImg}
+                starRate={review.starRate}
+                profileImg={review.memberProfileImg}
+                profileName={review.memberName}
+                content={review.content}
+                isBlur={review.spoiler}
+                theUpCnt={review.ThearUpCount}
+                theDownCnt={review.ThearDownCount}
+                commentCnt={review.commentCount}
+                theIsUp={review.isThearUp}
+                theIsDown={review.isThearDown}
+                contentClick={() => handleModalOpen(review.reviewId)}
+                reviewId={review.reviewId}
+                queryKeyType={["reviews", selectedSort, page]}
+              />
+            ))
+          : "loading"}
       </ReviewContainer>
       <Pagination
         count={totalpage} // 총 페이지 수

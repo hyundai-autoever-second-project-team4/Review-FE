@@ -343,7 +343,6 @@ function UserPage() {
         )}
         {editProfileModal && (
           <EditProfileModal
-            userDetail={userDetail}
             modal={editProfileModal}
             modalClose={editProfileModalClose}
             user={user}

@@ -22,12 +22,22 @@ function MovieDetail() {
     data: movieData,
     isLoading: loading,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["movieDetail"],
     queryFn: () => getMovieDetail(movieId),
-    staleTime: 60000,
+
     select: (data) => data.data,
   });
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+
+  const handleWriteModalOpen = () => {
+    setIsWriteModalOpen(true);
+  };
+
+  const handleWriteModalClose = () => {
+    setIsWriteModalOpen(false);
+  };
 
   const handleMoreClick = () => {
     navigate(`/movieReview/${movieId}`, {
@@ -120,13 +130,15 @@ function MovieDetail() {
                           height: "36px",
                         }}
                       >
-                        <Button
-                          style={{ height: "36px" }}
-                          color={"primary"}
-                          onClick={() => handleWriteModalOpen()}
-                        >
-                          리뷰작성
-                        </Button>
+                        {!movieData.isReviewed && (
+                          <Button
+                            style={{ height: "36px" }}
+                            color={"primary"}
+                            onClick={() => handleWriteModalOpen()}
+                          >
+                            리뷰작성
+                          </Button>
+                        )}
                         <StarRating
                           readOnly
                           rate={movieData.reviewCountInfo.averageStarRate}
@@ -247,6 +259,7 @@ function MovieDetail() {
       </S.Container>
       {isWriteModalOpen && (
         <ReviewAddModal
+          refetch={refetch}
           modalClose={handleWriteModalClose}
           movieTitle={movieData.movieInfo.title}
         />
