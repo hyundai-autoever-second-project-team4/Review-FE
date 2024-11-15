@@ -94,13 +94,15 @@ function MovieDetail() {
               backgroundColor: "#f8f8f8",
               width: "98.9vw",
               marginBottom: "40px",
+              paddingLeft: "20px",
             }}
           >
             <S.MovieWrap>
               <div
                 style={{
-                  width: "50%",
+                  // width: "50%",
                   display: "flex",
+
                   gap: "20px",
                 }}
               >
@@ -111,15 +113,7 @@ function MovieDetail() {
                   />
                 </S.PosterSection>
                 <S.MovieInfo>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      gap: "16px",
-
-                      flexDirection: "column",
-                    }}
-                  >
+                  <S.MovieInfoWrap>
                     <S.MainInfo>
                       <S.Title>{movieData.movieInfo.title}</S.Title>
                       <div
@@ -170,7 +164,8 @@ function MovieDetail() {
                         ))}
                       </S.Tags>
                     </S.StarInfo>
-                  </div>
+                  </S.MovieInfoWrap>
+
                   <S.Description>{movieData.movieInfo.overview}</S.Description>
                 </S.MovieInfo>
               </div>
@@ -201,8 +196,9 @@ function MovieDetail() {
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>
-              {combinedProfiles.map((profile) => (
-                <S.Profile key={profile.id}>
+              {combinedProfiles.splice(0, 15).map((profile, index) => (
+                <S.Profile key={index}>
+
                   {profile.imageUrl ? (
                     <S.ProfileImg
                       src={IMG_BASE_URL + `${profile.imageUrl}`}
