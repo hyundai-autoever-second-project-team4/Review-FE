@@ -10,16 +10,13 @@ import PhotoList from "./PhotoList";
 import { axiosInstance } from "../../api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetail } from "../../api/api";
-
+import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
 function MovieDetail() {
   const navigate = useNavigate();
   const { movieId } = useParams();
-  // const [movieData, setMovieData] = useState(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
 
   const {
     data: movieData,
@@ -75,7 +72,7 @@ function MovieDetail() {
     <div>
       <S.Container>
         <S.BackImg
-          backgroundImage={
+          $backgroundImage={
             IMG_BACK_BASE_URL + `${movieData.movieInfo.backdropPath}`
           }
         />
@@ -123,7 +120,11 @@ function MovieDetail() {
                           height: "36px",
                         }}
                       >
-                        <Button style={{ height: "36px" }} color={"primary"}>
+                        <Button
+                          style={{ height: "36px" }}
+                          color={"primary"}
+                          onClick={() => handleWriteModalOpen()}
+                        >
                           리뷰작성
                         </Button>
                         <StarRating
@@ -188,8 +189,8 @@ function MovieDetail() {
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>
-              {combinedProfiles.map((profile, index) => (
-                <S.Profile key={index}>
+              {combinedProfiles.map((profile) => (
+                <S.Profile key={profile.id}>
                   {profile.imageUrl ? (
                     <S.ProfileImg
                       src={IMG_BASE_URL + `${profile.imageUrl}`}
@@ -244,6 +245,12 @@ function MovieDetail() {
           </S.GalleryCont>
         </S.Content>
       </S.Container>
+      {isWriteModalOpen && (
+        <ReviewAddModal
+          modalClose={handleWriteModalClose}
+          movieTitle={movieData.movieInfo.title}
+        />
+      )}
     </div>
   );
 }

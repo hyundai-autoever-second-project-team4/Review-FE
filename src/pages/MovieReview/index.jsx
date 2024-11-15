@@ -60,7 +60,7 @@ function MovieReview() {
   const fetchReviews = async (type, page) => {
     try {
       const response = await axiosInstance.get(
-        `/movie/912649/reviews?type=${type}&page=${page}`
+        `/movie/912649/reviews?type=${type}&page=${page - 1}`
       );
       setReviews(response.data.reviewInfos.content); // API 응답 데이터를 상태에 저장
       setTotalPage(response.data.reviewInfos.totalPages);
