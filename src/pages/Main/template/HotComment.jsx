@@ -156,8 +156,8 @@ function HotComment({ reviewData }) {
                   isBlur={review.spoiler}
                   theUpCnt={review.ThearUpCount}
                   theDownCnt={review.ThearDownCount}
-                  theIsUp={review.isThearUp}
-                  theIsDown={review.isThearDown}
+                  // theIsUp={review.isThearUp}
+                  // theIsDown={review.isThearDown}
                   commentCnt={review.commentCount}
                   upClick={() => console.log(review.reviewId)}
                   downClick={() => console.log(review.reviewId)}

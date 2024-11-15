@@ -279,7 +279,10 @@ function UserPage() {
 
   return (
     <>
-      <BadgeImage src={userDetail.badgeImage} alt="" />
+      <BadgeImage
+        src={user?.memberBadgeList?.primaryBadgeBackgroundImg}
+        alt=""
+      />
       <Container>
         <ProfileImg
           src={user?.memberProfileImg}
@@ -295,7 +298,7 @@ function UserPage() {
         </ButtonWrapper>
         <InfoWrapper>
           <p>{user?.memberName}</p>
-          {userDetail.badges.map((badge) => {
+          {user?.memberBadgeList?.badges.map((badge) => {
             return (
               <img
                 src={badge.image}
@@ -340,7 +343,6 @@ function UserPage() {
         )}
         {editProfileModal && (
           <EditProfileModal
-            userDetail={userDetail}
             modal={editProfileModal}
             modalClose={editProfileModalClose}
             user={user}

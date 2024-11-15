@@ -100,11 +100,13 @@ const Primary = styled(DynamicSVG)`
   right: -15px;
 `;
 
-function EditProfileModal({ modal, modalClose, user, userDetail }) {
+function EditProfileModal({ modal, modalClose, user }) {
   const [profileImage, setProfileImage] = useState(user?.memberProfileImg);
   const [profileName, setProfileName] = useState(user?.memberName);
   const [mode, setMode] = useState("normal");
-  const [primaryId, setPrimaryId] = useState(userDetail.primaryBadgeId);
+  const [primaryId, setPrimaryId] = useState(
+    user?.memberBadgeList?.primaryBadgeId
+  );
   const fileInputRef = useRef();
 
   const handleImageChange = (event) => {
@@ -177,7 +179,7 @@ function EditProfileModal({ modal, modalClose, user, userDetail }) {
         <BadgeContainer>
           <p>대표 뱃지 설정하기</p>
           <BadgeWrapper>
-            {userDetail.badges.map((badge) => (
+            {user?.memberBadgeList?.badges?.map((badge) => (
               <div
                 key={badge.id}
                 style={{ position: "relative", cursor: "pointer" }}
