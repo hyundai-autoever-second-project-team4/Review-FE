@@ -38,3 +38,8 @@ export const getHotReview = async () => {
 export const getThearupHonorMovies = async () => {
   return await axiosInstance.get("/movie/most-reviewed/weekly");
 };
+
+// 영화 상세 정보
+export const getMovieDetail = async (movieId) => {
+  return await axiosInstance.get(`/movie/${movieId}`);
+};

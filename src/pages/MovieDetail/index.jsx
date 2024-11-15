@@ -8,6 +8,8 @@ import Review from "../../components/Review/Review";
 import MovieSlider from "../Main/template/MovieSlider";
 import PhotoList from "./PhotoList";
 import { axiosInstance } from "../../api/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
+import { getMovieDetail } from "../../api/api";
 import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
@@ -15,56 +17,44 @@ const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베�
 function MovieDetail() {
   const navigate = useNavigate();
   const { movieId } = useParams();
-  const [movieData, setMovieData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
 
-  const handleWriteModalOpen = () => {
-    setIsWriteModalOpen(true);
-  };
-
-  const handleWriteModalClose = () => {
-    setIsWriteModalOpen(false);
-  };
-
-  useEffect(() => {
-    const fetchMovieDetailData = async () => {
-      try {
-        const response = await axiosInstance.get(`/movie/${movieId}`);
-        setMovieData(response.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMovieDetailData();
-  }, [movieId]); // movieId가 변경될 때마다 데이터 가져오기
+  const {
+    data: movieData,
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ["movieDetail"],
+    queryFn: () => getMovieDetail(movieId),
+    staleTime: 60000,
+    select: (data) => data.data,
+  });
 
   const handleMoreClick = () => {
     navigate(`/movieReview/${movieId}`, {
-      state: { movieTitle: movieData.movieInfo.title },
+      state: { movieTitle: movieData?.movieInfo?.title },
     });
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div style={{ marginTop: "100px" }}>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error fetching movie data: {error.message}</div>;
+    return (
+      <div tyle={{ marginTop: "100px" }}>
+        Error fetching movie data: {error.message}
+      </div>
+    );
   }
   //releaseDate의 포멧 바꾸기
-  const releaseDate = new Date(movieData.movieInfo.releaseDate);
-  const formattedDate = `${releaseDate.getFullYear()}.${String(
+  const releaseDate = new Date(movieData?.movieInfo?.releaseDate);
+  const formattedDate = `${releaseDate?.getFullYear()}.${String(
     releaseDate.getMonth() + 1
-  ).padStart(2, "0")}.${String(releaseDate.getDate()).padStart(2, "0")}`;
+  ).padStart(2, "0")}.${String(releaseDate?.getDate()).padStart(2, "0")}`;
 
   // 감독과 출연진 정보를 통합하는 함수
   const combinedProfiles = [
-    ...movieData.directorInfoList.directors.map((director) => ({
+    ...movieData?.directorInfoList?.directors?.map((director) => ({
       id: director.directorId,
       name: director.name,
       imageUrl: director.profilePath,
@@ -185,15 +175,14 @@ function MovieDetail() {
                   </div>
                 </S.AvgRating>
 
-               <div style={{ marginBottom: "16px" }}>
-                <RatingChart
-                  ratingArray={movieData.reviewCountInfo.reviewCounts.map(
-                    (review) => review.count
-                  )}
-                  level={"movieGod"}
-                ></RatingChart>
-               </div>
-
+                <div style={{ marginBottom: "16px" }}>
+                  <RatingChart
+                    ratingArray={movieData.reviewCountInfo.reviewCounts.map(
+                      (review) => review.count
+                    )}
+                    level={"movieGod"}
+                  ></RatingChart>
+                </div>
               </S.ChartSection>
             </S.MovieWrap>
           </div>
@@ -242,9 +231,8 @@ function MovieDetail() {
                     theIsUp={review.isThearUp}
                     theIsDown={review.isThearDown}
                     commentCnt={review.commentCount}
-                    upClick={review.upClick}
-                    downClick={review.downClick}
-                    // contentClick={}//클릭 시 함수
+                    reviewId={review.reviewId}
+                    queryKeyType={"movieDetail"}
                   />
                 </S.CardWrapper>
               ))}
