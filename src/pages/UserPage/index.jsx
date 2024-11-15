@@ -251,8 +251,6 @@ function UserPage() {
     select: (data) => data.data,
   });
 
-  console.log(user);
-
   useEffect(() => {
     setPercent(
       (user?.memberTier?.tierCurrentPoints /
@@ -281,7 +279,10 @@ function UserPage() {
 
   return (
     <>
-      <BadgeImage src={userDetail.badgeImage} alt="" />
+      <BadgeImage
+        src={user?.memberBadgeList?.primaryBadgeBackgroundImg}
+        alt=""
+      />
       <Container>
         <ProfileImg
           src={user?.memberProfileImg}
@@ -297,7 +298,7 @@ function UserPage() {
         </ButtonWrapper>
         <InfoWrapper>
           <p>{user?.memberName}</p>
-          {userDetail.badges.map((badge) => {
+          {user?.memberBadgeList?.badges.map((badge) => {
             return (
               <img
                 src={badge.image}
@@ -335,14 +336,13 @@ function UserPage() {
           />
         </CenterContainer>
         <BottomArea>
-          <MyReviewsList reviews={userDetail.reviews} />
+          <MyReviewsList reviews={user?.reviewInfoList?.reviewInfos} />
         </BottomArea>
         {badgeModal && (
           <BadgeModal modal={badgeModal} modalClose={badgeModalClose} />
         )}
         {editProfileModal && (
           <EditProfileModal
-            userDetail={userDetail}
             modal={editProfileModal}
             modalClose={editProfileModalClose}
             user={user}

@@ -78,25 +78,25 @@ function MyReviewsList({ reviews }) {
       </div>
 
       <ReviewWrapper>
-        {reviews.map((review, index) => {
+        {reviews.map((review) => {
           return (
-            <CardWrapper key={index}>
+            <CardWrapper key={review.reviewId}>
               <Review
                 level={review.level}
-                movieName={review.movieName}
+                reviewId={review.reviewId}
+                movieName={review.movieTitle}
                 starRate={review.starRate}
                 profileName={review.profileName}
                 profileImg={review.profileImg}
                 content={review.content}
-                isBlur={review.isBlur}
-                theUpCnt={review.theUpCnt}
-                theDownCnt={review.theDownCnt}
-                theIsUp={review.theIsUp}
-                theIsDown={review.theIsDown}
-                commentCnt={review.commentCnt}
-                upClick={review.upClick}
-                downClick={review.downClick}
+                isBlur={review.spoiler} // 내 리뷰 일때도 스포일러
+                theUpCnt={review.ThearUpCount}
+                theDownCnt={review.ThearDownCount}
+                theIsUp={review.isThearUp}
+                theIsDown={review.isThearDown}
+                commentCnt={review.commentCount}
                 isMine
+                queryKeyType={"userDetail"}
               />
             </CardWrapper>
           );

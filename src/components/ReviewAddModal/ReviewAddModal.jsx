@@ -19,25 +19,29 @@ import {
   TagCheckBox,
   TagText,
 } from "./ReviewAddModalStyle";
+import { useParams } from "react-router-dom";
+import { axiosInstance } from "../../api/axiosInstance";
 
 const tagList = [
-  "👨‍👩‍👧‍👦 가족과 함께",
-  "❤️ 연인과 함께",
-  "👬 친구와 함께",
-  "👻 무서워요",
-  "🤣 코믹해요",
-  "😭 눈물나요ㅠ",
-  "😴 킬링 타임용",
-  "🍿 극장에서 보세요",
-  "🏠 집에서 보기 좋은",
-  "🦹‍♂️ 슈퍼 블록버스터",
-  "🎶음악이 좋은",
-  "🎨예술적인",
+  { id: 1, tagName: "👨‍👩‍👧‍👦 가족과 함께" },
+  { id: 2, tagName: "❤️ 연인과 함께" },
+  { id: 3, tagName: "👬 친구와 함께" },
+  { id: 4, tagName: "👻 무서워요" },
+  { id: 5, tagName: "🤣 코믹해요" },
+  { id: 6, tagName: "😭 눈물나요ㅠ" },
+  { id: 7, tagName: "😴 킬링 타임용" },
+  { id: 8, tagName: "🍿 극장에서 보세요" },
+  { id: 9, tagName: "🏠 집에서 보기 좋은" },
+  { id: 10, tagName: "🦹‍♂️ 슈퍼 블록버스터" },
+  { id: 11, tagName: "🎶 음악이 좋은" },
+  { id: 12, tagName: "🎨 예술적인" },
 ];
 
-function ReviewAddModal() {
+function ReviewAddModal({ modalClose, movieTitle, refetch }) {
+  const { movieId } = useParams();
   const [rate, setRate] = useState(5);
   const [isSpoiler, setIsSpoiler] = useState(false); // 스포일러 체크 상태 관리
+  const [content, setContent] = useState("");
   const [checkedTags, setCheckedTags] = useState(
     new Array(tagList.length).fill(false)
   );
@@ -45,8 +49,36 @@ function ReviewAddModal() {
     "이 작품에 대한 리뷰를 자유롭게 적어주세요."
   ); // placeholder 상태 추가
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const reviewData = {
+        movieId: parseInt(movieId),
+        starRate: rate,
+        content: content,
+        spoiler: isSpoiler,
+        tagIds: getSelectedTagIds(), // 선택된 태그 ID 배열 추가
+      };
+
+      const response = await axiosInstance.post("/review", reviewData);
+
+      if (response.status === 200 || response.status === 201) {
+        // 성공적으로 제출됨
+        modalClose(); // 모달 닫기
+        refetch();
+        alert(`   "${movieTitle}" 에 대한 리뷰 작성이 완료되었습니다!\n
+          리뷰 작성으로 👍띠어력 10점👍을 드렸으며,\n
+          리뷰 수정은 불가하고 삭제 시 10점 감소합니다.`);
+      }
+    } catch (error) {
+      console.error("리뷰 제출 중 오류 발생:", error);
+      // 에러 처리 - 사용자에게 에러 메시지 표시 등
+    }
+  };
+
   const handleSpoilerChange = () => {
-    setIsSpoiler(!isSpoiler); // 스포일러 체크 상태 토글
+    setIsSpoiler((prev) => !prev); // 스포일러 체크 상태 토글
   };
 
   const handleTagChange = (index) => {
@@ -69,6 +101,13 @@ function ReviewAddModal() {
     setCheckedTags(newCheckedTags);
   };
 
+  // 선택된 태그 ID들을 배열로 반환하는 함수
+  const getSelectedTagIds = () => {
+    return checkedTags
+      .map((checked, index) => (checked ? tagList[index].id : null))
+      .filter((id) => id !== null);
+  };
+
   const handleFocus = () => {
     setPlaceholder(""); // 포커스 시 placeholder 비우기
   };
@@ -80,63 +119,74 @@ function ReviewAddModal() {
   };
 
   return (
-    <CustomModal modal={true} title={"너의 이름은"} large>
-      <StarContainer>
-        <StarRating readOnly={false} rate={rate} setRating={setRate} />
-      </StarContainer>
-      <InputContainer>
-        <ReviewInput
-          placeholder={placeholder} // placeholder 상태 사용
-          onFocus={handleFocus} // 포커스 이벤트 핸들러
-          onBlur={handleBlur} // 블러 이벤트 핸들러
-        />
-      </InputContainer>
-      <StyledLine />
-      <MaxTextInfo>태그는 최대 3개까지 선택 가능합니다</MaxTextInfo>
-      <CheckBoxContainer>
-        {tagList.map((tag, index) => (
-          <CheckBoxWrap key={index}>
-            <TagText>{tag}</TagText>
-            <TagCheckBox
-              type="checkbox"
-              name={`tag-${index}`}
-              value={tag}
-              id={`tag-${index}`}
-              checked={checkedTags[index]}
-              onChange={() => handleTagChange(index)}
-              disabled={
-                checkedTags.filter(Boolean).length >= 3 && !checkedTags[index]
-              } // 3개 이상 체크된 경우 비활성화
-            />
-            <StyledCheckBox
-              htmlFor={`tag-${index}`}
-              style={{
-                cursor:
-                  checkedTags.filter(Boolean).length >= 3 && !checkedTags[index]
-                    ? "not-allowed"
-                    : "pointer",
-                opacity:
-                  checkedTags.filter(Boolean).length >= 3 && !checkedTags[index]
-                    ? 0.2
-                    : 1,
-              }}
-            />
-          </CheckBoxWrap>
-        ))}
-      </CheckBoxContainer>
-      <BottomContainer>
-        <SpoilerContainer>
-          <SpoilerText>스포일러 포함</SpoilerText>
-          <SpoilerCheckBox
-            type="checkbox"
-            id="spoiler-checkbox" // 고유한 ID 설정
-            checked={isSpoiler} // 체크 상태 연결
-            onChange={handleSpoilerChange} // 상태 변경 핸들러 연결
+    <CustomModal
+      modal={true}
+      title={`"${movieTitle}" 리뷰 남기기`}
+      large
+      modalClose={modalClose}
+    >
+      <form onSubmit={handleSubmit}>
+        <StarContainer>
+          <StarRating readOnly={false} rate={rate} setRating={setRate} />
+        </StarContainer>
+        <InputContainer>
+          <ReviewInput
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder={placeholder} // placeholder 상태 사용
+            onFocus={handleFocus} // 포커스 이벤트 핸들러
+            onBlur={handleBlur} // 블러 이벤트 핸들러
           />
-          <StyledSpoilerCheckBox htmlFor="spoiler-checkbox" />
-        </SpoilerContainer>
-        <SubmitBtn>작성</SubmitBtn>
-      </BottomContainer>
+        </InputContainer>
+        <StyledLine />
+        <MaxTextInfo>태그는 최대 3개까지 선택 가능합니다</MaxTextInfo>
+        <CheckBoxContainer>
+          {tagList.map((tag, index) => (
+            <CheckBoxWrap key={index}>
+              <TagText>{tag.tagName}</TagText>
+              <TagCheckBox
+                type="checkbox"
+                name={`tag-${index}`}
+                value={tag}
+                id={`tag-${index}`}
+                checked={checkedTags[index]}
+                onChange={() => handleTagChange(index)}
+                disabled={
+                  checkedTags.filter(Boolean).length >= 3 && !checkedTags[index]
+                } // 3개 이상 체크된 경우 비활성화
+              />
+              <StyledCheckBox
+                htmlFor={`tag-${index}`}
+                style={{
+                  cursor:
+                    checkedTags.filter(Boolean).length >= 3 &&
+                    !checkedTags[index]
+                      ? "not-allowed"
+                      : "pointer",
+                  opacity:
+                    checkedTags.filter(Boolean).length >= 3 &&
+                    !checkedTags[index]
+                      ? 0.2
+                      : 1,
+                }}
+              />
+            </CheckBoxWrap>
+          ))}
+        </CheckBoxContainer>
+        <BottomContainer>
+          <SpoilerContainer>
+            <SpoilerText>스포일러 포함</SpoilerText>
+            <SpoilerCheckBox
+              type="checkbox"
+              id="spoiler-checkbox" // 고유한 ID 설정
+              checked={isSpoiler} // 체크 상태 연결
+              onChange={handleSpoilerChange} // 상태 변경 핸들러 연결
+            />
+            <StyledSpoilerCheckBox htmlFor="spoiler-checkbox" />
+          </SpoilerContainer>
+          <SubmitBtn>작성</SubmitBtn>
+        </BottomContainer>
+      </form>
     </CustomModal>
   );
 }
