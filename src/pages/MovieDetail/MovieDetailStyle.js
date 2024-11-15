@@ -14,7 +14,7 @@ export const BackImg = styled.div`
   height: 550px;
   overflow: hidden;
 
-  background-image: ${(props) => `url(${props.backgroundImage})`};
+  background-image: ${(props) => `url(${props.$backgroundImage})`};
   background-position: center; /* 이미지를 중앙에 위치 */
   background-size: cover; /* 이미지를 전체에 꽉 채움 */
   background-repeat: no-repeat;

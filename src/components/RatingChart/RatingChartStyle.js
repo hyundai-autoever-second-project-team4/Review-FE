@@ -12,8 +12,8 @@ export const Container = styled.div`
 export const Bar = styled.div`
   width: 40px;
   height: ${({ height }) => (height ? `${height + 1}px` : "1px")};
-  background-color: ${({ $isMax, level }) =>
-    $isMax ? `${theme.colors.super[level]}` : `${theme.colors.sub[level]}`};
+  background-color: ${({ $isMax, $level }) =>
+    $isMax ? `${theme.colors.super[$level]}` : `${theme.colors.sub[$level]}`};
   transition: height 1s;
   border-radius: 4px 4px 0 0;
 

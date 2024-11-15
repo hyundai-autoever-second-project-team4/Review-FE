@@ -8,6 +8,7 @@ import Review from "../../components/Review/Review";
 import MovieSlider from "../Main/template/MovieSlider";
 import PhotoList from "./PhotoList";
 import { axiosInstance } from "../../api/axiosInstance";
+import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
@@ -17,6 +18,15 @@ function MovieDetail() {
   const [movieData, setMovieData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+
+  const handleWriteModalOpen = () => {
+    setIsWriteModalOpen(true);
+  };
+
+  const handleWriteModalClose = () => {
+    setIsWriteModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchMovieDetailData = async () => {
@@ -33,7 +43,6 @@ function MovieDetail() {
     fetchMovieDetailData();
   }, [movieId]); // movieId가 변경될 때마다 데이터 가져오기
 
-  const movieTitle = "베놈 : 더 라스트 댄스";
   const handleMoreClick = () => {
     navigate(`/movieReview/${movieId}`, {
       state: { movieTitle: movieData.movieInfo.title },
@@ -73,7 +82,7 @@ function MovieDetail() {
     <div>
       <S.Container>
         <S.BackImg
-          backgroundImage={
+          $backgroundImage={
             IMG_BACK_BASE_URL + `${movieData.movieInfo.backdropPath}`
           }
         />
@@ -121,7 +130,11 @@ function MovieDetail() {
                           height: "36px",
                         }}
                       >
-                        <Button style={{ height: "36px" }} color={"primary"}>
+                        <Button
+                          style={{ height: "36px" }}
+                          color={"primary"}
+                          onClick={() => handleWriteModalOpen()}
+                        >
                           리뷰작성
                         </Button>
                         <StarRating
@@ -183,8 +196,8 @@ function MovieDetail() {
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>
-              {combinedProfiles.map((profile, index) => (
-                <S.Profile key={index}>
+              {combinedProfiles.map((profile) => (
+                <S.Profile key={profile.id}>
                   {profile.imageUrl ? (
                     <S.ProfileImg
                       src={IMG_BASE_URL + `${profile.imageUrl}`}
@@ -211,9 +224,8 @@ function MovieDetail() {
             </S.ReviewTitleWrap>
             <S.ReviewWrap>
               {movieData.reviewInfoList.reviewInfos.map((review) => (
-                <S.CardWrapper>
+                <S.CardWrapper key={review.reviewId}>
                   <Review
-                    key={review.memberId}
                     id={review.reviewId}
                     level={review.memberTierImg}
                     starRate={review.starRate}
@@ -241,6 +253,12 @@ function MovieDetail() {
           </S.GalleryCont>
         </S.Content>
       </S.Container>
+      {isWriteModalOpen && (
+        <ReviewAddModal
+          modalClose={handleWriteModalClose}
+          movieTitle={movieData.movieInfo.title}
+        />
+      )}
     </div>
   );
 }
