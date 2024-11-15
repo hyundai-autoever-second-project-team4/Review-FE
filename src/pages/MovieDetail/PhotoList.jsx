@@ -82,7 +82,7 @@ const PhotoCard = styled.div`
   width: 431px;
   height: 287px;
   border-radius: 16px;
-  background-image: url(${(props) => props.photourl});
+  background-image: url(${(props) => props.$photourl});
   background-size: cover;
   background-position: center;
 `;
@@ -98,7 +98,7 @@ function PhotoList({ photos }) {
           <Swiper
             spaceBetween={16}
             speed={1500}
-            lazy={true}
+            lazy="true"
             // slidesPerView={3}
             slidesPerView={"3"}
             slidesPerGroup={3}
@@ -118,7 +118,7 @@ function PhotoList({ photos }) {
             {photos.map((photoURL, index) => (
               <SwiperSlide key={index} style={{ width: "300px" }}>
                 <PhotoCard
-                  photourl={IMG_GALLERY_BASE_URL + `${photoURL.galleryPath}`}
+                  $photourl={IMG_GALLERY_BASE_URL + `${photoURL.galleryPath}`}
                 />
               </SwiperSlide>
             ))}
