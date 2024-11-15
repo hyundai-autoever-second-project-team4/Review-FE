@@ -11,41 +11,6 @@ import { axiosInstance } from "../../api/axiosInstance";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
-const reviewData = [
-  {
-    width: "100%",
-    level: "newbie",
-    proflieImg: "https://via.placeholder.com/50",
-    profileName: "User1",
-    content: "Great movie with unexpected twists!",
-    isBlur: true,
-    theUpCnt: 23,
-    theDownCnt: 3,
-    theIsUp: false,
-    theIsDown: false,
-    commentCnt: 5,
-    starRate: 3.5,
-    upClick: () => console.log("Upvote clicked for User1"),
-    downClick: () => console.log("Downvote clicked for User1"),
-  },
-  ...Array(4).fill({
-    width: "100%",
-    level: "newbie",
-    proflieImg: "https://via.placeholder.com/50",
-    profileName: "User1",
-    content: "Great movie with unexpected twists!",
-    isBlur: false,
-    theUpCnt: 23,
-    theDownCnt: 3,
-    theIsUp: true,
-    theIsDown: false,
-    commentCnt: 5,
-    starRate: 3.5,
-    upClick: () => console.log("Upvote clicked for User1"),
-    downClick: () => console.log("Downvote clicked for User1"),
-  }),
-];
-
 function MovieDetail() {
   const navigate = useNavigate();
   const { movieId } = useParams();
@@ -74,7 +39,6 @@ function MovieDetail() {
       state: { movieTitle: movieData.movieInfo.title },
     });
   };
-  console.log(movieData);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -119,7 +83,7 @@ function MovieDetail() {
               display: "flex",
               justifyContent: "center",
               backgroundColor: "#f8f8f8",
-              width: "100vw",
+              width: "98.9vw",
               marginBottom: "40px",
             }}
           >
@@ -160,7 +124,10 @@ function MovieDetail() {
                         <Button style={{ height: "36px" }} color={"primary"}>
                           리뷰작성
                         </Button>
-                        <StarRating readOnly rate={3.5}></StarRating>
+                        <StarRating
+                          readOnly
+                          rate={movieData.reviewCountInfo.averageStarRate}
+                        ></StarRating>
                       </div>
                     </S.MainInfo>
                     <S.StarInfo>
@@ -183,9 +150,9 @@ function MovieDetail() {
                         </S.SubText>
                       </S.SubInfo>
                       <S.Tags>
-                        <S.Tag>🏠 집에서 보기 좋은</S.Tag>
-                        <S.Tag>💥 슈퍼 블록버스터</S.Tag>
-                        <S.Tag>🎶 음악이 좋은</S.Tag>
+                        {movieData.tagInfoList.tags.map((tag, index) => (
+                          <S.Tag key={index}>{tag.content}</S.Tag>
+                        ))}
                       </S.Tags>
                     </S.StarInfo>
                   </div>
@@ -195,21 +162,26 @@ function MovieDetail() {
               <S.ChartSection>
                 <S.AvgRating>
                   <div>
-                    평균별점<strong>3.3</strong>(1369명)
+                    평균별점
+                    <strong>
+                      {Math.floor(
+                        movieData.reviewCountInfo.averageStarRate * 10
+                      ) / 10}
+                    </strong>
+                    {`(${movieData.reviewCountInfo.totalReviewCount}명)`}
                   </div>
                 </S.AvgRating>
-
                 <RatingChart
-                  ratingArray={[1, 2, 3, 3, 3, 0, 5, 5, 0, 5]}
+                  ratingArray={movieData.reviewCountInfo.reviewCounts.map(
+                    (review) => review.count
+                  )}
                   level={"movieGod"}
                 ></RatingChart>
               </S.ChartSection>
             </S.MovieWrap>
           </div>
-
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
-
             <S.ProfileWrap>
               {combinedProfiles.map((profile, index) => (
                 <S.Profile key={index}>
@@ -238,23 +210,27 @@ function MovieDetail() {
               </Button>
             </S.ReviewTitleWrap>
             <S.ReviewWrap>
-              {reviewData.map((review, index) => (
-                <Review
-                  key={index}
-                  level={review.level}
-                  starRate={review.starRate}
-                  profileName={review.profileName}
-                  profileImg={review.profileImg}
-                  content={review.content}
-                  isBlur={review.isBlur}
-                  theUpCnt={review.theUpCnt}
-                  theDownCnt={review.theDownCnt}
-                  theIsUp={review.theIsUp}
-                  theIsDown={review.theIsDown}
-                  commentCnt={review.commentCnt}
-                  upClick={review.upClick}
-                  downClick={review.downClick}
-                />
+              {movieData.reviewInfoList.reviewInfos.map((review) => (
+                <S.CardWrapper>
+                  <Review
+                    key={review.memberId}
+                    id={review.reviewId}
+                    level={review.memberTierImg}
+                    starRate={review.starRate}
+                    profileName={review.memberName}
+                    profileImg={review.memberProfileImg}
+                    content={review.content}
+                    isBlur={review.spoiler}
+                    theUpCnt={review.ThearUpCount}
+                    theDownCnt={review.ThearDownCount}
+                    theIsUp={review.isThearUp}
+                    theIsDown={review.isThearDown}
+                    commentCnt={review.commentCount}
+                    upClick={review.upClick}
+                    downClick={review.downClick}
+                    // contentClick={}//클릭 시 함수
+                  />
+                </S.CardWrapper>
               ))}
             </S.ReviewWrap>
           </S.ReviewCont>

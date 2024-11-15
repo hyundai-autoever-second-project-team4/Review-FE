@@ -9,6 +9,9 @@ import WordCloud from "./template/WordCloud.jsx";
 import MyReviewsList from "./template/MyReviewsList.jsx";
 import BadgeModal from "./template/BadgeModal.jsx";
 import EditProfileModal from "./template/EditProfileModal.jsx";
+import { useQuery } from "@tanstack/react-query";
+import { getUserMyPage } from "../../api/api.js";
+import { matchToTier } from "../../utils/matchToTier.js";
 
 const Container = styled.div`
   width: 1320px;
@@ -94,7 +97,7 @@ const BottomArea = styled.div`
 
 const initState = {
   badgeImage: "/badgeBackgrounds/commentTrooper.png",
-  level: "newbie",
+  level: "movieGod",
   xp: 160,
   allXp: 300,
   primaryBadgeId: 12,
@@ -235,12 +238,26 @@ function UserPage() {
   const [percent, setPercent] = useState(0);
   const [badgeModal, setBadgeModal] = useState(false);
   const [editProfileModal, setEditProfileModal] = useState(false);
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
   const [userDetail, setUserDetail] = useState(initState);
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["userDetail"],
+    queryFn: getUserMyPage,
+    staleTime: 0,
+    select: (data) => data.data,
+  });
 
   useEffect(() => {
-    setPercent((userDetail?.xp / userDetail?.allXp) * 100);
-  }, [userDetail]);
+    setPercent(
+      (user?.memberTier?.tierCurrentPoints /
+        user?.memberTier?.tierRequiredPoints) *
+        100
+    );
+  }, [user]);
 
   const badgeModalOpen = () => {
     setBadgeModal(true);
@@ -258,11 +275,16 @@ function UserPage() {
     setEditProfileModal(false);
   };
 
+  if (isLoading) return "Loading...";
+
   return (
     <>
       <BadgeImage src={userDetail.badgeImage} alt="" />
       <Container>
-        <ProfileImg src={user?.profileImage} level={userDetail?.level} />
+        <ProfileImg
+          src={user?.memberProfileImg}
+          level={matchToTier[user?.memberTier?.tierId]}
+        />
         <ButtonWrapper>
           <Button color="primary" size="large" onClick={badgeModalOpen}>
             뱃지 조건
@@ -272,7 +294,7 @@ function UserPage() {
           </Button>
         </ButtonWrapper>
         <InfoWrapper>
-          <p>{user?.name}</p>
+          <p>{user?.memberName}</p>
           {userDetail.badges.map((badge) => {
             return (
               <img
@@ -287,29 +309,31 @@ function UserPage() {
         </InfoWrapper>
         <p
           style={{
-            color: theme.colors.super[userDetail?.level],
+            color: theme.colors.super[matchToTier[user?.memberTier?.tierId]],
             fontWeight: theme.fontWeight.bold,
           }}
         >
-          {levelName[userDetail?.level]}
+          {user?.memberTier?.tierName}
         </p>
         <XpBar>
           <Now
             width={percent}
-            super={theme.colors.super[userDetail?.level]}
-            sub={theme.colors.sub[userDetail?.level]}
+            super={theme.colors.super[matchToTier[user?.memberTier?.tierId]]}
+            sub={theme.colors.sub[matchToTier[user?.memberTier?.tierId]]}
           />
         </XpBar>
         <CenterContainer>
-          <WordCloud genre={userDetail?.genre} level={userDetail?.level} />
+          <WordCloud
+            genre={user?.genreList?.genreCounts}
+            level={matchToTier[user?.memberTier?.tierId]}
+          />
           <MyRating
-            rateInfo={userDetail.rateInfo}
-            ratingArray={userDetail.rating}
-            level={userDetail.level}
+            starRateList={user?.starRateList}
+            level={matchToTier[user?.memberTier?.tierId]}
           />
         </CenterContainer>
         <BottomArea>
-          <MyReviewsList reviews={userDetail.reviews} />
+          <MyReviewsList reviews={user?.reviewInfoList?.reviewInfos} />
         </BottomArea>
         {badgeModal && (
           <BadgeModal modal={badgeModal} modalClose={badgeModalClose} />
