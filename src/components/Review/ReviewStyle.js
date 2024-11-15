@@ -116,6 +116,7 @@ export const ThumbWrapper = styled.div`
   font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.bold};
   transition: 0.2s;
+  position: relative;
 `;
 
 export const BlurArea = styled.div`

@@ -39,7 +39,6 @@ function MovieDetail() {
       state: { movieTitle: movieData.movieInfo.title },
     });
   };
-  console.log(movieData);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -169,15 +168,19 @@ function MovieDetail() {
                         movieData.reviewCountInfo.averageStarRate * 10
                       ) / 10}
                     </strong>
-                    (1369명)
+                    {`(${movieData.reviewCountInfo.totalReviewCount}명)`}
                   </div>
                 </S.AvgRating>
-                <div style={{ marginBottom: "16px" }}>
-                  <RatingChart
-                    ratingArray={[1, 2, 3, 3, 3, 0, 5, 5, 0, 5]}
-                    level={"movieGod"}
-                  ></RatingChart>
-                </div>
+
+               <div style={{ marginBottom: "16px" }}>
+                <RatingChart
+                  ratingArray={movieData.reviewCountInfo.reviewCounts.map(
+                    (review) => review.count
+                  )}
+                  level={"movieGod"}
+                ></RatingChart>
+               </div>
+
               </S.ChartSection>
             </S.MovieWrap>
           </div>
@@ -247,38 +250,3 @@ function MovieDetail() {
 }
 
 export default MovieDetail;
-
-const reviewData = [
-  {
-    width: "100%",
-    level: "newbie",
-    proflieImg: "https://via.placeholder.com/50",
-    profileName: "User1",
-    content: "Great movie with unexpected twists!",
-    isBlur: true,
-    theUpCnt: 23,
-    theDownCnt: 3,
-    theIsUp: false,
-    theIsDown: false,
-    commentCnt: 5,
-    starRate: 3.5,
-    upClick: () => console.log("Upvote clicked for User1"),
-    downClick: () => console.log("Downvote clicked for User1"),
-  },
-  ...Array(4).fill({
-    width: "100%",
-    level: "newbie",
-    proflieImg: "https://via.placeholder.com/50",
-    profileName: "User1",
-    content: "Great movie with unexpected twists!",
-    isBlur: false,
-    theUpCnt: 23,
-    theDownCnt: 3,
-    theIsUp: true,
-    theIsDown: false,
-    commentCnt: 5,
-    starRate: 3.5,
-    upClick: () => console.log("Upvote clicked for User1"),
-    downClick: () => console.log("Downvote clicked for User1"),
-  }),
-];

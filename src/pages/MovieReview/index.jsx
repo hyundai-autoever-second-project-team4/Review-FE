@@ -11,12 +11,14 @@ import Review from "../../components/Review/Review";
 import { Pagination } from "@mui/material";
 import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
 import { useLocation } from "react-router-dom";
+import { axiosInstance } from "../../api/axiosInstance";
 
 const sortOptions = [
-  { value: "up", label: "UP 순" },
+  { value: "likes", label: "UP 순" },
   { value: "latest", label: "최신 순" },
-  { value: "highRating", label: "별점 높은 순" },
-  { value: "lowRating", label: "별점 낮은 순" },
+  { value: "ratingHigh", label: "별점 높은 순" },
+  { value: "ratingLow", label: "별점 낮은 순" },
+  { value: "comments", label: "댓글 많은 순" },
 ];
 
 function MovieReview() {
@@ -26,10 +28,13 @@ function MovieReview() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [reviewId, setReviewId] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [page, setPage] = useState(1); // 페이지 상태 추가
+  const [totalpage, setTotalPage] = useState(1); // 페이지 상태 추가
 
   const handleSortChange = (event) => {
     setSelectedSort(event.target.value);
-    // 여기에 정렬 로직을 추가할 수 있습니다.
+    fetchReviews(event.target.value, page); // 정렬 변경 시 리뷰를 다시 가져옵니다.
   };
 
   const handleResize = () => {
@@ -52,6 +57,51 @@ function MovieReview() {
     setIsModalOpen(false);
   };
 
+  const fetchReviews = async (type, page) => {
+    try {
+      const response = await axiosInstance.get(
+        `/movie/912649/reviews?type=${type}&page=${page}`
+      );
+      setReviews(response.data.reviewInfos.content); // API 응답 데이터를 상태에 저장
+      setTotalPage(response.data.reviewInfos.totalPages);
+    } catch (error) {
+      console.error("리뷰를 가져오는 중 오류 발생:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews(selectedSort, page); // 컴포넌트가 마운트될 때 리뷰를 가져옵니다.
+  }, [selectedSort, page]); // selectedSort와 page가 변경될 때마다 호출
+
+  const handlePageChange = (event, value) => {
+    setPage(value); // 페이지 변경
+    smoothScrollTo(0, 500); // 500ms 동안 부드럽게 스크롤
+  };
+
+  const smoothScrollTo = (targetY, duration) => {
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const startTime = performance.now();
+
+    const animateScroll = (currentTime) => {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1); // 0에서 1까지의 비율
+
+      // easeInOutQuad easing function
+      const easing = (t) => {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      };
+
+      window.scrollTo(0, startY + distance * easing(progress));
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll); // 애니메이션 계속 진행
+      }
+    };
+
+    requestAnimationFrame(animateScroll); // 애니메이션 시작
+  };
+
   return (
     <Container>
       <HeaderTextContainer>
@@ -69,26 +119,30 @@ function MovieReview() {
         </DropDownContainer>
       </HeaderBackground>
       <ReviewContainer>
-        {data.map((review, index) => (
+        {reviews.map((review) => (
           <Review
-            key={index}
+            key={review.reviewId}
             width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
-            id={review.id}
-            level={review.level}
+            id={review.reviewId}
+            level={review.memberTierImg}
             starRate={review.starRate}
-            profileImg={review.profileImg}
-            profileName={review.profileName}
+            profileImg={review.memberProfileImg}
+            profileName={review.memberName}
             content={review.content}
-            isBlur={review.isBlur}
-            theUpCnt={review.theUpCnt}
-            theDownCnt={review.theDownCnt}
-            commentCnt={review.commentCnt}
-            contentClick={handleModalOpen}
+            isBlur={review.spoiler}
+            theUpCnt={review.ThearUpCount}
+            theDownCnt={review.ThearDownCount}
+            commentCnt={review.commentCount}
+            theIsUp={review.isThearUp}
+            theIsDown={review.isThearDown}
+            contentClick={() => handleModalOpen(review.reviewId)}
           />
         ))}
       </ReviewContainer>
       <Pagination
-        count={10}
+        count={totalpage} // 총 페이지 수
+        page={page} // 현재 페이지
+        onChange={handlePageChange} // 페이지 변경 핸들러
         sx={{
           ".MuiPaginationItem-root.Mui-selected": {
             backgroundColor: "#F2B705",

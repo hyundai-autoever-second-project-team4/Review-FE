@@ -251,8 +251,6 @@ function UserPage() {
     select: (data) => data.data,
   });
 
-  console.log(user);
-
   useEffect(() => {
     setPercent(
       (user?.memberTier?.tierCurrentPoints /
@@ -335,7 +333,7 @@ function UserPage() {
           />
         </CenterContainer>
         <BottomArea>
-          <MyReviewsList reviews={userDetail.reviews} />
+          <MyReviewsList reviews={user?.reviewInfoList?.reviewInfos} />
         </BottomArea>
         {badgeModal && (
           <BadgeModal modal={badgeModal} modalClose={badgeModalClose} />
