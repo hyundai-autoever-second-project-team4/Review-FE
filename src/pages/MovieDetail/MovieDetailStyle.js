@@ -10,7 +10,7 @@ export const Container = styled.div`
 `;
 
 export const BackImg = styled.div`
-  width: 100vw;
+  width: 98.9vw;
   height: 550px;
   overflow: hidden;
 
@@ -66,7 +66,7 @@ export const MovieInfo = styled.div`
 `;
 
 export const MainInfo = styled.div`
-  width: "100%";
+  width: 100%;
   display: flex;
   /* height: 1px; */
   justify-content: space-between;
@@ -267,7 +267,7 @@ export const ReviewWrap = styled.div`
   width: 1320px;
   justify-content: space-between;
   overflow-x: auto;
-
+  gap: 16px;
   flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
 
   @media (max-width: 960px) {
@@ -284,4 +284,8 @@ export const GalleryCont = styled.div`
   margin-top: 20px;
   width: 1320px;
   justify-content: space-between;
+`;
+
+export const CardWrapper = styled.div`
+  flex-basis: calc((100% - 64px) / 5); /* 기본 너비 설정 */
 `;
