@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import styled from "styled-components";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
@@ -126,23 +126,42 @@ function NavBar() {
     }
   }, [data]);
 
-  useEffect(() => {
-    // 페이지 로드 시, 스크롤을 최상단으로 설정
+  // useEffect(() => {
+  //   // 페이지 로드 시 스크롤을 최상단으로 설정
+  //   window.scrollTo(0, 0);
+
+  //   const handleScroll = () => {
+  //     // MovieDetail 페이지에서만 동작
+  //     if (location.pathname.split("/")[1] === "movieDetail") {
+  //       setIsVariant(window.scrollY <= 200); // 스크롤 위치에 따라 업데이트
+  //     } else {
+  //       setIsVariant(false);
+  //     }
+  //   };
+
+  //   handleScroll();
+
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [location]);
+
+  /////////////////////
+
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
 
     const handleScroll = () => {
-      // 스크롤 위치가 100px 이상이면 NavBar를 밝게 설정
-      if (
-        location.pathname.split("/")[1] === "movieDetail" &&
-        window.scrollY > 200
-      ) {
-        setIsVariant(false);
-      } else if (location.pathname.split("/")[1] === "movieDetail") {
-        setIsVariant(true);
+      if (location.pathname.split("/")[1] === "movieDetail") {
+        setIsVariant(window.scrollY <= 200); // 스크롤 위치에 따라 업데이트
       } else {
         setIsVariant(false);
       }
     };
+
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll);
 
