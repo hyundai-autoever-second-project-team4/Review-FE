@@ -156,9 +156,11 @@ export const ReviewButton = styled.button`
 
 export const AvgRating = styled.div`
   font-size: 20px;
+  margin-top: 16px;
+  font-weight: 500;
   color: ${theme.colors.black};
   strong {
-    font-size: ${theme.fontSizes.h3};
+    font-size: ${theme.fontSizes.h2};
     font-weight: 600;
     color: ${theme.colors.primary};
   }
@@ -167,14 +169,15 @@ export const AvgRating = styled.div`
 export const ChartSection = styled.div`
   //width: 100%;
   display: flex;
-  height: 400px;
+  height: 300px;
+  border: 1px solid #bdbdbd;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: 560px;
+  width: 500px;
 
-  /* margin-top: 10px; */
   border-radius: 10px;
+
   @media (max-width: 960px) {
     width: 100%; /* 작은 화면에서 전체 너비 사용 */
   }
@@ -193,17 +196,19 @@ export const ProfileWrap = styled.div`
   display: flex;
   justify-content: flex-start;
   overflow-x: auto;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   /* width: 1320px; */
 
   width: 100%;
   max-width: 1320px;
   flex-wrap: wrap; /* 줄어들면 아래로 배치 */
 
-  @media (max-width: 960px) {
-    gap: 16px; /* 작은 화면에서 간격 추가 */
-    justify-content: center; /* 가운데 정렬 */
+  /* @media (max-width: 960px) {
+    flex-basis: calc((100% - 16px) / 3);
   }
+  @media (max-width: 640px) {
+    flex-basis: calc((100% - 16px) / 2);
+  } */
 `;
 export const Profile = styled.div`
   display: flex;
@@ -211,6 +216,13 @@ export const Profile = styled.div`
   margin-right: 16px;
   position: relative;
   margin-bottom: 10px;
+
+  @media (max-width: 960px) {
+    flex-basis: calc((100% - 16px) / 3);
+  }
+  @media (max-width: 640px) {
+    flex-basis: calc((100% - 16px) / 2);
+  }
 
   &::after {
     content: "";
@@ -267,6 +279,7 @@ export const ReviewWrap = styled.div`
   width: 1320px;
   justify-content: space-between;
   overflow-x: auto;
+  overflow-y: hidden; ///
   gap: 16px;
   flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
 
