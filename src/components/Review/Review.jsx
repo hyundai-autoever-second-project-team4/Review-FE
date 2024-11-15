@@ -9,8 +9,7 @@ import upLogo from "/src/assets/svg/up.svg";
 import downLogo from "/src/assets/svg/down.svg";
 import up2Logo from "/src/assets/svg/up2.svg";
 import down2Logo from "/src/assets/svg/down2.svg";
-import { useUpMutation } from "../../hooks/useUpMutation";
-import { useDownMutation } from "../../hooks/useDownMutation";
+import { useThearMutation } from "../../hooks/useThearMutation";
 
 function Review({
   reviewId,
@@ -35,14 +34,18 @@ function Review({
   queryKeyType,
 }) {
   const [blur, setBlur] = useState(isBlur);
-  const { mutate: thearup } = useUpMutation(reviewId, queryKeyType);
-  const { mutate: theardown } = useDownMutation(reviewId, queryKeyType);
+  const { mutate: thearUp } = useThearMutation(reviewId, queryKeyType, "up");
+  const { mutate: thearDown } = useThearMutation(
+    reviewId,
+    queryKeyType,
+    "down"
+  );
 
   const handleUpButtonClick = () => {
-    thearup();
+    if (queryKeyType !== "hotReview") thearUp();
   };
   const handleDownButtonClick = () => {
-    theardown();
+    if (queryKeyType !== "hotReview") thearDown();
   };
 
   return (
