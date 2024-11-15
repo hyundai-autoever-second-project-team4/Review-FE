@@ -167,9 +167,11 @@ export const AvgRating = styled.div`
 export const ChartSection = styled.div`
   //width: 100%;
   display: flex;
-  height: 400px;
+  height: 300px;
+  /* background-color: rebeccapurple; */
+  border: 1px solid ${theme.colors.gray1};
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 560px;
 
