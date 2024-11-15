@@ -146,6 +146,7 @@ function HotComment({ reviewData }) {
             {reviewData.map((review) => (
               <SwiperSlide key={review.reviewId}>
                 <Review
+                  reviewId={review.reviewId}
                   level={review.memberTierImg}
                   starRate={review.starRate}
                   profileName={review.memberName}
