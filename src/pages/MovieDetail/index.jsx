@@ -172,11 +172,12 @@ function MovieDetail() {
                     (1369명)
                   </div>
                 </S.AvgRating>
-
-                <RatingChart
-                  ratingArray={[1, 2, 3, 3, 3, 0, 5, 5, 0, 5]}
-                  level={"movieGod"}
-                ></RatingChart>
+                <div style={{ marginBottom: "16px" }}>
+                  <RatingChart
+                    ratingArray={[1, 2, 3, 3, 3, 0, 5, 5, 0, 5]}
+                    level={"movieGod"}
+                  ></RatingChart>
+                </div>
               </S.ChartSection>
             </S.MovieWrap>
           </div>
