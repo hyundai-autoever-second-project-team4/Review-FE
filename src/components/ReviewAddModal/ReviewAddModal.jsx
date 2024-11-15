@@ -37,7 +37,7 @@ const tagList = [
   { id: 12, tagName: "🎨 예술적인" },
 ];
 
-function ReviewAddModal({ modalClose, movieTitle }) {
+function ReviewAddModal({ modalClose, movieTitle, refetch }) {
   const { movieId } = useParams();
   const [rate, setRate] = useState(5);
   const [isSpoiler, setIsSpoiler] = useState(false); // 스포일러 체크 상태 관리
@@ -66,6 +66,7 @@ function ReviewAddModal({ modalClose, movieTitle }) {
       if (response.status === 200 || response.status === 201) {
         // 성공적으로 제출됨
         modalClose(); // 모달 닫기
+        refetch();
         alert(`   "${movieTitle}" 에 대한 리뷰 작성이 완료되었습니다!\n
           리뷰 작성으로 👍띠어력 10점👍을 드렸으며,\n
           리뷰 수정은 불가하고 삭제 시 10점 감소합니다.`);

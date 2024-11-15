@@ -43,3 +43,9 @@ export const getThearupHonorMovies = async () => {
 export const getMovieDetail = async (movieId) => {
   return await axiosInstance.get(`/movie/${movieId}`);
 };
+
+export const getMovieReviewList = async (type, page) => {
+  return await axiosInstance.get(
+    `/movie/912649/reviews?type=${type}&page=${page - 1}`
+  );
+};
