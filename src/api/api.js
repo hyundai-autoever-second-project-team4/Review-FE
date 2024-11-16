@@ -51,8 +51,8 @@ export const getMovieDetail = async (movieId) => {
   return await axiosInstance.get(`/movie/${movieId}`);
 };
 
-export const getMovieReviewList = async (type, page) => {
+export const getMovieReviewList = async (movieId, type, page) => {
   return await axiosInstance.get(
-    `/movie/912649/reviews?type=${type}&page=${page - 1}`
+    `/movie/${movieId}/reviews?type=${type}&page=${page - 1}`
   );
 };
