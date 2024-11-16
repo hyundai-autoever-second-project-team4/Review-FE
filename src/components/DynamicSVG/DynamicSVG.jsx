@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import theme from "../../styles/theme";
 
 const DynamicSVG = ({ svgUrl, color, width = 24, height = 24, ...props }) => {
   const [svgContent, setSvgContent] = useState("");
