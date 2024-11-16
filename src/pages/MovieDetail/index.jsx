@@ -240,7 +240,7 @@ function MovieDetail() {
                     commentCnt={review.commentCount}
                     reviewId={review.reviewId}
                     memberId={review.memberId}
-                    queryKeyType={"movieDetail"}
+                    queryKeyType={["movieDetail"]}
                   />
                 </S.CardWrapper>
               ))}

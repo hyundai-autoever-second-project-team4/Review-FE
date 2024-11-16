@@ -53,7 +53,7 @@ const StyledButton = styled.button`
   }
 `;
 
-function MyReviewsList({ reviews }) {
+function MyReviewsList({ reviews, queryKeyType }) {
   const navigate = useNavigate();
   const { userId } = useParams();
 
@@ -97,7 +97,8 @@ function MyReviewsList({ reviews }) {
                 theIsDown={review.isThearDown}
                 commentCnt={review.commentCount}
                 isMine
-                queryKeyType={"userDetail"}
+                queryKeyType={queryKeyType}
+                userId={userId}
               />
             </CardWrapper>
           );

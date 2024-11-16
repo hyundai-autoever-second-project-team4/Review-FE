@@ -108,7 +108,7 @@ function UserPage() {
 
   const queryClient = useQueryClient();
   const path = useParams();
-  const state = useLocation();
+  const { user } = useUserStore();
 
   const { mutate: editUserProfile } = useMutation({
     mutationFn: (data) => editUserInfo(data),
@@ -120,13 +120,12 @@ function UserPage() {
   });
 
   const {
-    data: user,
+    data: userDetail,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["userDetail"],
-    queryFn: () =>
-      state.state !== null ? getUserMyPage() : getOtherUserPage(path.userId),
+    queryKey: ["userDetail", path.userId],
+    queryFn: () => getOtherUserPage(path.userId),
     staleTime: 0,
     select: (data) => data.data,
   });
@@ -141,11 +140,11 @@ function UserPage() {
 
   useEffect(() => {
     setPercent(
-      (user?.memberTier?.tierCurrentPoints /
-        user?.memberTier?.tierRequiredPoints) *
+      (userDetail?.memberTier?.tierCurrentPoints /
+        userDetail?.memberTier?.tierRequiredPoints) *
         100
     );
-  }, [user]);
+  }, [userDetail]);
 
   useEffect(() => {
     refetch();
@@ -179,26 +178,28 @@ function UserPage() {
   return (
     <>
       <BadgeImage
-        src={user?.memberBadgeList?.primaryBadgeBackgroundImg}
+        src={userDetail?.memberBadgeList?.primaryBadgeBackgroundImg}
         alt=""
       />
       <Container>
         <ProfileImg
-          src={user?.memberProfileImg}
-          level={matchToTier[user?.memberTier?.tierId]}
+          src={userDetail?.memberProfileImg}
+          level={matchToTier[userDetail?.memberTier?.tierId]}
           // crossOrigin="anonymous"
         />
-        <ButtonWrapper>
-          <Button color="primary" size="large" onClick={badgeModalOpen}>
-            뱃지 조건
-          </Button>
-          <Button size="large" onClick={editProfileModalOpen}>
-            프로필 편집
-          </Button>
-        </ButtonWrapper>
+        {user.id == path.userId && (
+          <ButtonWrapper>
+            <Button color="primary" size="large" onClick={badgeModalOpen}>
+              뱃지 조건
+            </Button>
+            <Button size="large" onClick={editProfileModalOpen}>
+              프로필 편집
+            </Button>
+          </ButtonWrapper>
+        )}
         <InfoWrapper>
-          <p>{user?.memberName}</p>
-          {user?.memberBadgeList?.badges.map((badge) => {
+          <p>{userDetail?.memberName}</p>
+          {userDetail?.memberBadgeList?.badges.map((badge) => {
             return (
               <img
                 src={badge.image}
@@ -220,38 +221,44 @@ function UserPage() {
         >
           <p
             style={{
-              color: theme.colors.super[matchToTier[user?.memberTier?.tierId]],
+              color:
+                theme.colors.super[matchToTier[userDetail?.memberTier?.tierId]],
               fontWeight: theme.fontWeight.bold,
             }}
           >
-            {user?.memberTier?.tierName}
+            {userDetail?.memberTier?.tierName}
           </p>
           <p>
             {`승급 까지 -${
-              user?.memberTier?.tierRequiredPoints -
-              user?.memberTier?.tierCurrentPoints
+              userDetail?.memberTier?.tierRequiredPoints -
+              userDetail?.memberTier?.tierCurrentPoints
             }`}
           </p>
         </div>
         <XpBar>
           <Now
             width={percent}
-            super={theme.colors.super[matchToTier[user?.memberTier?.tierId]]}
-            sub={theme.colors.sub[matchToTier[user?.memberTier?.tierId]]}
+            super={
+              theme.colors.super[matchToTier[userDetail?.memberTier?.tierId]]
+            }
+            sub={theme.colors.sub[matchToTier[userDetail?.memberTier?.tierId]]}
           />
         </XpBar>
         <CenterContainer>
           <WordCloud
-            genre={user?.genreList?.genreCounts}
-            level={matchToTier[user?.memberTier?.tierId]}
+            genre={userDetail?.genreList?.genreCounts}
+            level={matchToTier[userDetail?.memberTier?.tierId]}
           />
           <MyRating
-            starRateList={user?.starRateList}
-            level={matchToTier[user?.memberTier?.tierId]}
+            starRateList={userDetail?.starRateList}
+            level={matchToTier[userDetail?.memberTier?.tierId]}
           />
         </CenterContainer>
         <BottomArea>
-          <MyReviewsList reviews={user?.reviewInfoList?.reviewInfos} />
+          <MyReviewsList
+            queryKeyType={["userDetail", path.userId]}
+            reviews={userDetail?.reviewInfoList?.reviewInfos}
+          />
         </BottomArea>
         {badgeModal && (
           <BadgeModal
@@ -264,7 +271,7 @@ function UserPage() {
           <EditProfileModal
             modal={editProfileModal}
             modalClose={editProfileModalClose}
-            user={user}
+            user={userDetail}
             handleProfileEdit={handleProfileEdit}
           />
         )}
