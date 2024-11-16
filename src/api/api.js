@@ -72,3 +72,12 @@ export const getMovieReviewList = async (movieId, type, page) => {
     `/movie/${movieId}/reviews?type=${type}&page=${page - 1}`
   );
 };
+
+//검색페이지
+export const getSearchTitle = async (data) => {
+  return await axiosInstance.get(`/search/movie`, { params: data });
+};
+
+export const getSearchGenre = async (data) => {
+  return await axiosInstance.get(`/search/genre`, { params: data });
+};

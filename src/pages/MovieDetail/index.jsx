@@ -41,30 +41,26 @@ function MovieDetail() {
 
   const handleMoreClick = () => {
     navigate(`/movieReview/${movieId}`, {
-      state: { movieTitle: movieData?.movieInfo?.title },
+      state: { movieTitle: movieData.movieInfo.title },
     });
   };
 
   if (loading) {
-    return <div style={{ marginTop: "100px" }}>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return (
-      <div tyle={{ marginTop: "100px" }}>
-        Error fetching movie data: {error.message}
-      </div>
-    );
+    return <div>Error fetching movie data: {error.message}</div>;
   }
   //releaseDate의 포멧 바꾸기
-  const releaseDate = new Date(movieData?.movieInfo?.releaseDate);
-  const formattedDate = `${releaseDate?.getFullYear()}.${String(
+  const releaseDate = new Date(movieData.movieInfo.releaseDate);
+  const formattedDate = `${releaseDate.getFullYear()}.${String(
     releaseDate.getMonth() + 1
-  ).padStart(2, "0")}.${String(releaseDate?.getDate()).padStart(2, "0")}`;
+  ).padStart(2, "0")}.${String(releaseDate.getDate()).padStart(2, "0")}`;
 
   // 감독과 출연진 정보를 통합하는 함수
   const combinedProfiles = [
-    ...movieData?.directorInfoList?.directors?.map((director) => ({
+    ...movieData.directorInfoList.directors.map((director) => ({
       id: director.directorId,
       name: director.name,
       imageUrl: director.profilePath,
@@ -94,15 +90,13 @@ function MovieDetail() {
               backgroundColor: "#f8f8f8",
               width: "98.9vw",
               marginBottom: "40px",
-              paddingLeft: "20px",
             }}
           >
             <S.MovieWrap>
               <div
                 style={{
-                  // width: "50%",
+                  width: "50%",
                   display: "flex",
-
                   gap: "20px",
                 }}
               >
@@ -113,7 +107,15 @@ function MovieDetail() {
                   />
                 </S.PosterSection>
                 <S.MovieInfo>
-                  <S.MovieInfoWrap>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      gap: "16px",
+
+                      flexDirection: "column",
+                    }}
+                  >
                     <S.MainInfo>
                       <S.Title>{movieData.movieInfo.title}</S.Title>
                       <div
@@ -124,15 +126,9 @@ function MovieDetail() {
                           height: "36px",
                         }}
                       >
-                        {!movieData.isReviewed && (
-                          <Button
-                            style={{ height: "36px" }}
-                            color={"primary"}
-                            onClick={() => handleWriteModalOpen()}
-                          >
-                            리뷰작성
-                          </Button>
-                        )}
+                        <Button style={{ height: "36px" }} color={"primary"}>
+                          리뷰작성
+                        </Button>
                         <StarRating
                           readOnly
                           rate={movieData.reviewCountInfo.averageStarRate}
@@ -164,8 +160,7 @@ function MovieDetail() {
                         ))}
                       </S.Tags>
                     </S.StarInfo>
-                  </S.MovieInfoWrap>
-
+                  </div>
                   <S.Description>{movieData.movieInfo.overview}</S.Description>
                 </S.MovieInfo>
               </div>
@@ -196,7 +191,7 @@ function MovieDetail() {
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>
-              {combinedProfiles.splice(0, 15).map((profile, index) => (
+              {combinedProfiles.map((profile, index) => (
                 <S.Profile key={index}>
                   {profile.imageUrl ? (
                     <S.ProfileImg
@@ -224,8 +219,9 @@ function MovieDetail() {
             </S.ReviewTitleWrap>
             <S.ReviewWrap>
               {movieData.reviewInfoList.reviewInfos.map((review) => (
-                <S.CardWrapper key={review.reviewId}>
+                <S.CardWrapper>
                   <Review
+                    key={review.memberId}
                     id={review.reviewId}
                     level={review.memberTierImg}
                     starRate={review.starRate}
@@ -253,13 +249,6 @@ function MovieDetail() {
           </S.GalleryCont>
         </S.Content>
       </S.Container>
-      {isWriteModalOpen && (
-        <ReviewAddModal
-          refetch={refetch}
-          modalClose={handleWriteModalClose}
-          movieTitle={movieData.movieInfo.title}
-        />
-      )}
     </div>
   );
 }

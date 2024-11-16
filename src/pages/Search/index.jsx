@@ -6,6 +6,8 @@ import theme from "../../styles/theme";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
 import { BottomMargin } from "../MovieList/MovieListStyle";
+import { useQuery } from "@tanstack/react-query";
+import { getSearchTitle, getSearchGenre } from "../../api/api";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 
@@ -38,6 +40,8 @@ const MovieContainer = styled.div`
   width: 1320px;
   margin: 20px 0 0 0;
   gap: 16px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 
   @media (max-width: 1320px) {
     width: 90%;
@@ -56,11 +60,19 @@ const KeywordBar = styled.div`
     ${theme.colors.primaryColor3},
     ${theme.colors.primary}
   );
+
+  @media (max-width: 1320px) {
+    width: 100%;
+  }
 `;
 //탭
 const TabContainer = styled.div`
-  width: 1224px;
+  width: 1320px;
   margin: 0 40px 0 40px;
+  @media (max-width: 1320px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const TabTextWrap = styled.div`
@@ -157,12 +169,65 @@ function Search() {
   const searchParams = new URLSearchParams(location.search);
   const searchKeyword = searchParams.get("query");
   const navigate = useNavigate();
-
+  const [query, setQuery] = useState(searchKeyword || "");
+  const [page, setPage] = useState(1);
+  const [titleSearchData, setTitleSearchData] = useState(null);
+  const [genreSearchData, setGenreSearchData] = useState(null);
   const [tab, setTab] = useState(0);
-  const handleTabClick = (event, newValue) => {
-    setTab(newValue); // newValue를 사용하여 탭 인덱스를 업데이트
+
+  const {
+    data: titleData,
+    isLoading: Titleloading,
+    refetch: refetchTitle,
+    error: titleError,
+  } = useQuery({
+    queryKey: ["searchTitle", page, query],
+    queryFn: () =>
+      getSearchTitle({
+        title: query,
+        page: page - 1,
+      }),
+    enabled: tab === 0 || page === 1,
+  });
+
+  const {
+    data: genreData,
+    isLoading: Genreloading,
+    refetch: refetchGenre,
+    error: genreError,
+  } = useQuery({
+    queryKey: ["searchGenre", page, query],
+    queryFn: () =>
+      getSearchGenre({
+        genre: query,
+        page: page - 1,
+      }),
+    enabled: tab === 1 || page === 1,
+  });
+
+  useEffect(() => {
+    setQuery(searchKeyword || "");
+  }, [searchKeyword]);
+
+  const handlePageChange = (event, value) => {
+    setPage(value); // 페이지 변경
+    smoothScrollTo(0, 500); // 500ms 동안 부드럽게 스크롤
   };
 
+  const handleTabClick = (event, newValue) => {
+    setTab(newValue); // newValue를 사용하여 탭 인덱스를 업데이트
+    setPage(1);
+  };
+
+  if (Titleloading) {
+    return <p>Loading...</p>;
+  }
+
+  if (titleError) {
+    return <p>error</p>;
+  }
+  console.log(titleData);
+  console.log(genreData);
   return (
     <>
       <KeywordBar>
@@ -205,22 +270,51 @@ function Search() {
         </TabContainer>
 
         <MovieContainer>
-          {movieData.map((movie, index) => (
-            <CardWrapper key={index}>
-              <MovieCard
-                onClick={() => navigate(`/movieDetail/${movie.id}`)}
-                title={movie.title}
-                poster={IMG_BASE_URL + movie.posterPath}
-                year={movie.releaseDate}
-                country={movie.original_language}
-                genre={movie.genre_ids}
-              />
-            </CardWrapper>
-          ))}
+          {tab === 0 &&
+            (titleData?.data?.content?.length > 0 ? (
+              titleData.data.content.map((movie, index) => (
+                <CardWrapper key={index}>
+                  <MovieCard
+                    onClick={() => navigate(`/movieDetail/${movie.movieId}`)}
+                    title={movie.title}
+                    poster={IMG_BASE_URL + movie.posterPath}
+                    year={movie.releaseDate}
+                    country={movie.originCountry}
+                    genre={movie.genre_ids}
+                    isSearch
+                  />
+                </CardWrapper>
+              ))
+            ) : (
+              <div>검색 결과가 없습니다.</div>
+            ))}
+
+          {tab === 1 &&
+            (genreData?.data?.content?.length > 0 ? (
+              genreData.data.content.map((movie, index) => (
+                <CardWrapper key={index}>
+                  <MovieCard
+                    onClick={() => navigate(`/movieDetail/${movie.movieId}`)}
+                    title={movie.title}
+                    poster={IMG_BASE_URL + movie.posterPath}
+                    year={movie.releaseDate}
+                    country={movie.originCountry}
+                    genre={movie.genre_ids}
+                    isSearch
+                  />
+                </CardWrapper>
+              ))
+            ) : (
+              <p>해당 장르는 존재하지 않습니다.</p>
+            ))}
         </MovieContainer>
       </Container>
       <Pagination
-        count={10}
+        page={page}
+        count={
+          tab === 0 ? titleData?.data?.totalPages : genreData?.data?.totalPages
+        }
+        onChange={handlePageChange}
         sx={{
           ".MuiPaginationItem-root.Mui-selected": {
             backgroundColor: "#F2B705",
