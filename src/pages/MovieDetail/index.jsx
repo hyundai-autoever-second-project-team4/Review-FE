@@ -124,9 +124,15 @@ function MovieDetail() {
                           height: "36px",
                         }}
                       >
-                        <Button style={{ height: "36px" }} color={"primary"}>
-                          리뷰작성
-                        </Button>
+                        {!movieData.isReviewed && (
+                          <Button
+                            onClick={handleWriteModalOpen}
+                            style={{ height: "36px" }}
+                            color={"primary"}
+                          >
+                            리뷰작성
+                          </Button>
+                        )}
                         <StarRating
                           readOnly
                           rate={movieData.reviewCountInfo.averageStarRate}
@@ -217,9 +223,8 @@ function MovieDetail() {
             </S.ReviewTitleWrap>
             <S.ReviewWrap>
               {movieData.reviewInfoList.reviewInfos.map((review) => (
-                <S.CardWrapper>
+                <S.CardWrapper key={review.reviewId}>
                   <Review
-                    key={review.memberId}
                     id={review.reviewId}
                     level={review.memberTierImg}
                     starRate={review.starRate}
@@ -247,6 +252,14 @@ function MovieDetail() {
           </S.GalleryCont>
         </S.Content>
       </S.Container>
+      {isWriteModalOpen && (
+        <ReviewAddModal
+          refetch={refetch}
+          movieTitle={movieData.movieInfo.title}
+          modal={isWriteModalOpen}
+          modalClose={handleWriteModalClose}
+        />
+      )}
     </div>
   );
 }
