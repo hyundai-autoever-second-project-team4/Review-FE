@@ -9,6 +9,22 @@ export const getUserMyPage = async () => {
   return await axiosInstance.get("/member/mypage");
 };
 
+export const getOtherUserPage = async (memberId) => {
+  return await axiosInstance.get(`/member/${memberId}/mypage`);
+};
+
+export const editUserInfo = async (data) => {
+  return await axiosInstance.put(`/member/update`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+export const getBadgeCnt = async () => {
+  return await axiosInstance.get("/badges");
+};
+
 // UP & DOWN
 export const postThearUp = async (id) => {
   return await axiosInstance.post(`/thearup/${id}`);

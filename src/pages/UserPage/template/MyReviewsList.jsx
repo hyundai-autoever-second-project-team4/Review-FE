@@ -16,7 +16,7 @@ const Title = styled.p`
 
 const ReviewWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
   flex-wrap: wrap;
 `;
@@ -82,6 +82,7 @@ function MyReviewsList({ reviews }) {
           return (
             <CardWrapper key={review.reviewId}>
               <Review
+                width={"100%"}
                 level={review.level}
                 reviewId={review.reviewId}
                 movieName={review.movieTitle}

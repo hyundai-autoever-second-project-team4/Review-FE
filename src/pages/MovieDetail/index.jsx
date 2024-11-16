@@ -198,7 +198,6 @@ function MovieDetail() {
             <S.ProfileWrap>
               {combinedProfiles.splice(0, 15).map((profile, index) => (
                 <S.Profile key={index}>
-
                   {profile.imageUrl ? (
                     <S.ProfileImg
                       src={IMG_BASE_URL + `${profile.imageUrl}`}
@@ -240,6 +239,7 @@ function MovieDetail() {
                     theIsDown={review.isThearDown}
                     commentCnt={review.commentCount}
                     reviewId={review.reviewId}
+                    memberId={review.memberId}
                     queryKeyType={"movieDetail"}
                   />
                 </S.CardWrapper>

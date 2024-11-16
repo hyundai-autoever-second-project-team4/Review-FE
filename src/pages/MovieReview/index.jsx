@@ -115,6 +115,7 @@ function MovieReview() {
           ? data?.reviewInfos?.content.map((review) => (
               <Review
                 key={review.reviewId}
+                memberId={review.memberId}
                 width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
                 id={review.reviewId}
                 level={review.memberTierImg}

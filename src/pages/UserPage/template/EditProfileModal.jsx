@@ -100,7 +100,7 @@ const Primary = styled(DynamicSVG)`
   right: -15px;
 `;
 
-function EditProfileModal({ modal, modalClose, user }) {
+function EditProfileModal({ modal, modalClose, user, handleProfileEdit }) {
   const [profileImage, setProfileImage] = useState(user?.memberProfileImg);
   const [profileName, setProfileName] = useState(user?.memberName);
   const [mode, setMode] = useState("normal");
@@ -129,12 +129,15 @@ function EditProfileModal({ modal, modalClose, user }) {
   };
 
   const handleSetting = () => {
-    const data = {
-      profileName,
-      profileImage,
-      primaryId,
-    };
-    console.log(data);
+    const file = fileInputRef.current.files[0];
+    const data = new FormData();
+    data.append("memberName", profileName);
+
+    data.append("memberProfileImg", file || null);
+
+    data.append("primaryBadgeId", primaryId);
+
+    handleProfileEdit(data);
   };
 
   return (
@@ -161,7 +164,6 @@ function EditProfileModal({ modal, modalClose, user }) {
               value={profileName}
               onChange={handleNameChange}
               onKeyDown={(e) => {
-                console.log(e.code);
                 if (e.code === "Enter") handleModeChange();
               }}
               autoFocus
