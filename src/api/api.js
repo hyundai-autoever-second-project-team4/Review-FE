@@ -13,6 +13,12 @@ export const getOtherUserPage = async (memberId) => {
   return await axiosInstance.get(`/member/${memberId}/mypage`);
 };
 
+export const getUserReview = async (memberId, type, page) => {
+  return await axiosInstance.get(`/member/${memberId}/reviews`, {
+    params: { type, page },
+  });
+};
+
 export const editUserInfo = async (data) => {
   return await axiosInstance.put(`/member/update`, data, {
     headers: {
