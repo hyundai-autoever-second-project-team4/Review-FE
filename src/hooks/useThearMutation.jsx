@@ -27,7 +27,10 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
           mainQueryKey === "movieDetail"
         ) {
           reviewInfos = old.data.reviewInfoList.reviewInfos;
-        } else if (mainQueryKey === "reviews") {
+        } else if (
+          mainQueryKey === "reviews" ||
+          mainQueryKey === "userReviews"
+        ) {
           reviewInfos = old.data.reviewInfos.content;
         }
 
@@ -36,7 +39,7 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
         );
 
         if (index === -1) return old;
-        console.log(reviewInfos, index);
+
         const updatedReviewInfos = [...reviewInfos];
         const field = actionType === "up" ? "ThearUpCount" : "ThearDownCount";
         const flagField = actionType === "up" ? "isThearUp" : "isThearDown";
@@ -55,7 +58,7 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
             ...old.data,
             ...(mainQueryKey === "hotReview"
               ? { reviewInfos: updatedReviewInfos }
-              : mainQueryKey === "reviews"
+              : mainQueryKey === "reviews" || mainQueryKey === "userReviews"
               ? { reviewInfos: { content: updatedReviewInfos } }
               : {
                   reviewInfoList: {
