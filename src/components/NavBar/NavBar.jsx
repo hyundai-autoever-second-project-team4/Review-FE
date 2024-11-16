@@ -126,36 +126,18 @@ function NavBar() {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   // 페이지 로드 시 스크롤을 최상단으로 설정
-  //   window.scrollTo(0, 0);
-
-  //   const handleScroll = () => {
-  //     // MovieDetail 페이지에서만 동작
-  //     if (location.pathname.split("/")[1] === "movieDetail") {
-  //       setIsVariant(window.scrollY <= 200); // 스크롤 위치에 따라 업데이트
-  //     } else {
-  //       setIsVariant(false);
-  //     }
-  //   };
-
-  //   handleScroll();
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [location]);
-
-  /////////////////////
-
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // 페이지 로드 시 스크롤을 최상단으로 설정
     window.scrollTo(0, 0);
 
     const handleScroll = () => {
-      if (location.pathname.split("/")[1] === "movieDetail") {
-        setIsVariant(window.scrollY <= 200); // 스크롤 위치에 따라 업데이트
+      // MovieDetail 페이지에서만 동작
+      if (
+        location.pathname.split("/")[1] === "movieDetail" &&
+        window.scrollY <= 200
+      ) {
+        //setIsVariant(window.scrollY <= 200); // 스크롤 위치에 따라 업데이트
+        setIsVariant(true);
       } else {
         setIsVariant(false);
       }
