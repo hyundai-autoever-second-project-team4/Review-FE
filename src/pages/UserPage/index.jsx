@@ -167,9 +167,6 @@ function UserPage() {
   };
 
   const handleProfileEdit = (data) => {
-    for (let pair of data.entries()) {
-      console.log(pair[0] + ": " + pair[1]); // 전송되는 데이터 출력
-    }
     editUserProfile(data);
   };
 

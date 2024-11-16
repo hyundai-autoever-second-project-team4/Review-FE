@@ -132,8 +132,7 @@ function EditProfileModal({ modal, modalClose, user, handleProfileEdit }) {
     const file = fileInputRef.current.files[0];
     const data = new FormData();
     data.append("memberName", profileName);
-    if (file) data.append("memberProfileImg", file || null);
-
+    if (file) data.append("memberProfileImg", file);
     data.append("primaryBadgeId", primaryId);
 
     handleProfileEdit(data);

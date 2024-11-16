@@ -3,20 +3,22 @@ import theme from "../../styles/theme";
 
 export const Container = styled.div`
   height: 120px;
-  width: 427px;
+  /* width: 427px; */
   display: flex;
   gap: 3px;
   align-items: flex-end;
 `;
 
 export const Bar = styled.div`
-  width: 40px;
+  width: 38px;
   height: ${({ height }) => (height ? `${height + 1}px` : "1px")};
   background-color: ${({ $isMax, $level }) =>
     $isMax ? `${theme.colors.super[$level]}` : `${theme.colors.sub[$level]}`};
   transition: height 1s;
   border-radius: 4px 4px 0 0;
-
+  @media (max-width: 480px) {
+    width: 25px;
+  }
   &:hover {
     opacity: 0.7;
   }

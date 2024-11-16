@@ -3,7 +3,7 @@ import theme from "../../styles/theme";
 
 export const Container = styled.div`
   width: ${({ width }) => width};
-  min-width: 180px;
+  /* min-width: 180px; */
   background-color: ${theme.colors.review};
   border-radius: ${theme.borderRadius.md};
   /* height: ${({ $hasMovieName, $isMine }) =>
