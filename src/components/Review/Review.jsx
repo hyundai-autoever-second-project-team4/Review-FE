@@ -27,12 +27,12 @@ function Review({
   theIsUp,
   theIsDown,
   commentCnt,
-
   contentClick,
   movieName,
   isMine,
   queryKeyType,
   memberId,
+  movieId,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const navigate = useNavigate();
@@ -53,6 +53,10 @@ function Review({
 
   const handleUserInfoClick = () => {
     navigate(`/userPage/${memberId}`);
+  };
+
+  const handleTitleClick = () => {
+    navigate(`/movieDetail/${movieId}`);
   };
 
   return (
@@ -81,7 +85,7 @@ function Review({
         </S.TopArea>
       )}
       {movieName !== undefined && (
-        <S.MovieNameArea>
+        <S.MovieNameArea onClick={handleTitleClick}>
           <S.MovieTitle>{movieName}</S.MovieTitle>
           {isMine && (
             <S.StarRate>
@@ -113,7 +117,7 @@ function Review({
               src={theIsUp ? redUp : upLogo}
               width={18}
               height={18}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: queryKeyType !== "hotReview" && "pointer" }}
               onClick={handleUpButtonClick}
             />
             <p>{theUpCnt}</p>
@@ -123,7 +127,11 @@ function Review({
               src={theIsDown ? blueDown : downLogo}
               width={18}
               height={18}
-              style={{ cursor: "pointer", position: "relative", top: "4px" }}
+              style={{
+                cursor: queryKeyType !== "hotReview" && "pointer",
+                position: "relative",
+                top: "4px",
+              }}
               onClick={handleDownButtonClick}
             />
 

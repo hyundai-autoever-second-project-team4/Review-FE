@@ -32,8 +32,9 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
   border-radius: ${theme.borderRadius.md};
-  padding: 8px 28px;
+  width: 124px;
   transition: 0.5s;
+  padding: 8px 0;
 
   &:hover {
     background-color: ${theme.colors.gray2}6C;
@@ -49,11 +50,13 @@ const ProfileImg = styled.img`
 `;
 
 const ProfileName = styled.div`
-  font-size: ${theme.fontSizes.sub1};
+  font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.bold};
   display: flex;
+  max-width: calc(100% - 20px);
+
   gap: 4px;
-  align-items: flex-start;
+  align-items: center;
 `;
 
 const LogoutWrapper = styled.div`
@@ -87,7 +90,7 @@ function ProfileTooltip({
       <ProfileWrapper onClick={moveToMyPage}>
         <ProfileImg src={img} />
         <ProfileName>
-          <DynamicSVG width={16} height={16} svgUrl={`/levels/${level}.svg`} />
+          <DynamicSVG width={12} height={12} svgUrl={`/levels/${level}.svg`} />
           <p>{name}</p>
         </ProfileName>
       </ProfileWrapper>

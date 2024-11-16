@@ -164,6 +164,7 @@ function HotComment({ reviewData }) {
                   movieName={review.movieTitle}
                   queryKeyType={"hotReview"}
                   memberId={review.memberId}
+                  movieId={review.movieId}
                 />
               </SwiperSlide>
             ))}
