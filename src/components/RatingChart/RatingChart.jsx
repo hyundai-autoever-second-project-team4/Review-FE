@@ -6,15 +6,20 @@ import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import theme from "../../styles/theme";
 
 function RatingChart({ ratingArray, level }) {
-  const [max, setMax] = useState(Math.max(...ratingArray));
   const [heights, setHeights] = useState(Array(ratingArray?.length).fill(0));
+  const [max, setMax] = useState(Math.max(...ratingArray));
 
   useEffect(() => {
-    setMax(Math.max(...ratingArray));
-
-    setTimeout(() => {
-      setHeights(ratingArray?.map((rate) => 150 * (rate / max)));
+    const newMax = Math.max(...ratingArray);
+    setMax(newMax);
+    const timeoutId = setTimeout(() => {
+      setHeights(ratingArray?.map((rate) => 150 * (rate / newMax)));
     }, 300);
+
+    return () => {
+      clearTimeout(timeoutId);
+      setHeights(Array(ratingArray?.length).fill(0));
+    };
   }, [ratingArray]);
 
   return (
