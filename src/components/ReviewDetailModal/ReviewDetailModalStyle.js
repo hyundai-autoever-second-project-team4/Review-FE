@@ -35,6 +35,14 @@ export const CommentContainer = styled.div`
   margin-top: 8px;
 `;
 
+export const NoCommentContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0px;
+`;
+
 export const CommentBox = styled.div`
   width: 100%;
   padding: 10px;
