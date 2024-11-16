@@ -270,8 +270,8 @@ function Search() {
   if (titleError) {
     return <p>error</p>;
   }
-  console.log(titleData);
-  console.log(genreData);
+  // console.log(titleData);
+  // console.log(genreData);
   return (
     <>
       <KeywordBar>
