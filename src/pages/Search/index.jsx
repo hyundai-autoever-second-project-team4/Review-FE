@@ -4,10 +4,12 @@ import Pagination from "@mui/material/Pagination";
 import styled from "styled-components";
 import theme from "../../styles/theme";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Tab, Tabs } from "@mui/material";
+import { Skeleton, Tab, Tabs } from "@mui/material";
 import { BottomMargin } from "../MovieList/MovieListStyle";
 import { useQuery } from "@tanstack/react-query";
 import { getSearchTitle, getSearchGenre } from "../../api/api";
+import { CircularProgress } from "@mui/material";
+import Box from "@mui/material/Box";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 
@@ -220,7 +222,52 @@ function Search() {
   };
 
   if (Titleloading) {
-    return <p>Loading...</p>;
+    return (
+      <>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          {/* <CircularProgress size={60} sx={{ color: theme.colors.primary }} /> */}
+          {/* <CircularProgress size={60} sx={{ color: "#f2b705" }} /> */}
+        </div>
+      </>
+    );
+  }
+
+  if (Genreloading) {
+    return (
+      <>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          {/* <CircularProgress
+            size={60}
+            sx={{
+              ".MuiCircularProgress-circle": { color: theme.colors.primary },
+              color: "#f2b705",
+            }}
+          /> */}
+          <CircularProgress
+            size={60}
+            sx={{
+              ".MuiCircularProgress-root": { color: theme.colors.primary },
+              color: "#f2b705",
+              ".MuiCircularProgress-svg": { color: theme.colors.primary },
+            }}
+          />
+        </div>
+      </>
+    );
   }
 
   if (titleError) {
