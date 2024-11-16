@@ -232,8 +232,13 @@ function Search() {
             height: "100vh",
           }}
         >
-          {/* <CircularProgress size={60} sx={{ color: theme.colors.primary }} /> */}
-          {/* <CircularProgress size={60} sx={{ color: "#f2b705" }} /> */}
+          <CircularProgress
+            size={60}
+            sx={{
+              ".MuiCircularProgress-circle": { color: theme.colors.primary },
+              color: "#f2b705",
+            }}
+          />
         </div>
       </>
     );
@@ -250,19 +255,11 @@ function Search() {
             height: "100vh",
           }}
         >
-          {/* <CircularProgress
+          <CircularProgress
             size={60}
             sx={{
               ".MuiCircularProgress-circle": { color: theme.colors.primary },
               color: "#f2b705",
-            }}
-          /> */}
-          <CircularProgress
-            size={60}
-            sx={{
-              ".MuiCircularProgress-root": { color: theme.colors.primary },
-              color: "#f2b705",
-              ".MuiCircularProgress-svg": { color: theme.colors.primary },
             }}
           />
         </div>
