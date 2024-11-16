@@ -72,7 +72,7 @@ const genreMapping = {
   37: "서부",
 };
 
-function MovieCard({ title, poster, year, country, genre, onClick }) {
+function MovieCard({ title, poster, year, country, genre, onClick, isSearch }) {
   const genreNames = genre
     ? genre.map((id) => genreMapping[id]).filter((name) => name)
     : [];
@@ -88,7 +88,7 @@ function MovieCard({ title, poster, year, country, genre, onClick }) {
         <Info>
           <Title>{title}</Title>
           <Data>
-            {formattedYear} • {countryName}
+            {formattedYear} • {isSearch ? country : countryName}
           </Data>
           {genreNames.length > 0 && <Genre>{genreNames.join(" / ")}</Genre>}
         </Info>

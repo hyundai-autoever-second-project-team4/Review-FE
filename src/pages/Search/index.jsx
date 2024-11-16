@@ -6,6 +6,8 @@ import theme from "../../styles/theme";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
 import { BottomMargin } from "../MovieList/MovieListStyle";
+import { useQuery } from "@tanstack/react-query";
+import { getSearchTitle, getSearchGenre } from "../../api/api";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 
@@ -157,12 +159,58 @@ function Search() {
   const searchParams = new URLSearchParams(location.search);
   const searchKeyword = searchParams.get("query");
   const navigate = useNavigate();
+  const [query, setQuery] = useState(searchKeyword || "");
+  const [page, setPage] = useState(1);
+  const [titleSearchData, setTitleSearchData] = useState(null);
+  const [genreSearchData, setGenreSearchData] = useState(null);
+
+  const {
+    data,
+    isLoading: Titleloading,
+    refetch: refetchTitle,
+    error: titleError,
+  } = useQuery({
+    queryKey: ["searchTitle", page],
+    queryFn: () =>
+      getSearchTitle({
+        title: query,
+        page: page - 1,
+      }),
+  });
+
+  const {
+    data: genreData,
+    isLoading: Genreloading,
+    refetch: refetchGenre,
+    error: genreError,
+  } = useQuery({
+    queryKey: ["searchGenre", page],
+    queryFn: () =>
+      getSearchGenre({
+        genre: query,
+        page: page - 1,
+      }),
+  });
+
+  const handlePageChange = (event, value) => {
+    setPage(value); // 페이지 변경
+    smoothScrollTo(0, 500); // 500ms 동안 부드럽게 스크롤
+  };
 
   const [tab, setTab] = useState(0);
   const handleTabClick = (event, newValue) => {
     setTab(newValue); // newValue를 사용하여 탭 인덱스를 업데이트
   };
 
+  if (Titleloading) {
+    return <p>Loading...</p>;
+  }
+
+  if (titleError) {
+    return <p>error</p>;
+  }
+  console.log(data);
+  console.log(genreData);
   return (
     <>
       <KeywordBar>
@@ -205,22 +253,25 @@ function Search() {
         </TabContainer>
 
         <MovieContainer>
-          {movieData.map((movie, index) => (
+          {data.data.content.map((movie, index) => (
             <CardWrapper key={index}>
               <MovieCard
                 onClick={() => navigate(`/movieDetail/${movie.id}`)}
                 title={movie.title}
                 poster={IMG_BASE_URL + movie.posterPath}
                 year={movie.releaseDate}
-                country={movie.original_language}
+                country={movie.originCountry}
                 genre={movie.genre_ids}
+                isSearch
               />
             </CardWrapper>
           ))}
         </MovieContainer>
       </Container>
       <Pagination
-        count={10}
+        page={page}
+        count={data?.data.totalPages}
+        onChange={handlePageChange}
         sx={{
           ".MuiPaginationItem-root.Mui-selected": {
             backgroundColor: "#F2B705",
