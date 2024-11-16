@@ -92,7 +92,11 @@ function MovieList() {
             <MovieCard
               onClick={() => navigate(`/movieDetail/${movie.id}`)}
               title={movie.title}
-              poster={IMG_BASE_URL + movie.poster_path}
+              poster={
+                movie.poster_path
+                  ? IMG_BASE_URL + movie.poster_path
+                  : "/images/no_img.png"
+              }
               year={movie.release_date}
               country={movie.original_language}
               genre={movie.genre_ids}
