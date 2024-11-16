@@ -23,6 +23,7 @@ import { getEndpoint, useGetRanking } from "../../hooks/useGetRanking";
 import { useQueryClient } from "@tanstack/react-query";
 import { getRankingData } from "../../api/api";
 import { smoothScrollTo } from "../../utils/smoothScrollTop.js";
+import CustomPagination from "../../components/CustomPagination/CustomPagination.jsx";
 
 function RankingBoardBox({ tab }) {
   const [page, setPage] = useState(1);
@@ -104,16 +105,10 @@ function RankingBoardBox({ tab }) {
           ))}
         </RankingContainer>
       </RankingBox>
-      <Pagination
+      <CustomPagination
         count={data.totalPages}
-        page={page} // 현재 페이지
-        siblingCount={3}
-        onChange={handlePageChange} // 페이지 변경 핸들러
-        sx={{
-          ".MuiPaginationItem-root.Mui-selected": {
-            backgroundColor: "#F2B705",
-          },
-        }}
+        page={page}
+        onChange={handlePageChange}
       />
     </>
   );

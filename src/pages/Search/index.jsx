@@ -9,7 +9,8 @@ import { BottomMargin } from "../MovieList/MovieListStyle";
 import { useQuery } from "@tanstack/react-query";
 import { getSearchTitle, getSearchGenre } from "../../api/api";
 import { CircularProgress } from "@mui/material";
-import Box from "@mui/material/Box";
+import CustomPagination from "../../components/CustomPagination/CustomPagination";
+import { smoothScrollTo } from "../../utils/smoothScrollTop";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 
@@ -353,17 +354,12 @@ function Search() {
             ))}
         </MovieContainer>
       </Container>
-      <Pagination
+      <CustomPagination
         page={page}
         count={
           tab === 0 ? titleData?.data?.totalPages : genreData?.data?.totalPages
         }
         onChange={handlePageChange}
-        sx={{
-          ".MuiPaginationItem-root.Mui-selected": {
-            backgroundColor: "#F2B705",
-          },
-        }}
       />
       <BottomMargin />
     </>
