@@ -52,6 +52,7 @@ export const DropDownContainer = styled.div`
 
 export const ReviewContainer = styled.div`
   margin-top: 26px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

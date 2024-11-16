@@ -46,12 +46,10 @@ function MovieList() {
   }, [urlType]);
 
   useEffect(() => {
-    if (pagination < data?.totalPages) {
-      queryClient.prefetchQuery({
-        queryKey: ["movies", urlType, pagination + 1],
-        queryFn: () => fetchMovies({ urlType, pagination: pagination + 1 }),
-      });
-    }
+    queryClient.prefetchQuery({
+      queryKey: ["movies", urlType, pagination + 1],
+      queryFn: () => fetchMovies({ urlType, pagination: pagination + 1 }),
+    });
   }, [pagination]);
 
   const handlePageChange = (event, value) => {

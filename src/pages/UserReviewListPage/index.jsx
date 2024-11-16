@@ -8,7 +8,7 @@ import {
   ReviewContainer,
 } from "./UserReviewListPageStyle";
 import Review from "../../components/Review/Review";
-import { Pagination } from "@mui/material";
+import CustomPagination from "../../components/CustomPagination/CustomPagination";
 import { getUserReview } from "../../api/api";
 import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
 import { useQuery } from "@tanstack/react-query";
@@ -105,20 +105,10 @@ function UserReviewListPage() {
             />
           ))}
       </ReviewContainer>
-      <Pagination
+      <CustomPagination
         count={data?.totalPages}
         page={page}
         onChange={handlePageChange}
-        sx={{
-          ".MuiPaginationItem-root.Mui-selected": {
-            backgroundColor: "#F2B705",
-          },
-        }}
-      />
-      <ReviewDetailModal
-        modalOpen={isModalOpen}
-        modalClose={handleModalClose}
-        id={reviewId}
       />
     </Container>
   );
