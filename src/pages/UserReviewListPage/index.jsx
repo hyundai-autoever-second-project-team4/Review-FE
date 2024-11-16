@@ -14,6 +14,7 @@ import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailMo
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { smoothScrollTo } from "../../utils/smoothScrollTop";
+import ReviewSkeleton from "../../components/Review/ReviewSkeleton";
 
 const sortOptions = [
   { value: "likes", label: "UP 순" },
@@ -82,34 +83,44 @@ function UserReviewListPage() {
         </DropDownContainer>
       </HeaderBackground>
       <ReviewContainer>
-        {!isLoading &&
-          data?.content.map((review) => (
-            <Review
-              key={review.reviewId}
-              width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
-              id={review.id}
-              starRate={review.starRate}
-              content={review.content}
-              isBlur={review.isBlur}
-              theUpCnt={review.ThearUpCount}
-              theDownCnt={review.ThearDownCount}
-              commentCnt={review.commentCount}
-              movieName={review.movieTitle}
-              contentClick={() => handleModalOpen(review.reviewId)}
-              memberId={review.memberId}
-              reviewId={review.reviewId}
-              theIsUp={review.isThearUp}
-              theIsDown={review.isThearDown}
-              queryKeyType={["userReviews", userId, selectedSort, page]}
-              isMine
-            />
-          ))}
+        {!isLoading
+          ? data?.content.map((review) => (
+              <Review
+                key={review.reviewId}
+                width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
+                id={review.id}
+                starRate={review.starRate}
+                content={review.content}
+                isBlur={review.isBlur}
+                theUpCnt={review.ThearUpCount}
+                theDownCnt={review.ThearDownCount}
+                commentCnt={review.commentCount}
+                movieName={review.movieTitle}
+                contentClick={() => handleModalOpen(review.reviewId)}
+                memberId={review.memberId}
+                reviewId={review.reviewId}
+                theIsUp={review.isThearUp}
+                theIsDown={review.isThearDown}
+                queryKeyType={["userReviews", userId, selectedSort, page]}
+                isMine
+              />
+            ))
+          : Array.from({ length: 5 }).map((_, index) => (
+              <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
+            ))}
       </ReviewContainer>
       <CustomPagination
         count={data?.totalPages}
         page={page}
         onChange={handlePageChange}
       />
+      {isModalOpen && (
+        <ReviewDetailModal
+          modalOpen={isModalOpen}
+          modalClose={handleModalClose}
+          id={reviewId}
+        />
+      )}
     </Container>
   );
 }

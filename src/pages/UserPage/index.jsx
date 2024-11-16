@@ -40,6 +40,7 @@ const ProfileImg = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  background-color: ${theme.colors.gray2};
   position: relative;
   top: -40px;
   object-fit: cover;

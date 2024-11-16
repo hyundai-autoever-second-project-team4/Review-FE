@@ -15,6 +15,7 @@ import { getMovieReviewList } from "../../api/api";
 import { useQuery } from "@tanstack/react-query";
 import { smoothScrollTo } from "../../utils/smoothScrollTop";
 import CustomPagination from "../../components/CustomPagination/CustomPagination";
+import ReviewSkeleton from "../../components/Review/ReviewSkeleton";
 
 const sortOptions = [
   { value: "likes", label: "UP 순" },
@@ -111,7 +112,9 @@ function MovieReview() {
                 queryKeyType={["reviews", movieId, selectedSort, page]}
               />
             ))
-          : "loading"}
+          : Array.from({ length: 5 }).map((_, index) => (
+              <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
+            ))}
       </ReviewContainer>
       <CustomPagination
         count={totalpage}
