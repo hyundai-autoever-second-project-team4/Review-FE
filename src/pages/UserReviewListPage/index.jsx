@@ -79,6 +79,7 @@ function UserReviewListPage() {
             commentCnt={review.commentCnt}
             movieName={review.movieName}
             contentClick={handleModalOpen}
+            memberId={review.memberId}
             isMine
           />
         ))}

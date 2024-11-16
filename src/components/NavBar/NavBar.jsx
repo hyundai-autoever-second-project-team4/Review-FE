@@ -100,6 +100,7 @@ const ProfileImg = styled.img`
   height: 36px;
   border-radius: 50%;
   cursor: pointer;
+  object-fit: cover;
 `;
 
 function NavBar() {
@@ -169,7 +170,7 @@ function NavBar() {
   };
 
   const moveToMyPage = () => {
-    navigate(`/userPage/${user.id}`);
+    navigate(`/userPage/${user.id}`, { state: true });
   };
 
   const isPlayingSelected = location.pathname === "/movieList/nowPlaying";

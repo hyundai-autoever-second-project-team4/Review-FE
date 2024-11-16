@@ -10,6 +10,7 @@ import downLogo from "/src/assets/svg/down.svg";
 import redUp from "/src/assets/svg/redUp.svg";
 import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Review({
   reviewId,
@@ -32,8 +33,11 @@ function Review({
   movieName,
   isMine,
   queryKeyType,
+  memberId,
 }) {
   const [blur, setBlur] = useState(isBlur);
+  const navigate = useNavigate();
+
   const { mutate: thearUp } = useThearMutation(reviewId, queryKeyType, "up");
   const { mutate: thearDown } = useThearMutation(
     reviewId,
@@ -48,6 +52,10 @@ function Review({
     if (queryKeyType !== "hotReview") thearDown();
   };
 
+  const handleUserInfoClick = () => {
+    navigate(`/userPage/${memberId}`);
+  };
+
   return (
     <S.Container
       width={width}
@@ -56,7 +64,7 @@ function Review({
     >
       {!isMine && (
         <S.TopArea>
-          <S.ProfileWrapper>
+          <S.ProfileWrapper onClick={handleUserInfoClick}>
             {/* <DynamicSVG
               svgUrl={`/levels/${level}.svg`}
               width={18}
@@ -75,7 +83,7 @@ function Review({
       )}
       {movieName !== undefined && (
         <S.MovieNameArea>
-          <p>{movieName}</p>
+          <S.MovieTitle>{movieName}</S.MovieTitle>
           {isMine && (
             <S.StarRate>
               <img src={StarIcon} width={12} height={12} />
