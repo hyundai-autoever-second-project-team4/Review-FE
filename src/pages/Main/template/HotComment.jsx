@@ -163,6 +163,7 @@ function HotComment({ reviewData }) {
                   downClick={() => console.log(review.reviewId)}
                   movieName={review.movieTitle}
                   queryKeyType={"hotReview"}
+                  memberId={review.memberId}
                 />
               </SwiperSlide>
             ))}

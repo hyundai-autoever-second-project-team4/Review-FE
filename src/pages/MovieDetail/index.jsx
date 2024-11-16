@@ -234,9 +234,9 @@ function MovieDetail() {
                     theIsUp={review.isThearUp}
                     theIsDown={review.isThearDown}
                     commentCnt={review.commentCount}
-                    upClick={review.upClick}
-                    downClick={review.downClick}
-                    // contentClick={}//클릭 시 함수
+                    reviewId={review.reviewId}
+                    memberId={review.memberId}
+                    queryKeyType={"movieDetail"}
                   />
                 </S.CardWrapper>
               ))}

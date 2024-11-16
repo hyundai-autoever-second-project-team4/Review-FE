@@ -55,7 +55,7 @@ const Count = styled.div`
   background-color: #f5f5f5;
 `;
 
-function BadgeModal({ modal, modalClose }) {
+function BadgeModal({ modal, modalClose, badgeCnt }) {
   return (
     <CustomModal
       title="뱃지 획득 조건"
@@ -64,7 +64,7 @@ function BadgeModal({ modal, modalClose }) {
       large
     >
       <Container>
-        {Object.entries(badges)?.map(([key, { name, condition }]) => {
+        {Object.entries(badges)?.map(([key, { name, condition }], index) => {
           if (key === "keepGoingChamp") return;
 
           return (
@@ -76,7 +76,7 @@ function BadgeModal({ modal, modalClose }) {
                   <BadgeCondition>{condition}</BadgeCondition>
                 </div>
               </Left>
-              <Count>{123}명</Count>
+              <Count>{badgeCnt[index].counts}명</Count>
             </BadgeWrapper>
           );
         })}
