@@ -98,6 +98,7 @@ function MyReviewsList({ reviews, queryKeyType }) {
                 commentCnt={review.commentCount}
                 isMine
                 queryKeyType={queryKeyType}
+                movieId={review.movieId}
                 userId={userId}
               />
             </CardWrapper>

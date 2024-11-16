@@ -22,6 +22,7 @@ export const TopArea = styled.div`
 `;
 export const MovieNameArea = styled.div`
   /* height: 30px; */
+  cursor: pointer;
   font-size: ${theme.fontSizes.sub1};
   font-weight: ${theme.fontWeight.bold};
   display: flex;

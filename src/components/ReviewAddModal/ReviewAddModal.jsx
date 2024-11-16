@@ -67,9 +67,10 @@ function ReviewAddModal({ modalClose, movieTitle, refetch }) {
         // 성공적으로 제출됨
         modalClose(); // 모달 닫기
         refetch();
-        alert(`   "${movieTitle}" 에 대한 리뷰 작성이 완료되었습니다!\n
-          리뷰 작성으로 👍띠어력 10점👍을 드렸으며,\n
-          리뷰 수정은 불가하고 삭제 시 10점 감소합니다.`);
+        alert(
+          `"${movieTitle}" 에 대한 리뷰 작성이 완료되었습니다!\n\n리뷰 작성으로 👍띠어력 10점👍을 드렸으며,\n\n리뷰 수정은 불가하고 삭제 시 10점 감소합니다.`
+        );
+        window.location.reload();
       }
     } catch (error) {
       console.error("리뷰 제출 중 오류 발생:", error);
