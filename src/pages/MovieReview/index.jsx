@@ -10,7 +10,7 @@ import {
 import Review from "../../components/Review/Review";
 import { Pagination } from "@mui/material";
 import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { axiosInstance } from "../../api/axiosInstance";
 import { getMovieReviewList } from "../../api/api";
 import { useQuery } from "@tanstack/react-query";
@@ -32,10 +32,11 @@ function MovieReview() {
   const [reviewId, setReviewId] = useState(null);
   const [page, setPage] = useState(1); // 페이지 상태 추가
   const [totalpage, setTotalPage] = useState(1); // 페이지 상태 추가
+  const { movieId } = useParams();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["reviews", selectedSort, page],
-    queryFn: () => getMovieReviewList(selectedSort, page),
+    queryKey: ["reviews", movieId, selectedSort, page],
+    queryFn: () => getMovieReviewList(movieId, selectedSort, page),
     select: (data) => data.data,
     keepPreviousData: true, // 페이지 이동 시 이전 데이터를 유지
   });

@@ -42,7 +42,7 @@ function MovieList() {
   }, [urlType]);
 
   const movies = data?.results || [];
-  const totalPages = data?.total_pages || 0;
+  const totalPages = data ? (type === "nowPlaying" ? 50 : 100) : 0; // data가 없으면 0, 있으면 type에 따라 50 또는 100
 
   const handlePageChange = (event, value) => {
     setPagination(value); // 페이지 변경
