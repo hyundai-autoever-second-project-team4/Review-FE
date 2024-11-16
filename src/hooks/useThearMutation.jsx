@@ -11,26 +11,32 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
   return useMutation({
     mutationFn,
     onMutate: async () => {
-      await queryClient.cancelQueries([querykeyType]);
-      const previousData = queryClient.getQueryData([querykeyType]);
+      await queryClient.cancelQueries(querykeyType);
+      const previousData = queryClient.getQueryData(querykeyType);
 
-      queryClient.setQueryData([querykeyType], (old) => {
+      queryClient.setQueryData(querykeyType, (old) => {
         if (!old) return;
 
         let reviewInfos;
-        if (querykeyType === "hotReview") reviewInfos = old.data.reviewInfos;
-        else if (
-          querykeyType === "userDetail" ||
-          querykeyType === "movieDetail"
-        )
+        const mainQueryKey = querykeyType[0]; // queryKey의 첫 번째 요소를 사용하여 판단
+
+        if (mainQueryKey === "hotReview") {
+          reviewInfos = old.data.reviewInfos;
+        } else if (
+          mainQueryKey === "userDetail" ||
+          mainQueryKey === "movieDetail"
+        ) {
           reviewInfos = old.data.reviewInfoList.reviewInfos;
+        } else if (mainQueryKey === "reviews") {
+          reviewInfos = old.data.reviewInfos.content;
+        }
 
         const index = reviewInfos.findIndex(
           (review) => review.reviewId === reviewId
         );
 
         if (index === -1) return old;
-
+        console.log(reviewInfos, index);
         const updatedReviewInfos = [...reviewInfos];
         const field = actionType === "up" ? "ThearUpCount" : "ThearDownCount";
         const flagField = actionType === "up" ? "isThearUp" : "isThearDown";
@@ -47,8 +53,10 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
           ...old,
           data: {
             ...old.data,
-            ...(querykeyType === "hotReview"
+            ...(mainQueryKey === "hotReview"
               ? { reviewInfos: updatedReviewInfos }
+              : mainQueryKey === "reviews"
+              ? { reviewInfos: { content: updatedReviewInfos } }
               : {
                   reviewInfoList: {
                     reviewInfos: updatedReviewInfos,
@@ -61,11 +69,11 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
       return { previousData };
     },
     onError: (err, userId, context) => {
-      queryClient.setQueryData([querykeyType], context.previousData);
+      queryClient.setQueryData(querykeyType, context.previousData);
       console.log(err);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [querykeyType] });
+      queryClient.invalidateQueries({ queryKey: querykeyType });
     },
   });
 };

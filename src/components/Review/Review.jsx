@@ -27,8 +27,7 @@ function Review({
   theIsUp,
   theIsDown,
   commentCnt,
-  upClick,
-  downClick,
+
   contentClick,
   movieName,
   isMine,

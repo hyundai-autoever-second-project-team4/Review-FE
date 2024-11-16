@@ -131,7 +131,7 @@ function MovieReview() {
                 theIsDown={review.isThearDown}
                 contentClick={() => handleModalOpen(review.reviewId)}
                 reviewId={review.reviewId}
-                queryKeyType={["reviews", selectedSort, page]}
+                queryKeyType={["reviews", movieId, selectedSort, page]}
               />
             ))
           : "loading"}
