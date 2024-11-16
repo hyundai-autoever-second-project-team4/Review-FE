@@ -7,8 +7,8 @@ import Button from "../Button/Button";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
 import upLogo from "/src/assets/svg/up.svg";
 import downLogo from "/src/assets/svg/down.svg";
-import up2Logo from "/src/assets/svg/up2.svg";
-import down2Logo from "/src/assets/svg/down2.svg";
+import redUp from "/src/assets/svg/redUp.svg";
+import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
 
 function Review({
@@ -102,9 +102,8 @@ function Review({
       <S.BottomArea>
         <S.ThumbWrapper>
           <S.ThumbWrapper>
-            <DynamicSVG
-              svgUrl={theIsUp ? upLogo : up2Logo}
-              color={theIsUp ? theme.colors.red : theme.colors.gray3}
+            <img
+              src={theIsUp ? redUp : upLogo}
               width={18}
               height={18}
               style={{ cursor: "pointer" }}
@@ -113,14 +112,14 @@ function Review({
             <p>{theUpCnt}</p>
           </S.ThumbWrapper>
           <S.ThumbWrapper>
-            <DynamicSVG
-              svgUrl={theIsDown ? downLogo : down2Logo}
-              color={theIsDown ? theme.colors.blue : theme.colors.gray3}
+            <img
+              src={theIsDown ? blueDown : downLogo}
               width={18}
               height={18}
               style={{ cursor: "pointer", position: "relative", top: "4px" }}
               onClick={handleDownButtonClick}
             />
+
             <p>{theDownCnt}</p>
           </S.ThumbWrapper>
         </S.ThumbWrapper>
