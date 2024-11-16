@@ -11,7 +11,6 @@ import Review from "../../components/Review/Review";
 import { Pagination } from "@mui/material";
 import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
 import { useLocation, useParams } from "react-router-dom";
-import { axiosInstance } from "../../api/axiosInstance";
 import { getMovieReviewList } from "../../api/api";
 import { useQuery } from "@tanstack/react-query";
 import { smoothScrollTo } from "../../utils/smoothScrollTop";
@@ -57,8 +56,8 @@ function MovieReview() {
     };
   }, []);
 
-  const handleModalOpen = (data) => {
-    setReviewId(data);
+  const handleModalOpen = (id) => {
+    setReviewId(id);
     setIsModalOpen(true);
   };
 
@@ -123,11 +122,13 @@ function MovieReview() {
           },
         }}
       />
-      <ReviewDetailModal
-        modalOpen={isModalOpen}
-        modalClose={handleModalClose}
-        id={reviewId}
-      />
+      {isModalOpen && (
+        <ReviewDetailModal
+          modalOpen={isModalOpen}
+          modalClose={handleModalClose}
+          id={reviewId}
+        />
+      )}
     </Container>
   );
 }

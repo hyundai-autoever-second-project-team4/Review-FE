@@ -11,16 +11,39 @@ import {
 } from "./ReviewDetailModalHeaderStyle";
 import StarIcon from "../../assets/svg/star.svg";
 
-function ReviewDetailModalHeader({ tierImg, profileImg, nickname, starRate }) {
+function ReviewDetailModalHeader({
+  tierImg,
+  profileImg,
+  nickname,
+  starRate,
+  badgeImg,
+  reviewDate,
+}) {
+  // 문자열 분리
+  const dateTimeParts = reviewDate.split("T");
+  const dateParts = dateTimeParts[0].split("-");
+  const timeParts = dateTimeParts[1].split(":");
+
+  // 연도, 월, 일, 시, 분, 초 추출
+  const year = dateParts[0];
+  const month = dateParts[1];
+  const day = dateParts[2];
+  const hours = timeParts[0];
+  const minutes = timeParts[1];
+  const seconds = timeParts[2];
+
+  // 원하는 형식으로 문자열 생성
+  const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+
   return (
     <Container>
       <TierImg src={tierImg} />
       <ProfileImgContainer>
         <ProfileImg src={profileImg} />
-        <BadgeImg src={tierImg} />
+        <BadgeImg src={badgeImg} />
       </ProfileImgContainer>
       <Name>{nickname}</Name>
-      <DateText>리뷰일 : 2024년 11월 8일 23:12:15</DateText>
+      <DateText>리뷰일 : {formattedDate}</DateText>
       <StarRate>
         <img src={StarIcon} width={16} height={16} />
         <p>{starRate}</p>

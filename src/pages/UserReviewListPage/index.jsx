@@ -51,8 +51,8 @@ function UserReviewListPage() {
     };
   }, []);
 
-  const handleModalOpen = (data) => {
-    setReviewId(data);
+  const handleModalOpen = (id) => {
+    setReviewId(id);
     setIsModalOpen(true);
   };
 
@@ -95,7 +95,7 @@ function UserReviewListPage() {
               theDownCnt={review.ThearDownCount}
               commentCnt={review.commentCount}
               movieName={review.movieTitle}
-              contentClick={handleModalOpen}
+              contentClick={() => handleModalOpen(review.reviewId)}
               memberId={review.memberId}
               reviewId={review.reviewId}
               theIsUp={review.isThearUp}
