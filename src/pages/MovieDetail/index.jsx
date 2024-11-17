@@ -72,6 +72,9 @@ function MovieDetail() {
     })),
   ];
 
+  console.log(movieData);
+  console.log(movieData.reviewCountInfo);
+
   return (
     <div>
       <S.Container>
@@ -217,32 +220,40 @@ function MovieDetail() {
           <S.ReviewCont>
             <S.ReviewTitleWrap>
               <S.Title>리뷰</S.Title>
-              <Button color={"primary"} onClick={handleMoreClick}>
-                더보기
-              </Button>
+              {movieData.reviewCountInfo.totalReviewCount > 5 && (
+                <Button color={"primary"} onClick={handleMoreClick}>
+                  더보기
+                </Button>
+              )}
             </S.ReviewTitleWrap>
             <S.ReviewWrap>
-              {movieData.reviewInfoList.reviewInfos.map((review) => (
-                <S.CardWrapper key={review.reviewId}>
-                  <Review
-                    id={review.reviewId}
-                    level={review.memberTierImg}
-                    starRate={review.starRate}
-                    profileName={review.memberName}
-                    profileImg={review.memberProfileImg}
-                    content={review.content}
-                    isBlur={review.spoiler}
-                    theUpCnt={review.ThearUpCount}
-                    theDownCnt={review.ThearDownCount}
-                    theIsUp={review.isThearUp}
-                    theIsDown={review.isThearDown}
-                    commentCnt={review.commentCount}
-                    reviewId={review.reviewId}
-                    memberId={review.memberId}
-                    queryKeyType={["movieDetail"]}
-                  />
-                </S.CardWrapper>
-              ))}
+              {movieData.reviewCountInfo.totalReviewCount > 0 ? (
+                movieData.reviewInfoList.reviewInfos.map((review) => (
+                  <S.CardWrapper key={review.reviewId}>
+                    <Review
+                      id={review.reviewId}
+                      level={review.memberTierImg}
+                      starRate={review.starRate}
+                      profileName={review.memberName}
+                      profileImg={review.memberProfileImg}
+                      content={review.content}
+                      isBlur={review.spoiler}
+                      theUpCnt={review.ThearUpCount}
+                      theDownCnt={review.ThearDownCount}
+                      theIsUp={review.isThearUp}
+                      theIsDown={review.isThearDown}
+                      commentCnt={review.commentCount}
+                      reviewId={review.reviewId}
+                      memberId={review.memberId}
+                      queryKeyType={["movieDetail"]}
+                    />
+                  </S.CardWrapper>
+                ))
+              ) : (
+                <div>
+                  아직 작성된 리뷰가 없습니다. 첫번째 리뷰를 달아주세요~^^
+                </div>
+              )}
             </S.ReviewWrap>
           </S.ReviewCont>
 

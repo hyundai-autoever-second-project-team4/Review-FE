@@ -299,14 +299,18 @@ export const ReviewCont = styled.div`
 export const ReviewTitleWrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-bottom: 16px;
+
+  & > button {
+    margin-left: auto; /* 버튼을 오른쪽으로 밀기 */
+  }
 `;
 
 export const ReviewWrap = styled.div`
   display: flex;
   width: 1320px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   overflow-x: auto;
   overflow-y: hidden; ///
   gap: 16px;
