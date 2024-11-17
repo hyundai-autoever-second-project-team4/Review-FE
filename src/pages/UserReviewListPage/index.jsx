@@ -31,11 +31,21 @@ function UserReviewListPage() {
   const [reviewId, setReviewId] = useState(null);
   const { userId } = useParams();
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(null);
+
   const { data, isLoading } = useQuery({
     queryKey: ["userReviews", userId, selectedSort, page],
     queryFn: () => getUserReview(userId, selectedSort, page - 1),
     select: (data) => data.data.reviewInfos,
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedSort]);
+
+  useEffect(() => {
+    if (data && totalPages === null) setTotalPages(data?.totalPages);
+  }, [data]);
 
   const handleSortChange = (event) => {
     setSelectedSort(event.target.value);
@@ -105,17 +115,20 @@ function UserReviewListPage() {
                 memberId={review.memberId}
                 reviewId={review.reviewId}
                 theIsUp={review.isThearUp}
+                movieId={review.movieId}
                 theIsDown={review.isThearDown}
                 queryKeyType={["userReviews", userId, selectedSort, page]}
                 isMine
               />
             ))}
       </ReviewContainer>
-      <CustomPagination
-        count={data?.totalPages}
-        page={page}
-        onChange={handlePageChange}
-      />
+      {totalPages && (
+        <CustomPagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+        />
+      )}
       {isModalOpen && (
         <ReviewDetailModal
           modalOpen={isModalOpen}
