@@ -95,34 +95,44 @@ function PhotoList({ photos }) {
     <div>
       <SliderContainer>
         <Slide>
-          <Swiper
-            spaceBetween={16}
-            speed={1500}
-            lazy="true"
-            // slidesPerView={3}
-            slidesPerView={"3"}
-            slidesPerGroup={3}
-            allowTouchMove={false}
-            navigation={{
-              nextEl: `.swiper-button-next`,
-              prevEl: `.swiper-button-prev`,
-            }}
-            modules={[Navigation]}
-            onSlideChange={(swiper) => {
-              setIsBeginning(swiper.isBeginning);
-              setIsEnd(swiper.isEnd);
-            }}
-            onReachBeginning={() => setIsBeginning(true)}
-            onReachEnd={() => setIsEnd(true)}
-          >
-            {photos.map((photoURL, index) => (
-              <SwiperSlide key={index} style={{ width: "300px" }}>
+          {photos.length <= 2 ? (
+            <div style={{ display: "flex", gap: "16px", width: "100%" }}>
+              {photos.map((photoURL, index) => (
                 <PhotoCard
                   $photourl={IMG_GALLERY_BASE_URL + `${photoURL.galleryPath}`}
                 />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              ))}
+            </div>
+          ) : (
+            <Swiper
+              spaceBetween={16}
+              speed={1500}
+              lazy="true"
+              // slidesPerView={3}
+              slidesPerView={Math.min(photos.length, 3)}
+              slidesPerGroup={Math.min(photos.length, 3)}
+              allowTouchMove={false}
+              navigation={{
+                nextEl: `.swiper-button-next`,
+                prevEl: `.swiper-button-prev`,
+              }}
+              modules={[Navigation]}
+              onSlideChange={(swiper) => {
+                setIsBeginning(swiper.isBeginning);
+                setIsEnd(swiper.isEnd);
+              }}
+              onReachBeginning={() => setIsBeginning(true)}
+              onReachEnd={() => setIsEnd(true)}
+            >
+              {photos.map((photoURL, index) => (
+                <SwiperSlide key={index}>
+                  <PhotoCard
+                    $photourl={IMG_GALLERY_BASE_URL + `${photoURL.galleryPath}`}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
         </Slide>
         <ButtonWrapper>
           <PrevButton className="swiper-button-prev" $isBeginning={isBeginning}>

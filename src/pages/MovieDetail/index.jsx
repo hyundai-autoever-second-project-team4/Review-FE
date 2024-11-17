@@ -22,7 +22,7 @@ function MovieDetail() {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["movieDetail"],
+    queryKey: ["movieDetail", movieId],
     queryFn: () => getMovieDetail(movieId),
 
     select: (data) => data.data,
@@ -239,7 +239,7 @@ function MovieDetail() {
                     commentCnt={review.commentCount}
                     reviewId={review.reviewId}
                     memberId={review.memberId}
-                    queryKeyType={["movieDetail"]}
+                    queryKeyType={["movieDetail", movieId]}
                   />
                 </S.CardWrapper>
               ))}
