@@ -51,7 +51,6 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   const [placeholder, setPlaceholder] = useState(
     "영화 리뷰에 대한 자신의 생각을 입력 해보세요."
   ); // placeholder 상태 추가
-  const [page, setPage] = useState(1);
   const { data, isLoading, isError, error } = useGetReviewDetail(id);
   const { mutate: thearUp } = useThearMutation(id, ["reviewDetail", id], "up");
   const navigate = useNavigate();
@@ -83,10 +82,6 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
     if (e.target.value === "") {
       setPlaceholder("영화 리뷰에 대한 자신의 생각을 입력 해보세요."); // 포커스 해제 시 입력이 없으면 placeholder 복원
     }
-  };
-
-  const handlePageChange = (event, value) => {
-    setPage(value); // 페이지 변경
   };
 
   const handleProfileClick = () => {
@@ -166,20 +161,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
             />
             <UpDownText>댓글 {reviewData.commentCount}</UpDownText>
           </S.ThumbWrapper>
-          <CommentList page={page} reviewId={id} />
-          <PaginationContainer>
-            <Pagination
-              count={parseInt(reviewData.commentCount / 10)}
-              page={page} // 현재 페이지
-              siblingCount={3}
-              onChange={handlePageChange} // 페이지 변경 핸들러
-              sx={{
-                ".MuiPaginationItem-root.Mui-selected": {
-                  backgroundColor: "#F2B705",
-                },
-              }}
-            />
-          </PaginationContainer>
+          <CommentList reviewId={id} />
           <CommentUploadContainer>
             <CommetUploadBox>
               <MyContainer>

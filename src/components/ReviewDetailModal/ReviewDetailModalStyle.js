@@ -76,6 +76,7 @@ export const ProfileImgContainer = styled.div`
 export const ProfileImg = styled.img`
   width: 20px;
   height: 20px;
+  border-radius: 100%;
 `;
 
 export const BadgeImg = styled.img`
@@ -159,6 +160,7 @@ export const MyProfileImgContainer = styled.div`
 export const MyProfileImg = styled.img`
   width: 24px;
   height: 24px;
+  border-radius: 100%;
 `;
 
 export const MyBadgeImg = styled.img`
