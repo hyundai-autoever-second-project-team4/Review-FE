@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteReview } from "../api/api";
+import Swal from "sweetalert2";
 
 export const useDeleteReview = (reviewId, queryKeyType) => {
   const queryClient = useQueryClient();
@@ -7,11 +8,19 @@ export const useDeleteReview = (reviewId, queryKeyType) => {
   return useMutation({
     mutationFn: () => deleteReview(reviewId),
     onSuccess: () => {
-      console.log(queryKeyType);
       queryClient.invalidateQueries(queryKeyType);
+      Swal.fire({
+        text: "삭제되었습니다.",
+        icon: "success",
+        confirmButtonText: "확인",
+      });
     },
     onError: (error) => {
-      console.error("에러: ", error);
+      Swal.fire({
+        text: `삭제에 실패했습니다: ${error}`,
+        icon: "error",
+        confirmButtonText: "확인",
+      });
     },
   });
 };

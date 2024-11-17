@@ -49,6 +49,7 @@ import { useDeleteReview } from "../../hooks/useDeleteReview";
 import { axiosInstance } from "../../api/axiosInstance";
 import useUserStore from "../../store/userStore";
 import { useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   const queryClient = useQueryClient(); // queryClient 가져오기
@@ -96,10 +97,17 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   };
 
   const handleDeleteButtonClick = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteReview();
-      alert("삭제되었습니다.");
-    }
+    Swal.fire({
+      text: "정말 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "확인",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteReview();
+      }
+    });
   };
 
   const handleCommentSubmit = async (content) => {
