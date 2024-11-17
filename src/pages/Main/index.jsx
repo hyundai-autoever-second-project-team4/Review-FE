@@ -7,6 +7,7 @@ import HotComment from "./template/HotComment";
 import FaceMovieList from "./template/FaceMovieList";
 import { useMainPageApi } from "../../hooks/useMainPageAPI.jsx";
 import Loading from "./template/Loading.jsx";
+import theme from "../../styles/theme.js";
 
 const Container = styled.div`
   margin-top: 72px;
@@ -59,7 +60,14 @@ function Main() {
         <FaceMovieList movieData={faceList} />
         {user?.id !== null && (
           <MovieSlider
-            title={`"${user?.name}" 님의 위한 추천 영화`}
+            title={
+              <div>
+                <p style={{ color: theme.colors.primary, display: "inline" }}>
+                  {`${user.name}`}
+                </p>{" "}
+                님을 위한 추천 영화
+              </div>
+            }
             movieData={userRecommendMovies}
             cnt={1}
           />

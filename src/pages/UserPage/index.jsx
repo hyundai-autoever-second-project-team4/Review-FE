@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useUserStore from "../../store/userStore.js";
 import theme from "../../styles/theme.js";
-import { levelName } from "../../utils/level.js";
 import Button from "../../components/Button/Button.jsx";
 import MyRating from "./template/MyRating.jsx";
 import WordCloud from "./template/WordCloud.jsx";
@@ -17,7 +16,10 @@ import {
   getBadgeCnt,
 } from "../../api/api.js";
 import { matchToTier } from "../../utils/matchToTier.js";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Tooltip } from "@mui/material";
+import { badgeNames } from "../../utils/badges.js";
+import UserPageLoading from "./template/UserPageLoading.jsx";
 
 const Container = styled.div`
   width: 1320px;
@@ -140,11 +142,18 @@ function UserPage() {
   });
 
   useEffect(() => {
-    setPercent(
-      (userDetail?.memberTier?.tierCurrentPoints /
-        userDetail?.memberTier?.tierRequiredPoints) *
-        100
-    );
+    const timeoutId = setTimeout(() => {
+      setPercent(
+        (userDetail?.memberTier?.tierCurrentPoints /
+          userDetail?.memberTier?.tierRequiredPoints) *
+          100
+      );
+    }, 300);
+
+    return () => {
+      clearTimeout(timeoutId);
+      setPercent(0);
+    };
   }, [userDetail]);
 
   useEffect(() => {
@@ -171,7 +180,7 @@ function UserPage() {
     editUserProfile(data);
   };
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <UserPageLoading />;
 
   return (
     <>
@@ -199,13 +208,19 @@ function UserPage() {
           <p>{userDetail?.memberName}</p>
           {userDetail?.memberBadgeList?.badges.map((badge) => {
             return (
-              <img
-                src={badge.image}
+              <Tooltip
                 key={badge.id}
-                alt=""
-                width={56}
-                height={56}
-              />
+                title={badgeNames[badge.id - 1]}
+                placement="top-start"
+              >
+                <img
+                  src={badge.image}
+                  alt=""
+                  width={56}
+                  height={56}
+                  // style={{ cursor: "pointer" }}
+                />
+              </Tooltip>
             );
           })}
         </InfoWrapper>

@@ -62,8 +62,10 @@ function UserReviewListPage() {
   };
 
   const handlePageChange = (event, value) => {
-    setPage(value); // 페이지 변경
-    smoothScrollTo(0, 500); // 500ms 동안 부드럽게 스크롤
+    setPage(value);
+    setTimeout(() => {
+      smoothScrollTo(0, 500);
+    }, 0);
   };
 
   return (
@@ -83,11 +85,14 @@ function UserReviewListPage() {
         </DropDownContainer>
       </HeaderBackground>
       <ReviewContainer>
-        {!isLoading
-          ? data?.content.map((review) => (
+        {isLoading
+          ? Array.from({ length: 5 }).map((_, index) => (
+              <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
+            ))
+          : data?.content.map((review) => (
               <Review
                 key={review.reviewId}
-                width={isMobile ? "80%" : "640px"} // 화면 크기에 따라 width 설정
+                width={isMobile ? "80%" : "640px"}
                 id={review.id}
                 starRate={review.starRate}
                 content={review.content}
@@ -104,9 +109,6 @@ function UserReviewListPage() {
                 queryKeyType={["userReviews", userId, selectedSort, page]}
                 isMine
               />
-            ))
-          : Array.from({ length: 5 }).map((_, index) => (
-              <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
             ))}
       </ReviewContainer>
       <CustomPagination
