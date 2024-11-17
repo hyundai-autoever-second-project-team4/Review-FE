@@ -95,3 +95,9 @@ export const getReviewDetail = async (reviewId) => {
 export const getCommentList = async (reviewId, page) => {
   return await axiosInstance.get(`/${reviewId}/comments?page=${page - 1}`);
 };
+
+// 리뷰
+
+export const deleteReview = async (reviewId) => {
+  return await axiosInstance.delete(`/review/${reviewId}`);
+};

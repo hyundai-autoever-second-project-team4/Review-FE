@@ -62,7 +62,7 @@ function Review({
   };
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    if (!blur) setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
@@ -78,12 +78,6 @@ function Review({
       {!isMine && (
         <S.TopArea>
           <S.ProfileWrapper onClick={handleUserInfoClick}>
-            {/* <DynamicSVG
-              svgUrl={`/levels/${level}.svg`}
-              width={18}
-              height={18}
-              color={theme.colors.super[level]}
-            /> */}
             <img src={level} width={18} height={18} alt="" />
             <S.ProfileImg src={profileImg} alt="" />
             <S.ProfileName>{profileName}</S.ProfileName>
@@ -106,7 +100,7 @@ function Review({
         </S.MovieNameArea>
       )}
       <div style={{ position: "relative" }}>
-        <S.ContentArea onClick={!blur && handleModalOpen} $isBlur={blur}>
+        <S.ContentArea onClick={handleModalOpen} $isBlur={blur}>
           {content}
         </S.ContentArea>
         {blur && (
@@ -127,7 +121,9 @@ function Review({
               src={theIsUp ? redUp : upLogo}
               width={18}
               height={18}
-              style={{ cursor: queryKeyType !== "hotReview" && "pointer" }}
+              style={{
+                cursor: queryKeyType !== "hotReview" ? "pointer" : "default",
+              }}
               onClick={handleUpButtonClick}
             />
             <p>{theUpCnt}</p>
@@ -138,7 +134,7 @@ function Review({
               width={18}
               height={18}
               style={{
-                cursor: queryKeyType !== "hotReview" && "pointer",
+                cursor: queryKeyType !== "hotReview" ? "pointer" : "default",
                 position: "relative",
                 top: "4px",
               }}
@@ -165,6 +161,7 @@ function Review({
           modalOpen={isModalOpen}
           modalClose={handleModalClose}
           id={reviewId}
+          queryKeyType={queryKeyType}
         />
       )}
     </S.Container>

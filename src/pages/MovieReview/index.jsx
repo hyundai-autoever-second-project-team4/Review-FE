@@ -28,18 +28,19 @@ function MovieReview() {
   const movieTitle = location.state?.movieTitle; // 상태에서 movieTitle을 가져옵니다.
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
-
-  const [reviewId, setReviewId] = useState(null);
   const [page, setPage] = useState(1); // 페이지 상태 추가
-  const [totalpage, setTotalPage] = useState(1); // 페이지 상태 추가
   const { movieId } = useParams();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["reviews", movieId, selectedSort, page],
     queryFn: () => getMovieReviewList(movieId, selectedSort, page),
     select: (data) => data.data,
     keepPreviousData: true, // 페이지 이동 시 이전 데이터를 유지
   });
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedSort]);
 
   const handleSortChange = (event) => {
     setSelectedSort(event.target.value);
@@ -107,7 +108,7 @@ function MovieReview() {
             ))}
       </ReviewContainer>
       <CustomPagination
-        count={totalpage}
+        count={data?.reviewInfos?.totalPages}
         page={page}
         onChange={handlePageChange}
       />
