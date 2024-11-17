@@ -22,7 +22,7 @@ function MovieDetail() {
     error,
     refetch,
   } = useQuery({
-    queryKey: ["movieDetail"],
+    queryKey: ["movieDetail", movieId],
     queryFn: () => getMovieDetail(movieId),
 
     select: (data) => data.data,
@@ -71,9 +71,6 @@ function MovieDetail() {
       role: actor.characterName, // 역할을 캐릭터 이름으로 설정
     })),
   ];
-
-  console.log(movieData);
-  console.log(movieData.reviewCountInfo);
 
   return (
     <div>
@@ -245,7 +242,7 @@ function MovieDetail() {
                       commentCnt={review.commentCount}
                       reviewId={review.reviewId}
                       memberId={review.memberId}
-                      queryKeyType={["movieDetail"]}
+                      queryKeyType={["movieDetail", movieId]}
                     />
                   </S.CardWrapper>
                 ))
