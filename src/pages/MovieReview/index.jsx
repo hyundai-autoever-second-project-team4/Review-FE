@@ -30,6 +30,7 @@ function MovieReview() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
   const [page, setPage] = useState(1); // 페이지 상태 추가
   const { movieId } = useParams();
+  const [totalPages, setTotalPages] = useState(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["reviews", movieId, selectedSort, page],
@@ -37,6 +38,10 @@ function MovieReview() {
     select: (data) => data.data,
     keepPreviousData: true, // 페이지 이동 시 이전 데이터를 유지
   });
+
+  useEffect(() => {
+    if (data && totalPages === null) setTotalPages(data.reviewInfos.totalPages);
+  }, [data]);
 
   useEffect(() => {
     setPage(1);
@@ -107,11 +112,13 @@ function MovieReview() {
               <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
             ))}
       </ReviewContainer>
-      <CustomPagination
-        count={data?.reviewInfos?.totalPages}
-        page={page}
-        onChange={handlePageChange}
-      />
+      {totalPages && (
+        <CustomPagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+        />
+      )}
     </Container>
   );
 }
