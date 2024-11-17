@@ -21,6 +21,7 @@ const Poster = styled.img`
   width: 120px;
   height: 180px;
   border-radius: ${theme.borderRadius.md};
+  object-fit: cover;
 `;
 
 const Info = styled.div`

@@ -37,6 +37,10 @@
   font-family: "Noto Sans KR", sans-serif;
 }
 
+.swal2-container {
+  z-index: 10000;
+}
+
 html,
 body,
 div,

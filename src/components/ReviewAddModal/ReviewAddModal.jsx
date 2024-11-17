@@ -21,6 +21,7 @@ import {
 } from "./ReviewAddModalStyle";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../api/axiosInstance";
+import Swal from "sweetalert2";
 
 const tagList = [
   { id: 1, tagName: "👨‍👩‍👧‍👦 가족과 함께" },
@@ -66,11 +67,15 @@ function ReviewAddModal({ modalClose, movieTitle, refetch }) {
       if (response.status === 200 || response.status === 201) {
         // 성공적으로 제출됨
         modalClose(); // 모달 닫기
-        refetch();
-        alert(
-          `"${movieTitle}" 에 대한 리뷰 작성이 완료되었습니다!\n\n리뷰 작성으로 👍띠어력 10점👍을 드렸으며,\n\n리뷰 수정은 불가하고 삭제 시 10점 감소합니다.`
-        );
-        window.location.reload();
+        Swal.fire({
+          text: `"${movieTitle}" 에 대한 리뷰 작성이 완료되었습니다!\n\n리뷰 작성으로 👍띠어력 10점👍을 드렸으며,\n\n리뷰 수정은 불가하고 삭제 시 10점 감소합니다.`,
+          icon: "success",
+          showCancelButton: false,
+          confirmButtonText: "확인",
+        }).then(() => {
+          refetch();
+          window.location.reload();
+        });
       }
     } catch (error) {
       console.error("리뷰 제출 중 오류 발생:", error);

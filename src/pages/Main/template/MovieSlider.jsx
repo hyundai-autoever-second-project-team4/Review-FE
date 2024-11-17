@@ -142,9 +142,8 @@ function MovieSlider({ title, movieData, cnt }) {
             onReachEnd={() => setIsEnd(true)}
           >
             {movieData.map((movie, index) => (
-              <SwiperSlide key={index}>
+              <SwiperSlide key={movie.movieId}>
                 <MainMovieCard
-                  key={index}
                   index={index}
                   movieId={movie.movieId}
                   title={movie.title}

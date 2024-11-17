@@ -28,6 +28,7 @@
     "react-wordcloud": "^1.2.7",
     "rollup-plugin-polyfill-node": "^0.13.0",
     "styled-components": "^6.1.13",
+    "sweetalert2": "^11.14.5",
     "swiper": "^11.1.14",
     "zustand": "^5.0.1"
   },
