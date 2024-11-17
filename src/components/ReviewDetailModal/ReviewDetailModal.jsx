@@ -46,6 +46,7 @@ import { useThearMutation } from "../../hooks/useThearMutation";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useDeleteReview } from "../../hooks/useDeleteReview";
+import Swal from "sweetalert2";
 
 function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   const [placeholder, setPlaceholder] = useState(
@@ -94,10 +95,17 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   };
 
   const handleDeleteButtonClick = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteReview();
-      alert("삭제되었습니다.");
-    }
+    Swal.fire({
+      text: "정말 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "확인",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteReview();
+      }
+    });
   };
 
   return (

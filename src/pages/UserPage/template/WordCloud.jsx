@@ -23,9 +23,12 @@ const Wrapepr = styled.div`
   width: 100%;
   border-radius: ${theme.borderRadius.md};
   height: 300px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
-function WordCloud({ level, genre }) {
+const WordCloud = React.memo(({ level, genre }) => {
   const options = {
     rotations: 1,
     rotationAngles: [0],
@@ -40,10 +43,12 @@ function WordCloud({ level, genre }) {
     <Container>
       <Title>영화 선호 장르</Title>
       <Wrapepr>
-        <ReactWordcloud options={options} words={genre} />
+        <div>
+          <ReactWordcloud size={[350, 250]} options={options} words={genre} />
+        </div>
       </Wrapepr>
     </Container>
   );
-}
+});
 
 export default WordCloud;

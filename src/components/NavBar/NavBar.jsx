@@ -13,6 +13,7 @@ import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import ProfileTooltip from "./ProfileTooltip";
 import Fade from "@mui/material/Fade";
 import LoginModal from "../LoginModal/LoginModal";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   position: fixed;
@@ -194,10 +195,25 @@ function NavBar() {
   };
 
   const handleLogOut = () => {
-    alert("로그아웃 되었습니다.");
-    logOut();
-    deleteAllCookies();
-    navigate("/");
+    Swal.fire({
+      text: "정말 로그아웃 하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "확인",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logOut();
+        deleteAllCookies();
+        Swal.fire({
+          text: "로그아웃 되었습니다.",
+          icon: "success",
+          confirmButtonText: "확인",
+        }).then(() => {
+          navigate("/");
+        });
+      }
+    });
   };
 
   const handleModalOpen = () => {
