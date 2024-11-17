@@ -86,11 +86,11 @@ function ProfileTooltip({
 }) {
   return (
     <Container>
-      <BadgeImg src={`/badgeBackgrounds/${primaryBadge}.png`} alt="" />
+      <BadgeImg src={primaryBadge} alt="" />
       <ProfileWrapper onClick={moveToMyPage}>
         <ProfileImg src={img} />
         <ProfileName>
-          <DynamicSVG width={12} height={12} svgUrl={`/levels/${level}.svg`} />
+          <img src={level} alt="" width={12} height={12} />
           <p>{name}</p>
         </ProfileName>
       </ProfileWrapper>

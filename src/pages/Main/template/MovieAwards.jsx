@@ -78,6 +78,10 @@ const MovieAwardsText = styled.p`
   text-align: center;
 
   margin-bottom: 40px;
+
+  @media (max-width: 480px) {
+    font-size: 36px;
+  }
 `;
 
 const LeftWing = styled.img`
@@ -100,6 +104,11 @@ const RightWing = styled.img`
 
 const LogoImg = styled.img`
   animation: ${upDown} 4s ease-in-out infinite;
+  width: 240px;
+
+  @media (max-width: 480px) {
+    width: 180px;
+  }
 `;
 
 function MovieAwards({ movieData }) {
@@ -114,7 +123,7 @@ function MovieAwards({ movieData }) {
           flexDirection: "column",
         }}
       >
-        <LogoImg src={svgLogo} alt="" width={240} />
+        <LogoImg src={svgLogo} alt="" />
         <WingWrapper>
           <LeftWing src={leftWing} />
           <RightWing src={rightWing} />

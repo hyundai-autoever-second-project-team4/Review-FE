@@ -267,16 +267,16 @@ function NavBar() {
                   <ProfileTooltip
                     name={user?.name}
                     img={user?.profileImage}
-                    level="movieGod"
-                    primaryBadge="unbreakable"
+                    level={user?.tier?.image}
+                    primaryBadge={user?.badge?.background_image}
                     moveToMyPage={moveToMyPage}
                     handleLogOut={handleLogOut}
                   />
                 }
+                arrow
                 placement="bottom-end"
                 TransitionComponent={Fade}
                 TransitionProps={{ timeout: 650 }}
-                // open={true}
                 componentsProps={{
                   tooltip: {
                     sx: {
@@ -285,6 +285,9 @@ function NavBar() {
                       color: "black",
                       boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
                       borderRadius: theme.borderRadius.sm,
+                      ".css-iglfhh-MuiTooltip-arrow::before": {
+                        backgroundColor: "#fff",
+                      },
                     },
                   },
                 }}

@@ -22,6 +22,10 @@ const StyledButton = styled.button`
         ? theme.colors.primaryColor2
         : theme.colors.gray2};
   }
+
+  @media (max-width: 480px) {
+    font-size: ${theme.fontSizes.sub2};
+  }
 `;
 
 function Button({ children, color, size, ...props }) {
