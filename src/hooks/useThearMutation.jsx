@@ -17,9 +17,32 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
       queryClient.setQueryData(querykeyType, (old) => {
         if (!old) return;
 
-        let reviewInfos;
         const mainQueryKey = querykeyType[0]; // queryKey의 첫 번째 요소를 사용하여 판단
+        const field = actionType === "up" ? "ThearUpCount" : "ThearDownCount";
+        const flagField = actionType === "up" ? "isThearUp" : "isThearDown";
 
+        if (mainQueryKey === "reviewDetail") {
+          const reviewInfo = old.data.reviewInfo;
+          let updateReviewInfo = { ...reviewInfo };
+
+          updateReviewInfo = {
+            ...updateReviewInfo,
+            [field]: !updateReviewInfo[flagField]
+              ? updateReviewInfo[field] + 1
+              : updateReviewInfo[field] - 1,
+            [flagField]: !updateReviewInfo[flagField],
+          };
+
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              reviewInfo: updateReviewInfo,
+            },
+          };
+        }
+
+        let reviewInfos;
         if (mainQueryKey === "hotReview") {
           reviewInfos = old.data.reviewInfos;
         } else if (
@@ -41,8 +64,6 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
         if (index === -1) return old;
 
         const updatedReviewInfos = [...reviewInfos];
-        const field = actionType === "up" ? "ThearUpCount" : "ThearDownCount";
-        const flagField = actionType === "up" ? "isThearUp" : "isThearDown";
 
         updatedReviewInfos[index] = {
           ...updatedReviewInfos[index],
@@ -71,7 +92,7 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
 
       return { previousData };
     },
-    onError: (err, userId, context) => {
+    onError: (err, context) => {
       queryClient.setQueryData(querykeyType, context.previousData);
       console.log(err);
     },

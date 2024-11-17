@@ -88,7 +88,7 @@ export const getSearchGenre = async (data) => {
   return await axiosInstance.get(`/search/genre`, { params: data });
 };
 
-export const getMovieReviewDetail = async (reviewId) => {
+export const getReviewDetail = async (reviewId) => {
   return await axiosInstance.get(`/review/${reviewId}`);
 };
 

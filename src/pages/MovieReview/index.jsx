@@ -8,8 +8,6 @@ import {
   ReviewContainer,
 } from "./MovieReviewStyle";
 import Review from "../../components/Review/Review";
-import { Pagination } from "@mui/material";
-import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
 import { useLocation, useParams } from "react-router-dom";
 import { getMovieReviewList } from "../../api/api";
 import { useQuery } from "@tanstack/react-query";
@@ -30,7 +28,7 @@ function MovieReview() {
   const movieTitle = location.state?.movieTitle; // 상태에서 movieTitle을 가져옵니다.
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [reviewId, setReviewId] = useState(null);
   const [page, setPage] = useState(1); // 페이지 상태 추가
   const [totalpage, setTotalPage] = useState(1); // 페이지 상태 추가
@@ -57,15 +55,6 @@ function MovieReview() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const handleModalOpen = (id) => {
-    setReviewId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -109,7 +98,6 @@ function MovieReview() {
                 commentCnt={review.commentCount}
                 theIsUp={review.isThearUp}
                 theIsDown={review.isThearDown}
-                contentClick={() => handleModalOpen(review.reviewId)}
                 reviewId={review.reviewId}
                 queryKeyType={["reviews", movieId, selectedSort, page]}
               />
@@ -123,14 +111,6 @@ function MovieReview() {
         page={page}
         onChange={handlePageChange}
       />
-
-      {isModalOpen && (
-        <ReviewDetailModal
-          modalOpen={isModalOpen}
-          modalClose={handleModalClose}
-          id={reviewId}
-        />
-      )}
     </Container>
   );
 }

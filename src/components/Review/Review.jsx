@@ -11,6 +11,7 @@ import redUp from "/src/assets/svg/redUp.svg";
 import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
 import { useNavigate, useParams } from "react-router-dom";
+import ReviewDetailModal from "../ReviewDetailModal/ReviewDetailModal";
 
 function Review({
   reviewId,
@@ -35,6 +36,7 @@ function Review({
   movieId,
 }) {
   const [blur, setBlur] = useState(isBlur);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const { mutate: thearUp } = useThearMutation(reviewId, queryKeyType, "up");
@@ -57,6 +59,14 @@ function Review({
 
   const handleTitleClick = () => {
     navigate(`/movieDetail/${movieId}`);
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -96,7 +106,7 @@ function Review({
         </S.MovieNameArea>
       )}
       <div style={{ position: "relative" }}>
-        <S.ContentArea onClick={() => contentClick(id)} $isBlur={blur}>
+        <S.ContentArea onClick={!blur && handleModalOpen} $isBlur={blur}>
           {content}
         </S.ContentArea>
         {blur && (
@@ -150,6 +160,13 @@ function Review({
           </S.ThumbWrapper>
         </S.ThumbWrapper>
       </S.BottomArea>
+      {isModalOpen && (
+        <ReviewDetailModal
+          modalOpen={isModalOpen}
+          modalClose={handleModalClose}
+          id={reviewId}
+        />
+      )}
     </S.Container>
   );
 }
