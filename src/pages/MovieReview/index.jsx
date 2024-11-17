@@ -68,8 +68,10 @@ function MovieReview() {
   };
 
   const handlePageChange = (event, value) => {
-    setPage(value); // 페이지 변경
-    smoothScrollTo(0, 500); // 500ms 동안 부드럽게 스크롤
+    setPage(value);
+    setTimeout(() => {
+      smoothScrollTo(0, 500);
+    }, 0);
   };
 
   return (
