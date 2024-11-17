@@ -27,7 +27,8 @@ function CommentList({ reviewId, page }) {
     return <div>Error: {error.message}</div>;
   }
 
-  const comments = data?.commentList;
+  console.log(data.commentList);
+  const comments = data?.commentList.content;
 
   return (
     <CommentContainer>

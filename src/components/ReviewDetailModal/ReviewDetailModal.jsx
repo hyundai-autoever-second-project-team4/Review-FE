@@ -91,7 +91,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
           nickname={reviewData.memberName}
           starRate={reviewData.starRate}
           reviewDate={reviewData.createdAt}
-          badgeImg={reviewData.memberProfileImg} //수정 필요
+          badgeImg={reviewData.memberBadgeImg}
         />
       }
       large
@@ -154,7 +154,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
             <MyTierImg src={reviewData.memberTierImg} />
             <MyProfileImgContainer>
               <MyProfileImg src={reviewData.memberProfileImg} />
-              <MyBadgeImg src={reviewData.memberTierImg} />
+              <MyBadgeImg src={reviewData.memberBadgeImg} />
             </MyProfileImgContainer>
             <MyName>{reviewData.memberName}</MyName>
           </MyContainer>
