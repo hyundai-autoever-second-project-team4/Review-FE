@@ -8,7 +8,23 @@ export const Container = styled.div`
   align-items: center;
   padding-bottom: 40px;
 `;
+export const MovieInfoCont = styled.div`
+  width: 100%;
+  /* max-width: 800px; */
+  display: flex;
+  gap: 16px;
+  padding-right: 16px;
 
+  @media (max-width: 1320px) {
+    padding-left: 8px;
+    padding-right: 8px;
+    /* max-width: 800px; */
+    width: 100%;
+  }
+  @media (max-width: 1200px) {
+    width: 100%; /* 가로로 공간 채우기 */
+  }
+`;
 export const BackImg = styled.div`
   width: 98.9vw;
   height: 550px;
@@ -37,12 +53,14 @@ export const MovieWrap = styled.div`
   margin-top: 20px;
   width: 1320px;
   justify-content: space-between;
-  gap: 16px;
+  /* gap: 16px; */
+  margin-left: 16px;
 
   @media (max-width: 1200px) {
     flex-direction: column; /* 작은 화면에서 수직 배열 */
     justify-content: flex-start; /// center냐 뭐냐 뭐가 맞냐
-    padding-left: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 `;
 
@@ -69,19 +87,13 @@ export const MovieInfo = styled.div`
   //justify-content: space-between;
 `;
 
-export const MovieInfoWrap = styled.div`
+export const StarWrap = styled.div`
   /* max-width: 580px; */
   display: flex;
   gap: 16px;
-  /* background-color: greenyellow; */
+  background-color: blue;
+  opacity: 0.2;
   flex-direction: column;
-
-  @media (max-width: 1200px) {
-    /* flex: 1; // 화면이 줄어들면 가득 차도록
-    max-width: 100%; */
-
-    flex-basis: 100%;
-  }
 `;
 
 export const MainInfo = styled.div`
@@ -89,15 +101,21 @@ export const MainInfo = styled.div`
   display: flex;
   /* height: 1px; */
   justify-content: space-between;
+  background-color: pink;
+
   flex-direction: row;
 `;
 export const StarInfo = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: flex-start;
   justify-content: space-between;
-  min-width: 600px;
+  /* min-width: 600px; */
+  width: 100%;
+  /* max-width: 600px; */
   position: relative;
+  background-color: yellow;
+  opacity: 0.7;
 `;
 
 export const Title = styled.h1`
@@ -115,6 +133,8 @@ export const SubInfo = styled.div`
   color: ${theme.colors.black};
   font-weight: bold;
   gap: 8px;
+  background-color: red;
+  opacity: 0.4;
 `;
 
 export const SubText = styled.div`
@@ -138,12 +158,9 @@ export const Description = styled.p`
 `;
 
 export const Tags = styled.div`
-  position: absolute; //얘는 flex-end같은걸로 가야함. 안돼
-  right: 0;
-  bottom: 0;
-  top: 10px;
   display: flex;
-  gap: 16px;
+  justify-content: flex-start;
+  gap: 8px;
 
   flex-direction: column; // 태그 세로배치
 `;
@@ -219,7 +236,7 @@ export const ProfileCont = styled.div`
 
   @media (max-width: 1320px) {
     width: 90%;
-    /* padding-left: 20px; */
+    padding-left: 20px;
   }
 `;
 export const ProfileWrap = styled.div`

@@ -71,7 +71,7 @@ function MovieDetail() {
       role: actor.characterName, // 역할을 캐릭터 이름으로 설정
     })),
   ];
-
+  console.log(movieData);
   return (
     <div>
       <S.Container>
@@ -91,13 +91,7 @@ function MovieDetail() {
             }}
           >
             <S.MovieWrap>
-              <div
-                style={{
-                  width: "50%",
-                  display: "flex",
-                  gap: "20px",
-                }}
-              >
+              <S.MovieInfoCont>
                 <S.PosterSection>
                   <S.Poster
                     src={IMG_BASE_URL + `${movieData.movieInfo.posterPath}`}
@@ -110,20 +104,15 @@ function MovieDetail() {
                       width: "100%",
                       display: "flex",
                       gap: "16px",
+                      background: "gray",
+                      opacity: "0.3",
 
                       flexDirection: "column",
                     }}
                   >
                     <S.MainInfo>
                       <S.Title>{movieData.movieInfo.title}</S.Title>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "16px",
-                          alignItems: "center",
-                          height: "36px",
-                        }}
-                      >
+                      <S.StarWrap>
                         {!movieData.isReviewed && (
                           <Button
                             onClick={handleWriteModalOpen}
@@ -137,7 +126,7 @@ function MovieDetail() {
                           readOnly
                           rate={movieData.reviewCountInfo.averageStarRate}
                         ></StarRating>
-                      </div>
+                      </S.StarWrap>
                     </S.MainInfo>
                     <S.StarInfo>
                       <S.SubInfo>
@@ -167,7 +156,7 @@ function MovieDetail() {
                   </div>
                   <S.Description>{movieData.movieInfo.overview}</S.Description>
                 </S.MovieInfo>
-              </div>
+              </S.MovieInfoCont>
               <S.ChartSection>
                 <S.AvgRating>
                   <div>
