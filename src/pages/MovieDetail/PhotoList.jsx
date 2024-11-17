@@ -85,6 +85,18 @@ const PhotoCard = styled.div`
   background-image: url(${(props) => props.$photourl});
   background-size: cover;
   background-position: center;
+
+  @media (max-width: 960px) {
+    width: 90%; /* 화면 크기에 따라 너비를 조정 */
+    height: auto; /* 비율을 유지 */
+    aspect-ratio: 3 / 2; /* 비율 유지 */
+  }
+
+  @media (max-width: 640px) {
+    width: 90%; /* 모바일 화면에서 너비를 100%로 설정 */
+    height: auto; /* 비율을 유지 */
+    aspect-ratio: 3 / 2;
+  }
 `;
 
 function PhotoList({ photos }) {

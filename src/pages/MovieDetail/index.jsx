@@ -184,7 +184,7 @@ function MovieDetail() {
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>
-              {combinedProfiles.map((profile, index) => (
+              {combinedProfiles.splice(0, 15).map((profile, index) => (
                 <S.Profile key={index}>
                   {profile.imageUrl ? (
                     <S.ProfileImg

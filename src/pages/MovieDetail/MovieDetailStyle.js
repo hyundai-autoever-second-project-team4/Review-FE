@@ -44,7 +44,6 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   gap: 16px;
 `;
 
@@ -236,7 +235,7 @@ export const ProfileCont = styled.div`
 
   @media (max-width: 1320px) {
     width: 90%;
-    padding-left: 20px;
+    /* padding-left: 20px; */
   }
 `;
 export const ProfileWrap = styled.div`
@@ -306,11 +305,8 @@ export const ProfileInfo = styled.div`
 export const ReviewCont = styled.div`
   display: flex;
   margin-top: 20px;
-  /* align-self: flex-start; */
-  /* justify-content: space-between; */
   flex-direction: column;
   margin-bottom: 24px;
-  /* height: 160px; */
 `;
 
 export const ReviewTitleWrap = styled.div`
@@ -319,23 +315,43 @@ export const ReviewTitleWrap = styled.div`
   /* justify-content: space-between; */
   margin-bottom: 16px;
 
+  max-width: 1320px;
+  width: 100%;
   & > button {
     margin-left: auto; /* 버튼을 오른쪽으로 밀기 */
+  }
+
+  @media (max-width: 1200px) {
+    width: 90%;
+    justify-content: space-between; /* 제목과 버튼의 간격 유지 */
+  }
+
+  @media (max-width: 960px) {
+    width: 90%;
+    justify-content: space-between; /* 제목과 버튼의 간격 유지 */
   }
 `;
 
 export const ReviewWrap = styled.div`
   display: flex;
-  width: 1320px;
-  /* justify-content: space-between; */
+  max-width: 1320px;
+  width: 100%;
+
   overflow-x: auto;
+  padding: 0 16px;
   overflow-y: hidden; ///
   gap: 16px;
   flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
 
+  @media (max-width: 1200px) {
+    width: 100%;
+    gap: 16px;
+    padding: 0 16px;
+  }
   @media (max-width: 960px) {
-    gap: 16px; /* 작은 화면에서 간격 추가 */
-    justify-content: center; /* 가운데 정렬 */
+    gap: 16px;
+    width: 100%;
+    padding: 0 16px;
   }
 `;
 
@@ -347,8 +363,23 @@ export const GalleryCont = styled.div`
   margin-top: 20px;
   width: 1320px;
   justify-content: space-between;
+  background-color: goldenrod;
 `;
 
 export const CardWrapper = styled.div`
   flex-basis: calc((100% - 64px) / 5); /* 기본 너비 설정 */
+
+  min-width: 250px; /* 카드의 고정 너비 */
+
+  /////////////
+  @media (max-width: 1320px) {
+    flex-basis: calc((100% - 48px) / 4);
+  }
+  @media (max-width: 960px) {
+    flex-basis: calc((100% - 32px) / 3);
+  }
+
+  @media (max-width: 640px) {
+    flex-basis: calc((100% - 16px) / 2);
+  }
 `;
