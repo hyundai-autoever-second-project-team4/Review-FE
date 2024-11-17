@@ -6,7 +6,7 @@ import theme from "../../styles/theme";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Skeleton, Tab, Tabs } from "@mui/material";
 import { BottomMargin } from "../MovieList/MovieListStyle";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSearchTitle, getSearchGenre } from "../../api/api";
 import { CircularProgress } from "@mui/material";
 import CustomPagination from "../../components/CustomPagination/CustomPagination";
@@ -178,6 +178,7 @@ function Search() {
   const [genreSearchData, setGenreSearchData] = useState(null);
   const [tab, setTab] = useState(0);
 
+  const queryClient = useQueryClient(); //다음 페이지 prefetch
   const {
     data: titleData,
     isLoading: Titleloading,
@@ -207,6 +208,31 @@ function Search() {
       }),
     enabled: tab === 1 || page === 1,
   });
+
+  //탭에 따라서 다음 페이지를 미리 prefetch
+  useEffect(() => {
+    const nextPage = page + 1;
+
+    if (tab === 0) {
+      queryClient.prefetchQuery({
+        queryKey: ["searchTitle", nextPage, query],
+        queryFn: () =>
+          getSearchTitle({
+            title: query,
+            page: nextPage - 1,
+          }),
+      });
+    } else if (tab === 1) {
+      queryClient.prefetchQuery({
+        queryKey: ["searchGenre", nextPage, query],
+        queryFn: () =>
+          getSearchGenre({
+            genre: query,
+            page: nextPage - 1,
+          }),
+      });
+    }
+  }, [queryClient, tab, page, query]);
 
   useEffect(() => {
     setQuery(searchKeyword || "");
