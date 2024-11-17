@@ -28,6 +28,7 @@ import {
   UpDownContainer,
   UpDownText,
   UserBox,
+  DeleteButton,
 } from "./ReviewDetailModalStyle";
 import * as S from "../Review/ReviewStyle";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
@@ -42,19 +43,24 @@ import downLogo from "/src/assets/svg/down.svg";
 import redUp from "/src/assets/svg/redUp.svg";
 import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
+import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
+import { useDeleteReview } from "../../hooks/useDeleteReview";
 
-function ReviewDetailModal({ modalOpen, modalClose, id }) {
+function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   const [placeholder, setPlaceholder] = useState(
     "영화 리뷰에 대한 자신의 생각을 입력 해보세요."
   ); // placeholder 상태 추가
   const [page, setPage] = useState(1);
   const { data, isLoading, isError, error } = useGetReviewDetail(id);
   const { mutate: thearUp } = useThearMutation(id, ["reviewDetail", id], "up");
+  const navigate = useNavigate();
   const { mutate: thearDown } = useThearMutation(
     id,
     ["reviewDetail", id],
     "down"
   );
+  const { mutate: deleteReview } = useDeleteReview(id, queryKeyType);
 
   if (isError) {
     return <div>Error: {error.message}</div>;
@@ -83,6 +89,17 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
     setPage(value); // 페이지 변경
   };
 
+  const handleProfileClick = () => {
+    navigate(`/userPage/${reviewData?.memberId}`);
+  };
+
+  const handleDeleteButtonClick = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteReview();
+      alert("삭제되었습니다.");
+    }
+  };
+
   return (
     <CustomModal
       modal={modalOpen}
@@ -96,6 +113,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
             starRate={reviewData?.starRate}
             reviewDate={reviewData?.createdAt}
             badgeImg={reviewData?.memberBadgeImg}
+            handleProfileClick={handleProfileClick}
           />
         )
       }
@@ -104,40 +122,47 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
     >
       {!isLoading && (
         <>
-          <ContentContainer> {reviewData.content}</ContentContainer>
+          <ContentContainer>{reviewData.content}</ContentContainer>
           <UpDownContainer>
             <S.ThumbWrapper>
-              <img
-                src={reviewData.isThearUp ? redUp : upLogo}
-                width={28}
-                height={28}
-                style={{ cursor: "pointer" }}
-                onClick={toggleUpVote}
-              />
-              <UpDownText>{reviewData.ThearUpCount}</UpDownText>
+              <S.ThumbWrapper>
+                <img
+                  src={reviewData.isThearUp ? redUp : upLogo}
+                  width={24}
+                  height={24}
+                  style={{ cursor: "pointer" }}
+                  onClick={toggleUpVote}
+                />
+                <UpDownText>{reviewData.ThearUpCount}</UpDownText>
+              </S.ThumbWrapper>
+              <S.ThumbWrapper>
+                <img
+                  src={reviewData.isThearDown ? blueDown : downLogo}
+                  width={24}
+                  height={24}
+                  style={{
+                    cursor: "pointer",
+                    position: "relative",
+                    top: "6px",
+                  }}
+                  onClick={toggleDownVote}
+                />
+                <UpDownText>{reviewData.ThearDownCount}</UpDownText>
+              </S.ThumbWrapper>
             </S.ThumbWrapper>
-            <S.ThumbWrapper>
-              <img
-                src={reviewData.isThearDown ? blueDown : downLogo}
-                width={28}
-                height={28}
-                style={{
-                  cursor: "pointer",
-                  position: "relative",
-                  top: "6px",
-                }}
-                onClick={toggleDownVote}
-              />
-              <UpDownText>{reviewData.ThearDownCount}</UpDownText>
-            </S.ThumbWrapper>
+            {reviewData.isWriter && (
+              <DeleteButton onClick={handleDeleteButtonClick}>
+                리뷰 삭제
+              </DeleteButton>
+            )}
           </UpDownContainer>
           <StyledLine />
           <S.ThumbWrapper>
             <DynamicSVG
               svgUrl={ChatLogo}
               color={theme.colors.gray3}
-              width={29}
-              height={28}
+              width={24}
+              height={24}
             />
             <UpDownText>댓글 {reviewData.commentCount}</UpDownText>
           </S.ThumbWrapper>
@@ -170,7 +195,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
                 onFocus={handleFocus} // 포커스 이벤트 핸들러
                 onBlur={handleBlur} // 블러 이벤트 핸들러
               />
-              <SubmitBtn>등록</SubmitBtn>
+              <SubmitBtn color="primary">등록</SubmitBtn>
             </CommetUploadBox>
           </CommentUploadContainer>
         </>

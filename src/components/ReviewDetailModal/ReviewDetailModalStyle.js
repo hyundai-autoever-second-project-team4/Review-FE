@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from "../../styles/theme";
+import Button from "../Button/Button";
 
 export const ContentContainer = styled.div`
   font-size: ${theme.fontSizes.sub1};
@@ -13,6 +14,7 @@ export const UpDownContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
 `;
@@ -186,22 +188,17 @@ export const ReviewInput = styled.textarea`
   border-radius: 10px;
 `;
 
-export const SubmitBtn = styled.button`
+export const SubmitBtn = styled(Button)`
   position: absolute;
   bottom: 20px;
   right: 18px;
-  border: none;
-  cursor: pointer;
-  font-family: "Noto Sans KR";
-  width: 46px;
-  height: 22px;
-  color: ${theme.colors.black};
-  font-size: ${theme.fontSizes.sub2};
-  font-weight: ${theme.fontWeight.regular};
-  text-align: center;
-  border-radius: 8px;
-  background-color: ${theme.colors.primary};
+`;
+
+export const DeleteButton = styled(Button)`
+  background-color: ${theme.colors.gray2};
+  color: white;
+
   &:hover {
-    background-color: ${theme.colors.primaryColor4};
+    background-color: ${theme.colors.red};
   }
 `;

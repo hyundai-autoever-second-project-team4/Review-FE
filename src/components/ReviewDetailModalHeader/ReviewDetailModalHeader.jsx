@@ -18,6 +18,7 @@ function ReviewDetailModalHeader({
   starRate,
   badgeImg,
   reviewDate,
+  handleProfileClick,
 }) {
   // 문자열 분리
   const dateTimeParts = reviewDate.split("T");
@@ -37,12 +38,23 @@ function ReviewDetailModalHeader({
 
   return (
     <Container>
-      <TierImg src={tierImg} />
-      <ProfileImgContainer>
-        <ProfileImg src={profileImg} />
-        <BadgeImg src={badgeImg} />
-      </ProfileImgContainer>
-      <Name>{nickname}</Name>
+      <div
+        style={{
+          cursor: "pointer",
+          height: "100%",
+          display: "flex",
+          alignItems: "flex-end",
+        }}
+        onClick={handleProfileClick}
+      >
+        <TierImg src={tierImg} />
+        <ProfileImgContainer>
+          <ProfileImg src={profileImg} />
+          <BadgeImg src={badgeImg} />
+        </ProfileImgContainer>
+        <Name>{nickname}</Name>
+      </div>
+
       <DateText>리뷰일 : {formattedDate}</DateText>
       <StarRate>
         <img src={StarIcon} width={16} height={16} />
