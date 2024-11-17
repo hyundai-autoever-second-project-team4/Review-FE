@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CustomModal from "../CustomModal/CustomModal";
 import ReviewDetailModalHeader from "../ReviewDetailModalHeader/ReviewDetailModalHeader";
 import {
@@ -46,14 +46,20 @@ import { useThearMutation } from "../../hooks/useThearMutation";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useDeleteReview } from "../../hooks/useDeleteReview";
+import { axiosInstance } from "../../api/axiosInstance";
+import useUserStore from "../../store/userStore";
+import { useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 
 function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
+  const queryClient = useQueryClient(); // queryClient 가져오기
   const [placeholder, setPlaceholder] = useState(
     "영화 리뷰에 대한 자신의 생각을 입력 해보세요."
   ); // placeholder 상태 추가
-  const [page, setPage] = useState(1);
-  const { data, isLoading, isError, error } = useGetReviewDetail(id);
+  const [commentContent, setCommentContent] = useState(""); // 댓글 내용 상태 추가
+  const inputRef = useRef(null); // 입력 필드에 대한 ref 생성
+  const { data, isLoading, isError, error, refetch } = useGetReviewDetail(id);
+  const { user, setUser, logOut } = useUserStore();
   const { mutate: thearUp } = useThearMutation(id, ["reviewDetail", id], "up");
   const navigate = useNavigate();
   const { mutate: thearDown } = useThearMutation(
@@ -86,10 +92,6 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
     }
   };
 
-  const handlePageChange = (event, value) => {
-    setPage(value); // 페이지 변경
-  };
-
   const handleProfileClick = () => {
     navigate(`/userPage/${reviewData?.memberId}`);
   };
@@ -106,6 +108,29 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
         deleteReview();
       }
     });
+  };
+
+  const handleCommentSubmit = async (content) => {
+    if (commentContent == "") {
+      alert("댓글 내용을 입력해주세요!");
+    } else {
+      try {
+        const response = await axiosInstance.post("/comment", {
+          reviewId: id,
+          content: content,
+        });
+        // 댓글 등록 후 쿼리 무효화
+        queryClient.invalidateQueries(queryKeyType);
+        alert("댓글이 등록되었습니다.");
+        inputRef.current.blur(); // 입력 필드의 포커스를 해제
+        setPlaceholder("영화 리뷰에 대한 자신의 생각을 입력 해보세요.");
+        setCommentContent("");
+        refetch();
+      } catch (error) {
+        console.error("댓글 등록 오류:", error);
+        alert("댓글 등록에 실패했습니다.");
+      }
+    }
   };
 
   return (
@@ -174,36 +199,38 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
             />
             <UpDownText>댓글 {reviewData.commentCount}</UpDownText>
           </S.ThumbWrapper>
-          <CommentList page={page} reviewId={id} />
-          <PaginationContainer>
-            <Pagination
-              count={parseInt(reviewData.commentCount / 10)}
-              page={page} // 현재 페이지
-              siblingCount={3}
-              onChange={handlePageChange} // 페이지 변경 핸들러
-              sx={{
-                ".MuiPaginationItem-root.Mui-selected": {
-                  backgroundColor: "#F2B705",
-                },
-              }}
-            />
-          </PaginationContainer>
+          <CommentList reviewId={id} />
           <CommentUploadContainer>
             <CommetUploadBox>
-              <MyContainer>
-                <MyTierImg src={reviewData.memberTierImg} />
-                <MyProfileImgContainer>
-                  <MyProfileImg src={reviewData.memberProfileImg} />
-                  <MyBadgeImg src={reviewData.memberBadgeImg} />
-                </MyProfileImgContainer>
-                <MyName>{reviewData.memberName}</MyName>
-              </MyContainer>
+              {user?.id === null ? (
+                <MyContainer>
+                  <MyName>로그인이 필요합니다.</MyName>
+                </MyContainer>
+              ) : (
+                <MyContainer>
+                  <MyTierImg src={user?.tier?.image} />
+                  <MyProfileImgContainer>
+                    <MyProfileImg src={user?.profileImage} />
+                    <MyBadgeImg src={user?.badge?.image} />
+                  </MyProfileImgContainer>
+                  <MyName>{user?.name}</MyName>
+                </MyContainer>
+              )}
               <ReviewInput
+                type="text"
+                value={commentContent} // 상태와 연결
                 placeholder={placeholder} // placeholder 상태 사용
                 onFocus={handleFocus} // 포커스 이벤트 핸들러
                 onBlur={handleBlur} // 블러 이벤트 핸들러
+                onChange={(e) => setCommentContent(e.target.value)} // 댓글 내용 상태 업데이트
+                ref={inputRef} // ref를 입력 필드에 연결
               />
-              <SubmitBtn color="primary">등록</SubmitBtn>
+              <SubmitBtn
+                color="primary"
+                onClick={() => handleCommentSubmit(commentContent)} // 댓글 등록 함수 호출
+              >
+                등록
+              </SubmitBtn>
             </CommetUploadBox>
           </CommentUploadContainer>
         </>
