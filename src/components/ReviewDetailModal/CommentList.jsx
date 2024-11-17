@@ -77,7 +77,7 @@ function CommentList({ reviewId }) {
           count={data.commentList.totalPages}
           page={page} // 현재 페이지
           siblingCount={3}
-          onChange={() => handlePageChange} // 페이지 변경 핸들러
+          onChange={handlePageChange} // 페이지 변경 핸들러
           sx={{
             ".MuiPaginationItem-root.Mui-selected": {
               backgroundColor: "#F2B705",
