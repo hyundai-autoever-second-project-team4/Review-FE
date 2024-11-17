@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import useUserStore from "../../store/userStore.js";
 import theme from "../../styles/theme.js";
@@ -20,6 +20,7 @@ import { useParams } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import { badgeNames } from "../../utils/badges.js";
 import UserPageLoading from "./template/UserPageLoading.jsx";
+import Swal from "sweetalert2";
 
 const Container = styled.div`
   width: 1320px;
@@ -117,8 +118,21 @@ function UserPage() {
     mutationFn: (data) => editUserInfo(data),
     onSuccess: () => {
       queryClient.invalidateQueries(["userDetail"]);
-      alert("수정되었습니다.");
+      Swal.fire({
+        text: "변경되었습니다.",
+        icon: "success",
+        confirmButtonText: "확인",
+      }).then(() => {
+        setEditProfileModal(false);
+      });
       setEditProfileModal(false);
+    },
+    onError: (error) => {
+      Swal.fire({
+        text: `변경 실패: ${error}`,
+        icon: "error",
+        confirmButtonText: "확인",
+      });
     },
   });
 
@@ -140,6 +154,18 @@ function UserPage() {
     gcTime: 600000,
     select: (data) => data.data.badgeCounts,
   });
+
+  const memoizedGenre = useMemo(() => {
+    if (!userDetail?.genreList?.genreCounts) {
+      return [];
+    }
+    return userDetail.genreList.genreCounts;
+  }, [userDetail?.genreList?.genreCounts]);
+
+  const memoizedTier = useMemo(() => {
+    if (!userDetail?.memberTier?.tierId) return "";
+    return matchToTier[userDetail?.memberTier?.tierId];
+  }, [userDetail?.memberTier?.tierId]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -258,10 +284,7 @@ function UserPage() {
           />
         </XpBar>
         <CenterContainer>
-          <WordCloud
-            genre={userDetail?.genreList?.genreCounts}
-            level={matchToTier[userDetail?.memberTier?.tierId]}
-          />
+          <WordCloud genre={memoizedGenre} level={memoizedTier} />
           <MyRating
             starRateList={userDetail?.starRateList}
             level={matchToTier[userDetail?.memberTier?.tierId]}

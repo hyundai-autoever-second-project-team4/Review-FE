@@ -11,6 +11,7 @@ import redUp from "/src/assets/svg/redUp.svg";
 import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
 import { useNavigate, useParams } from "react-router-dom";
+import ReviewDetailModal from "../ReviewDetailModal/ReviewDetailModal";
 
 function Review({
   reviewId,
@@ -35,6 +36,7 @@ function Review({
   movieId,
 }) {
   const [blur, setBlur] = useState(isBlur);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const { mutate: thearUp } = useThearMutation(reviewId, queryKeyType, "up");
@@ -59,6 +61,14 @@ function Review({
     navigate(`/movieDetail/${movieId}`);
   };
 
+  const handleModalOpen = () => {
+    if (!blur) setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <S.Container
       width={width}
@@ -68,12 +78,6 @@ function Review({
       {!isMine && (
         <S.TopArea>
           <S.ProfileWrapper onClick={handleUserInfoClick}>
-            {/* <DynamicSVG
-              svgUrl={`/levels/${level}.svg`}
-              width={18}
-              height={18}
-              color={theme.colors.super[level]}
-            /> */}
             <img src={level} width={18} height={18} alt="" />
             <S.ProfileImg src={profileImg} alt="" />
             <S.ProfileName>{profileName}</S.ProfileName>
@@ -96,7 +100,7 @@ function Review({
         </S.MovieNameArea>
       )}
       <div style={{ position: "relative" }}>
-        <S.ContentArea onClick={() => contentClick(id)} $isBlur={blur}>
+        <S.ContentArea onClick={handleModalOpen} $isBlur={blur}>
           {content}
         </S.ContentArea>
         {blur && (
@@ -117,7 +121,9 @@ function Review({
               src={theIsUp ? redUp : upLogo}
               width={18}
               height={18}
-              style={{ cursor: queryKeyType !== "hotReview" && "pointer" }}
+              style={{
+                cursor: queryKeyType !== "hotReview" ? "pointer" : "default",
+              }}
               onClick={handleUpButtonClick}
             />
             <p>{theUpCnt}</p>
@@ -128,7 +134,7 @@ function Review({
               width={18}
               height={18}
               style={{
-                cursor: queryKeyType !== "hotReview" && "pointer",
+                cursor: queryKeyType !== "hotReview" ? "pointer" : "default",
                 position: "relative",
                 top: "4px",
               }}
@@ -150,6 +156,14 @@ function Review({
           </S.ThumbWrapper>
         </S.ThumbWrapper>
       </S.BottomArea>
+      {isModalOpen && (
+        <ReviewDetailModal
+          modalOpen={isModalOpen}
+          modalClose={handleModalClose}
+          id={reviewId}
+          queryKeyType={queryKeyType}
+        />
+      )}
     </S.Container>
   );
 }

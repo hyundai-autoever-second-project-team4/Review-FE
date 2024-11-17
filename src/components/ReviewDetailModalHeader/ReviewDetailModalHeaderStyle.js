@@ -3,7 +3,8 @@ import theme from "../../styles/theme";
 
 export const Container = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
+  height: 30px;
 `;
 
 export const TierImg = styled.img`
@@ -22,6 +23,7 @@ export const ProfileImgContainer = styled.div`
 export const ProfileImg = styled.img`
   width: 24px;
   height: 24px;
+  border-radius: 50%;
 `;
 
 export const BadgeImg = styled.img`
@@ -52,8 +54,8 @@ export const StarRate = styled.div`
   gap: 8px;
 
   background-color: ${theme.colors.review};
-  padding: 0 6px;
-  height: 22px;
+  padding: 6px 8px;
+  /* height: 24px; */
   border-radius: ${theme.borderRadius.sm};
   font-size: ${theme.fontSizes.sub1};
   font-weight: ${theme.fontWeight.bold};

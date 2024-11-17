@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as S from "./MovieDetailStyle";
 import Button from "../../components/Button/Button";
@@ -42,6 +42,13 @@ function MovieDetail() {
       state: { movieTitle: movieData.movieInfo.title },
     });
   };
+
+  const ratingArray = useMemo(() => {
+    if (!movieData || !movieData.reviewCountInfo) {
+      return [];
+    }
+    return movieData.reviewCountInfo.reviewCounts.map((review) => review.count);
+  }, [movieData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -172,9 +179,7 @@ function MovieDetail() {
 
                 <div style={{ marginBottom: "16px" }}>
                   <RatingChart
-                    ratingArray={movieData.reviewCountInfo.reviewCounts.map(
-                      (review) => review.count
-                    )}
+                    ratingArray={ratingArray}
                     level={"movieGod"}
                   ></RatingChart>
                 </div>

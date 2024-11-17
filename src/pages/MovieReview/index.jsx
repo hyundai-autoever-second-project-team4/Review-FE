@@ -8,8 +8,6 @@ import {
   ReviewContainer,
 } from "./MovieReviewStyle";
 import Review from "../../components/Review/Review";
-import { Pagination } from "@mui/material";
-import ReviewDetailModal from "../../components/ReviewDetailModal/ReviewDetailModal";
 import { useLocation, useParams } from "react-router-dom";
 import { getMovieReviewList } from "../../api/api";
 import { useQuery } from "@tanstack/react-query";
@@ -30,18 +28,24 @@ function MovieReview() {
   const movieTitle = location.state?.movieTitle; // 상태에서 movieTitle을 가져옵니다.
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 680);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [reviewId, setReviewId] = useState(null);
   const [page, setPage] = useState(1); // 페이지 상태 추가
-  const [totalpage, setTotalPage] = useState(1); // 페이지 상태 추가
   const { movieId } = useParams();
+  const [totalPages, setTotalPages] = useState(null);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["reviews", movieId, selectedSort, page],
     queryFn: () => getMovieReviewList(movieId, selectedSort, page),
     select: (data) => data.data,
     keepPreviousData: true, // 페이지 이동 시 이전 데이터를 유지
   });
+
+  useEffect(() => {
+    if (data && totalPages === null) setTotalPages(data.reviewInfos.totalPages);
+  }, [data]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedSort]);
 
   const handleSortChange = (event) => {
     setSelectedSort(event.target.value);
@@ -57,15 +61,6 @@ function MovieReview() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const handleModalOpen = (id) => {
-    setReviewId(id);
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -109,7 +104,6 @@ function MovieReview() {
                 commentCnt={review.commentCount}
                 theIsUp={review.isThearUp}
                 theIsDown={review.isThearDown}
-                contentClick={() => handleModalOpen(review.reviewId)}
                 reviewId={review.reviewId}
                 queryKeyType={["reviews", movieId, selectedSort, page]}
               />
@@ -118,17 +112,11 @@ function MovieReview() {
               <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
             ))}
       </ReviewContainer>
-      <CustomPagination
-        count={totalpage}
-        page={page}
-        onChange={handlePageChange}
-      />
-
-      {isModalOpen && (
-        <ReviewDetailModal
-          modalOpen={isModalOpen}
-          modalClose={handleModalClose}
-          id={reviewId}
+      {totalPages && (
+        <CustomPagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
         />
       )}
     </Container>
