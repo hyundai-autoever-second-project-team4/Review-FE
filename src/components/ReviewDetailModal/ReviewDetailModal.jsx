@@ -34,36 +34,39 @@ import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import theme from "../../styles/theme";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
 import { Pagination } from "@mui/material";
-import { useGetMovieReviewDetail } from "../../hooks/useGetMovieReviewDetail";
+import { useGetReviewDetail } from "../../hooks/useGetReviewDetail";
 import { useGetCommentList } from "../../hooks/useGetCommentList";
 import CommentList from "./CommentList";
+import upLogo from "/src/assets/svg/up.svg";
+import downLogo from "/src/assets/svg/down.svg";
+import redUp from "/src/assets/svg/redUp.svg";
+import blueDown from "/src/assets/svg/blueDown.svg";
+import { useThearMutation } from "../../hooks/useThearMutation";
 
 function ReviewDetailModal({ modalOpen, modalClose, id }) {
-  const [isUp, setIsUp] = useState(false);
-  const [isDown, setIsDown] = useState(false);
   const [placeholder, setPlaceholder] = useState(
     "영화 리뷰에 대한 자신의 생각을 입력 해보세요."
   ); // placeholder 상태 추가
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError, error } = useGetMovieReviewDetail(id);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { data, isLoading, isError, error } = useGetReviewDetail(id);
+  const { mutate: thearUp } = useThearMutation(id, ["reviewDetail", id], "up");
+  const { mutate: thearDown } = useThearMutation(
+    id,
+    ["reviewDetail", id],
+    "down"
+  );
+
   if (isError) {
     return <div>Error: {error.message}</div>;
   }
   const reviewData = data?.reviewInfo;
 
   const toggleUpVote = () => {
-    setIsUp((prev) => !prev);
-    setUpCnt((prev) => (isUp ? prev - 1 : prev + 1));
-    upClick();
+    thearUp();
   };
 
   const toggleDownVote = () => {
-    setIsDown((prev) => !prev);
-    setDownCnt((prev) => (isDown ? prev - 1 : prev + 1));
-    downClick();
+    thearDown();
   };
 
   const handleFocus = () => {
@@ -85,87 +88,93 @@ function ReviewDetailModal({ modalOpen, modalClose, id }) {
       modal={modalOpen}
       modalClose={modalClose}
       title={
-        <ReviewDetailModalHeader
-          tierImg={reviewData.memberTierImg}
-          profileImg={reviewData.memberProfileImg}
-          nickname={reviewData.memberName}
-          starRate={reviewData.starRate}
-          reviewDate={reviewData.createdAt}
-          badgeImg={reviewData.memberBadgeImg}
-        />
+        !isLoading && (
+          <ReviewDetailModalHeader
+            tierImg={reviewData?.memberTierImg}
+            profileImg={reviewData?.memberProfileImg}
+            nickname={reviewData?.memberName}
+            starRate={reviewData?.starRate}
+            reviewDate={reviewData?.createdAt}
+            badgeImg={reviewData?.memberBadgeImg}
+          />
+        )
       }
       large
       titleHeight={"50px"}
     >
-      <ContentContainer> {reviewData.content}</ContentContainer>
-      <UpDownContainer>
-        <S.ThumbWrapper>
-          <DynamicSVG
-            svgUrl="/src/assets/svg/up.svg"
-            color={reviewData.isThearUp ? theme.colors.red : theme.colors.gray3}
-            width={29}
-            height={28}
-            style={{ cursor: "pointer" }}
-            onClick={toggleUpVote}
-          />
-          <UpDownText>{reviewData.ThearUpCount}</UpDownText>
-        </S.ThumbWrapper>
-        <S.ThumbWrapper>
-          <DynamicSVG
-            svgUrl="/src/assets/svg/down.svg"
-            color={
-              reviewData.isThearDown ? theme.colors.blue : theme.colors.gray3
-            }
-            width={29}
-            height={28}
-            style={{ cursor: "pointer" }}
-            onClick={toggleDownVote}
-          />
-          <UpDownText>{reviewData.ThearDownCount}</UpDownText>
-        </S.ThumbWrapper>
-      </UpDownContainer>
-      <StyledLine />
-      <S.ThumbWrapper>
-        <DynamicSVG
-          svgUrl={ChatLogo}
-          color={theme.colors.gray3}
-          width={29}
-          height={28}
-        />
-        <UpDownText>댓글 {reviewData.commentCount}</UpDownText>
-      </S.ThumbWrapper>
-      <CommentList page={page} reviewId={id} />
-      <PaginationContainer>
-        <Pagination
-          count={parseInt(reviewData.commentCount / 10)}
-          page={page} // 현재 페이지
-          siblingCount={3}
-          onChange={handlePageChange} // 페이지 변경 핸들러
-          sx={{
-            ".MuiPaginationItem-root.Mui-selected": {
-              backgroundColor: "#F2B705",
-            },
-          }}
-        />
-      </PaginationContainer>
-      <CommentUploadContainer>
-        <CommetUploadBox>
-          <MyContainer>
-            <MyTierImg src={reviewData.memberTierImg} />
-            <MyProfileImgContainer>
-              <MyProfileImg src={reviewData.memberProfileImg} />
-              <MyBadgeImg src={reviewData.memberBadgeImg} />
-            </MyProfileImgContainer>
-            <MyName>{reviewData.memberName}</MyName>
-          </MyContainer>
-          <ReviewInput
-            placeholder={placeholder} // placeholder 상태 사용
-            onFocus={handleFocus} // 포커스 이벤트 핸들러
-            onBlur={handleBlur} // 블러 이벤트 핸들러
-          />
-          <SubmitBtn>등록</SubmitBtn>
-        </CommetUploadBox>
-      </CommentUploadContainer>
+      {!isLoading && (
+        <>
+          <ContentContainer> {reviewData.content}</ContentContainer>
+          <UpDownContainer>
+            <S.ThumbWrapper>
+              <img
+                src={reviewData.isThearUp ? redUp : upLogo}
+                width={28}
+                height={28}
+                style={{ cursor: "pointer" }}
+                onClick={toggleUpVote}
+              />
+              <UpDownText>{reviewData.ThearUpCount}</UpDownText>
+            </S.ThumbWrapper>
+            <S.ThumbWrapper>
+              <img
+                src={reviewData.isThearDown ? blueDown : downLogo}
+                width={28}
+                height={28}
+                style={{
+                  cursor: "pointer",
+                  position: "relative",
+                  top: "6px",
+                }}
+                onClick={toggleDownVote}
+              />
+              <UpDownText>{reviewData.ThearDownCount}</UpDownText>
+            </S.ThumbWrapper>
+          </UpDownContainer>
+          <StyledLine />
+          <S.ThumbWrapper>
+            <DynamicSVG
+              svgUrl={ChatLogo}
+              color={theme.colors.gray3}
+              width={29}
+              height={28}
+            />
+            <UpDownText>댓글 {reviewData.commentCount}</UpDownText>
+          </S.ThumbWrapper>
+          <CommentList page={page} reviewId={id} />
+          <PaginationContainer>
+            <Pagination
+              count={parseInt(reviewData.commentCount / 10)}
+              page={page} // 현재 페이지
+              siblingCount={3}
+              onChange={handlePageChange} // 페이지 변경 핸들러
+              sx={{
+                ".MuiPaginationItem-root.Mui-selected": {
+                  backgroundColor: "#F2B705",
+                },
+              }}
+            />
+          </PaginationContainer>
+          <CommentUploadContainer>
+            <CommetUploadBox>
+              <MyContainer>
+                <MyTierImg src={reviewData.memberTierImg} />
+                <MyProfileImgContainer>
+                  <MyProfileImg src={reviewData.memberProfileImg} />
+                  <MyBadgeImg src={reviewData.memberBadgeImg} />
+                </MyProfileImgContainer>
+                <MyName>{reviewData.memberName}</MyName>
+              </MyContainer>
+              <ReviewInput
+                placeholder={placeholder} // placeholder 상태 사용
+                onFocus={handleFocus} // 포커스 이벤트 핸들러
+                onBlur={handleBlur} // 블러 이벤트 핸들러
+              />
+              <SubmitBtn>등록</SubmitBtn>
+            </CommetUploadBox>
+          </CommentUploadContainer>
+        </>
+      )}
     </CustomModal>
   );
 }
