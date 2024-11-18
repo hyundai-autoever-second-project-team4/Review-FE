@@ -23,6 +23,8 @@ import useDetectMobile from "../../hooks/useDetectMobile";
 import NavBarBottom from "./NavBarBottom";
 import useAuthenticatedSSE from "../../hooks/useAuthenticatedSSE";
 import { toast } from "react-toastify";
+import { postLogout } from "../../api/api";
+import { useLogout } from "../../hooks/useLogout";
 
 const Container = styled.div`
   position: fixed;
@@ -124,6 +126,7 @@ function NavBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useDetectMobile();
   const { events, error, message } = useAuthenticatedSSE(user.id);
+  const { mutate: realLogout } = useLogout();
 
   useEffect(() => {
     if (message && message !== null) {
@@ -221,14 +224,7 @@ function NavBar() {
     }).then((result) => {
       if (result.isConfirmed) {
         logOut();
-        deleteAllCookies();
-        Swal.fire({
-          text: "로그아웃 되었습니다.",
-          icon: "success",
-          confirmButtonText: "확인",
-        }).then(() => {
-          navigate("/");
-        });
+        realLogout();
       }
     });
   };
