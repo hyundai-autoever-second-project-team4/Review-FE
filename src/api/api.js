@@ -123,3 +123,9 @@ export const ChangeComment = async (commentId, content) => {
     content: content,
   });
 };
+
+// 알람
+
+export const readAlram = async (alarmId) => {
+  return await axiosInstance.post(`/alarms/${alarmId}`);
+};

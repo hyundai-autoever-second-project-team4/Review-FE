@@ -6,6 +6,7 @@ export const useGetUserInfo = () => {
   const queryKey = ["userInfo"];
 
   const queryFn = async () => {
+    console.log("실헹");
     if (getCookie() !== null && getRefresh() !== null) {
       const response = await getUserInfo();
       return response.data;

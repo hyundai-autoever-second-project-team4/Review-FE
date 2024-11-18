@@ -15,7 +15,7 @@ const TitleArea = styled.div`
   height: ${({ $titleHeight }) => ($titleHeight ? `${$titleHeight}` : `100px`)};
   width: ${({ $large }) => ($large ? `800px` : `95%`)};
   min-width: ${({ $large }) => ($large ? `800px` : `95%`)};
-  padding: ${({ $large }) => ($large ? `0 40px` : `10px`)};
+  padding: ${({ $large }) => ($large ? `0 40px` : `0 20px`)};
   position: fixed;
   border-bottom: 1px solid ${theme.colors.gray2};
 
@@ -63,7 +63,7 @@ const BottomArea = styled.div`
 
 const CloseButton = styled.div`
   position: absolute;
-  right: ${({ $large }) => ($large ? `36px` : `10px`)};
+  right: ${({ $large }) => ($large ? `36px` : `20px`)};
   cursor: pointer;
 
   &:hover {

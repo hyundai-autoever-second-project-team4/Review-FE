@@ -3,6 +3,7 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import logoutSvg from "../../assets/svg/logout.svg";
+import alarm from "../../assets/svg/notification.svg";
 
 const Container = styled.div`
   background-color: #fff;
@@ -10,7 +11,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   /* padding: 8px 12px; */
-  height: 150px;
+  /* height: 150px; */
   width: 150px;
   border-radius: ${theme.borderRadius.sm};
   position: relative;
@@ -59,7 +60,7 @@ const ProfileName = styled.div`
   align-items: center;
 `;
 
-const LogoutWrapper = styled.div`
+const AlarmWrapper = styled.div`
   padding: 14px 16px;
   width: 124px;
   border-radius: 12px;
@@ -67,7 +68,7 @@ const LogoutWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 59px;
-  font-size: ${theme.fontSizes.sub1};
+  font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.regular};
   transition: 0.5s;
 
@@ -76,6 +77,35 @@ const LogoutWrapper = styled.div`
     background-color: ${theme.colors.gray2}6C;
   }
 `;
+
+const LogoutWrapper = styled.div`
+  padding: 14px 16px;
+  width: 124px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: ${theme.fontSizes.sub2};
+  font-weight: ${theme.fontWeight.regular};
+  transition: 0.5s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: ${theme.colors.gray2}6C;
+  }
+`;
+
+const Cnt = styled.div`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${theme.colors.gray2}6C;
+`;
+
 function ProfileTooltip({
   primaryBadge,
   level,
@@ -83,6 +113,8 @@ function ProfileTooltip({
   img,
   moveToMyPage,
   handleLogOut,
+  alarms,
+  handleAlarmModalOpen,
 }) {
   return (
     <Container>
@@ -94,6 +126,18 @@ function ProfileTooltip({
           <p>{name}</p>
         </ProfileName>
       </ProfileWrapper>
+      <AlarmWrapper onClick={handleAlarmModalOpen}>
+        <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+          <DynamicSVG
+            svgUrl={alarm}
+            width={16}
+            height={16}
+            color={theme.colors.gray3}
+          />
+          <p style={{ color: theme.colors.gray3 }}>알림</p>
+        </div>
+        <Cnt>{alarms.length}</Cnt>
+      </AlarmWrapper>
       <LogoutWrapper onClick={handleLogOut}>
         <DynamicSVG
           svgUrl={logoutSvg}
@@ -101,7 +145,7 @@ function ProfileTooltip({
           height={16}
           color={theme.colors.gray3}
         />
-        <p style={{ color: theme.colors.gray3 }}>로그아웃</p>
+        <p style={{ color: theme.colors.gray3 }}>로그 아웃</p>
       </LogoutWrapper>
     </Container>
   );

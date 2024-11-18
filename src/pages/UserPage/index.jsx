@@ -105,6 +105,12 @@ const BottomArea = styled.div`
   width: 100%;
 `;
 
+const Tier = styled.img`
+  position: absolute;
+  top: 40px;
+  left: 34px;
+`;
+
 function UserPage() {
   const [percent, setPercent] = useState(0);
   const [badgeModal, setBadgeModal] = useState(false);
@@ -169,11 +175,14 @@ function UserPage() {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setPercent(
-        (userDetail?.memberTier?.tierCurrentPoints /
-          userDetail?.memberTier?.tierRequiredPoints) *
-          100
-      );
+      const calculatedPercent =
+        (userDetail.memberTier.tierCurrentPoints /
+          userDetail.memberTier.tierRequiredPoints) *
+        100;
+
+      if (percent !== calculatedPercent) {
+        setPercent(calculatedPercent);
+      }
     }, 300);
 
     return () => {
@@ -215,11 +224,19 @@ function UserPage() {
         alt=""
       />
       <Container>
-        <ProfileImg
-          src={userDetail?.memberProfileImg}
-          level={matchToTier[userDetail?.memberTier?.tierId]}
-          // crossOrigin="anonymous"
-        />
+        <div style={{ position: "relative" }}>
+          <ProfileImg
+            src={userDetail?.memberProfileImg}
+            level={matchToTier[userDetail?.memberTier?.tierId]}
+            // crossOrigin="anonymous"
+          />
+          <Tier
+            src={userDetail.memberTier.tierImage}
+            alt=""
+            width={32}
+            height={32}
+          />
+        </div>
         {user.id == path.userId && (
           <ButtonWrapper>
             <Button color="primary" size="large" onClick={badgeModalOpen}>
