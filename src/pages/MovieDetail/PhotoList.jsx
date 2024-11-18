@@ -23,7 +23,7 @@ const phots = [
 
 const SliderContainer = styled.div`
   width: 100%;
-  max-width: 1320px; /* 원하는 너비 제한 설정 */
+  //max-width: 1320px; /* 원하는 너비 제한 설정 */
   margin: 0 auto;
   position: relative;
 `;
@@ -79,8 +79,9 @@ const ButtonWrapper = styled.div`
 `;
 
 const PhotoCard = styled.div`
-  width: 431px;
-  height: 287px;
+  width: 100%;
+  aspect-ratio: 3/2;
+  /* height: 287px; */
   border-radius: 16px;
   background-image: url(${(props) => props.$photourl});
   background-size: cover;
@@ -92,9 +93,9 @@ function PhotoList({ photos }) {
   const [isEnd, setIsEnd] = useState(false);
 
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <SliderContainer>
-        <Slide>
+        <Slide className="여기">
           {photos.length <= 2 ? (
             <div style={{ display: "flex", gap: "16px", width: "100%" }}>
               {photos.map((photoURL, index) => (
@@ -123,6 +124,7 @@ function PhotoList({ photos }) {
               }}
               onReachBeginning={() => setIsBeginning(true)}
               onReachEnd={() => setIsEnd(true)}
+              style={{ width: "100%" }}
             >
               {photos.map((photoURL, index) => (
                 <SwiperSlide key={index}>

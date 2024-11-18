@@ -9,6 +9,7 @@ import PhotoList from "./PhotoList";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetail } from "../../api/api";
 import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
+import theme from "../../styles/theme";
 import useUserStore from "../../store/userStore";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
@@ -84,9 +85,9 @@ function MovieDetail() {
       role: actor.characterName, // 역할을 캐릭터 이름으로 설정
     })),
   ];
-
+  console.log(movieData);
   return (
-    <div>
+    <>
       <S.Container>
         <S.BackImg
           $backgroundImage={
@@ -104,13 +105,7 @@ function MovieDetail() {
             }}
           >
             <S.MovieWrap>
-              <div
-                style={{
-                  width: "50%",
-                  display: "flex",
-                  gap: "20px",
-                }}
-              >
+              <S.MovieInfoCont>
                 <S.PosterSection>
                   <S.Poster
                     src={IMG_BASE_URL + `${movieData.movieInfo.posterPath}`}
@@ -129,14 +124,7 @@ function MovieDetail() {
                   >
                     <S.MainInfo>
                       <S.Title>{movieData.movieInfo.title}</S.Title>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "16px",
-                          alignItems: "center",
-                          height: "36px",
-                        }}
-                      >
+                      <S.StarWrap>
                         {!movieData.isReviewed && (
                           <Button
                             onClick={handleWriteModalOpen}
@@ -150,7 +138,7 @@ function MovieDetail() {
                           readOnly
                           rate={movieData.reviewCountInfo.averageStarRate}
                         ></StarRating>
-                      </div>
+                      </S.StarWrap>
                     </S.MainInfo>
                     <S.StarInfo>
                       <S.SubInfo>
@@ -158,7 +146,10 @@ function MovieDetail() {
                         <S.SubText>
                           {movieData.genreInfoList.genres.map(
                             (genre, index) => (
-                              <span key={genre.genreId}>
+                              <span
+                                style={{ color: theme.colors.gray3 }}
+                                key={genre.genreId}
+                              >
                                 {genre.name}
                                 {index <
                                   movieData.genreInfoList.genres.length - 1 &&
@@ -180,7 +171,7 @@ function MovieDetail() {
                   </div>
                   <S.Description>{movieData.movieInfo.overview}</S.Description>
                 </S.MovieInfo>
-              </div>
+              </S.MovieInfoCont>
               <S.ChartSection>
                 <S.AvgRating>
                   <div>
@@ -206,7 +197,7 @@ function MovieDetail() {
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>
-              {combinedProfiles.map((profile, index) => (
+              {combinedProfiles.splice(0, 15).map((profile, index) => (
                 <S.Profile key={index}>
                   {profile.imageUrl ? (
                     <S.ProfileImg
@@ -279,7 +270,7 @@ function MovieDetail() {
           modalClose={handleWriteModalClose}
         />
       )}
-    </div>
+    </>
   );
 }
 

@@ -86,7 +86,7 @@ function FaceMovieList({ movieData }) {
   return (
     <Container>
       <SliderContainer>
-        <Slide>
+        <Slide className="저기">
           <Swiper
             spaceBetween={16}
             speed={1500}

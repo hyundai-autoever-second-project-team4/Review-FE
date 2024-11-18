@@ -8,7 +8,23 @@ export const Container = styled.div`
   align-items: center;
   padding-bottom: 40px;
 `;
+export const MovieInfoCont = styled.div`
+  width: 100%;
+  /* max-width: 800px; */
+  display: flex;
+  gap: 16px;
+  padding-right: 16px;
 
+  @media (max-width: 1320px) {
+    padding-left: 8px;
+    padding-right: 8px;
+    /* max-width: 800px; */
+    width: 100%;
+  }
+  @media (max-width: 1200px) {
+    width: 100%; /* 가로로 공간 채우기 */
+  }
+`;
 export const BackImg = styled.div`
   width: 98.9vw;
   height: 550px;
@@ -28,8 +44,12 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   gap: 16px;
+
+  @media (max-width: 1320px) {
+    width: 100%;
+    padding: 0 16px;
+  }
 `;
 
 export const MovieWrap = styled.div`
@@ -37,12 +57,14 @@ export const MovieWrap = styled.div`
   margin-top: 20px;
   width: 1320px;
   justify-content: space-between;
-  gap: 16px;
+  /* gap: 16px; */
+  margin-left: 16px;
 
   @media (max-width: 1200px) {
     flex-direction: column; /* 작은 화면에서 수직 배열 */
     justify-content: flex-start; /// center냐 뭐냐 뭐가 맞냐
-    padding-left: 20px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 `;
 
@@ -69,19 +91,11 @@ export const MovieInfo = styled.div`
   //justify-content: space-between;
 `;
 
-export const MovieInfoWrap = styled.div`
-  /* max-width: 580px; */
+export const StarWrap = styled.div`
   display: flex;
   gap: 16px;
-  /* background-color: greenyellow; */
+
   flex-direction: column;
-
-  @media (max-width: 1200px) {
-    /* flex: 1; // 화면이 줄어들면 가득 차도록
-    max-width: 100%; */
-
-    flex-basis: 100%;
-  }
 `;
 
 export const MainInfo = styled.div`
@@ -89,15 +103,20 @@ export const MainInfo = styled.div`
   display: flex;
   /* height: 1px; */
   justify-content: space-between;
+
   flex-direction: row;
 `;
 export const StarInfo = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: flex-start;
   justify-content: space-between;
-  min-width: 600px;
+  /* min-width: 600px; */
+  width: 100%;
+  /* max-width: 600px; */
   position: relative;
+
+  /* opacity: 0.7; */
 `;
 
 export const Title = styled.h1`
@@ -112,14 +131,16 @@ export const SubInfo = styled.div`
   display: flex;
   flex-direction: column;
   font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.black};
+  color: ${theme.colors.gray1};
   font-weight: bold;
   gap: 8px;
+
+  /* opacity: 0.8; */
 `;
 
 export const SubText = styled.div`
-  font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.black};
+  font-size: ${theme.fontSizes.sub1};
+  color: ${theme.colors.gray3};
   font-weight: bold;
 `;
 
@@ -138,18 +159,16 @@ export const Description = styled.p`
 `;
 
 export const Tags = styled.div`
-  position: absolute; //얘는 flex-end같은걸로 가야함. 안돼
-  right: 0;
-  bottom: 0;
-  top: 10px;
   display: flex;
-  gap: 16px;
+  justify-content: flex-start;
+  gap: 8px;
 
   flex-direction: column; // 태그 세로배치
 `;
 
 export const Tag = styled.span`
-  background-color: #f3f3f3;
+  background-color: ${theme.colors.gray2};
+
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 0.9em;
@@ -196,8 +215,8 @@ export const ChartSection = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 500px;
-
+  //width: 500px;
+  padding: 0 16px;
   border-radius: 10px;
 
   @media (max-width: 1200px) {
@@ -213,13 +232,9 @@ export const ProfileCont = styled.div`
   flex-direction: column;
   margin-top: 20px;
   margin-bottom: 24px;
-  padding-left: 20px;
-  margin: 0 auto;
-  max-width: 1320px;
 
   @media (max-width: 1320px) {
-    width: 90%;
-    /* padding-left: 20px; */
+    /* padding: 0 16px; */
   }
 `;
 export const ProfileWrap = styled.div`
@@ -227,28 +242,28 @@ export const ProfileWrap = styled.div`
   justify-content: flex-start;
   overflow-x: auto;
   width: 100%;
-  max-width: 1320px;
   flex-wrap: wrap; /* 줄어들면 아래로 배치 */
-
+  gap: 16px;
   margin: 0 auto;
 `;
 export const Profile = styled.div`
   display: flex;
-  width: 240px;
-  margin-right: 16px;
-  position: relative;
-  margin-bottom: 32px;
+  /* width: 240px; */
 
-  @media (max-width: 1120px) {
-    flex-basis: calc((100% - 16px) / 4.5);
+  position: relative;
+
+  flex-basis: calc((100% - 64px) / 5);
+
+  @media (max-width: 1320px) {
+    flex-basis: calc((100% - 48px) / 4);
   }
   @media (max-width: 960px) {
-    flex-basis: calc((100% - 16px) / 3.5);
+    flex-basis: calc((100% - 32px) / 3);
   }
   @media (max-width: 640px) {
     flex-basis: calc((100% - 16px) / 2);
   }
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
     flex-basis: calc(100%);
   }
 
@@ -275,6 +290,7 @@ export const ProfileImg = styled.img`
 
 export const Role = styled.div`
   font-weight: 500;
+  font-size: ${theme.fontSizes.sub2};
 `;
 
 export const ProfileInfo = styled.div`
@@ -289,11 +305,16 @@ export const ProfileInfo = styled.div`
 export const ReviewCont = styled.div`
   display: flex;
   margin-top: 20px;
-  /* align-self: flex-start; */
-  /* justify-content: space-between; */
   flex-direction: column;
   margin-bottom: 24px;
-  /* height: 160px; */
+  ////
+
+  width: 100%;
+  /* max-width: 1320px; */
+
+  @media (max-width: 1320px) {
+    /* padding: 0 16px; */
+  }
 `;
 
 export const ReviewTitleWrap = styled.div`
@@ -301,25 +322,21 @@ export const ReviewTitleWrap = styled.div`
   align-items: center;
   /* justify-content: space-between; */
   margin-bottom: 16px;
-
-  & > button {
-    margin-left: auto; /* 버튼을 오른쪽으로 밀기 */
-  }
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const ReviewWrap = styled.div`
   display: flex;
-  width: 1320px;
-  /* justify-content: space-between; */
+  max-width: 1320px;
+  width: 100%;
+
   overflow-x: auto;
+  /* padding: 0 16px; */
   overflow-y: hidden; ///
   gap: 16px;
   flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
-
-  @media (max-width: 960px) {
-    gap: 16px; /* 작은 화면에서 간격 추가 */
-    justify-content: center; /* 가운데 정렬 */
-  }
+  //////////
 `;
 
 export const GalleryCont = styled.div`
@@ -328,10 +345,30 @@ export const GalleryCont = styled.div`
   margin-bottom: 24px;
   gap: 16px;
   margin-top: 20px;
-  width: 1320px;
+  //width: 1320px;
   justify-content: space-between;
+
+  //////
+  width: 100%;
+  max-width: 1320px;
+
+  margin: 0 auto;
 `;
 
 export const CardWrapper = styled.div`
   flex-basis: calc((100% - 64px) / 5); /* 기본 너비 설정 */
+
+  /* min-width: 250px; 카드의 고정 너비 */
+
+  /////////////
+  @media (max-width: 1320px) {
+    flex-basis: calc((100% - 48px) / 4);
+  }
+  @media (max-width: 960px) {
+    flex-basis: calc((100% - 32px) / 3);
+  }
+
+  @media (max-width: 640px) {
+    flex-basis: calc((100% - 16px) / 2);
+  }
 `;
