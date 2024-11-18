@@ -83,11 +83,6 @@ function CommentList({ reviewId }) {
 
   const handleSaveClick = () => {
     if (editingCommentId) {
-      console.log("수정 요청", {
-        commentId: editingCommentId,
-        content: editContent,
-      }); // 추가된 로그
-
       Swal.fire({
         text: "정말 수정하시겠습니까?",
         icon: "warning",
@@ -116,7 +111,6 @@ function CommentList({ reviewId }) {
       confirmButtonText: "확인",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(commentId);
         deleteComment(commentId); // commentId를 직접 전달
       }
     });
