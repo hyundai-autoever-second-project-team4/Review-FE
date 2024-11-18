@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import UserReviewListPage from "./pages/UserReviewListPage";
 import useDetectMobile from "./hooks/useDetectMobile";
 import { Helmet } from "react-helmet-async";
+import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled.div`
   font-family: "Noto Sans KR", sans-serif;

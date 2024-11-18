@@ -56,7 +56,7 @@ function RankingBoard() {
             />
             <Tab
               value={3}
-              label="달린 댓글 수 랭킹"
+              label="작성한 댓글 수 랭킹"
               sx={{
                 fontWeight: tab === 3 ? "bold" : "normal",
                 fontFamily: "Noto Sans KR",
