@@ -23,7 +23,6 @@ import useDetectMobile from "../../hooks/useDetectMobile";
 import NavBarBottom from "./NavBarBottom";
 import useAuthenticatedSSE from "../../hooks/useAuthenticatedSSE";
 import { toast } from "react-toastify";
-import { postLogout } from "../../api/api";
 import { useLogout } from "../../hooks/useLogout";
 
 const Container = styled.div`
@@ -130,7 +129,7 @@ function NavBar() {
 
   useEffect(() => {
     if (message && message !== null) {
-      toast.success(message.message);
+      toast.info(message.message);
     }
   }, [message]);
 
