@@ -31,7 +31,7 @@ function ReviewDetailModalHeader({
   const day = dateParts[2];
   const hours = timeParts[0];
   const minutes = timeParts[1];
-  const seconds = timeParts[2];
+  const seconds = parseInt(timeParts[2]);
 
   // 원하는 형식으로 문자열 생성
   const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;

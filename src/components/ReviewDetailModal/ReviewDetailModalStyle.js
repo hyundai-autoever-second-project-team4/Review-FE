@@ -37,6 +37,18 @@ export const CommentContainer = styled.div`
   margin-top: 8px;
 `;
 
+export const CommentDeleteBtn = styled.div`
+  font-size: ${theme.fontSizes.sub2};
+  font-weight: ${theme.fontWeight.regular};
+  color: ${theme.colors.gray3};
+  cursor: pointer;
+  text-decoration: underline;
+  margin-right: 10px;
+  &:hover {
+    color: ${theme.colors.black};
+  }
+`;
+
 export const NoCommentContainer = styled.div`
   width: 100%;
   display: flex;
@@ -57,6 +69,7 @@ export const CommentBox = styled.div`
 export const UserBox = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 12px;
 `;
 

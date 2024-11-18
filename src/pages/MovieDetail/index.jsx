@@ -9,12 +9,14 @@ import PhotoList from "./PhotoList";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetail } from "../../api/api";
 import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
+import useUserStore from "../../store/userStore";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
 function MovieDetail() {
   const navigate = useNavigate();
   const { movieId } = useParams();
+  const { user } = useUserStore();
 
   const {
     data: movieData,
@@ -30,7 +32,11 @@ function MovieDetail() {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
 
   const handleWriteModalOpen = () => {
-    setIsWriteModalOpen(true);
+    if (user?.id === null) {
+      alert("리뷰 작성을 위한 로그인이 필요합니다!");
+    } else {
+      setIsWriteModalOpen(true);
+    }
   };
 
   const handleWriteModalClose = () => {
