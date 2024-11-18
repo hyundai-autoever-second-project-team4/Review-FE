@@ -118,6 +118,7 @@ function UserReviewListPage() {
                 movieId={review.movieId}
                 theIsDown={review.isThearDown}
                 queryKeyType={["userReviews", userId, selectedSort, page]}
+                isWriter={review.isWriter}
                 isMine
               />
             ))}

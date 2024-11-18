@@ -143,6 +143,7 @@ function HotComment({ reviewData }) {
             }}
             onReachBeginning={() => setIsBeginning(true)}
             onReachEnd={() => setIsEnd(true)}
+            style={{ width: "100%" }}
           >
             {reviewData.map((review) => (
               <SwiperSlide key={review.reviewId}>

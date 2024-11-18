@@ -53,7 +53,6 @@ function Main() {
 
   if (loading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
-
   return (
     <>
       <Container>

@@ -94,6 +94,7 @@ function FaceMovieList({ movieData }) {
             slidesPerView={3}
             slidesPerGroup={3}
             allowTouchMove={false}
+            loop={false}
             autoplay={{ delay: 2000, disableOnInteraction: true }}
             navigation={{
               nextEl: `.swiper-button-next-face`,
@@ -111,6 +112,7 @@ function FaceMovieList({ movieData }) {
               return (
                 <SwiperSlide key={index}>
                   <FaceMovieCard
+                    movieId={movie.movieId}
                     index={index}
                     title={movie.title}
                     poster={movie.posterPath}
