@@ -13,6 +13,7 @@ import { useThearMutation } from "../../hooks/useThearMutation";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewDetailModal from "../ReviewDetailModal/ReviewDetailModal";
 import Swal from "sweetalert2";
+import useUserStore from "../../store/userStore";
 
 function Review({
   reviewId,
@@ -40,6 +41,7 @@ function Review({
   const [blur, setBlur] = useState(isBlur);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useUserStore();
 
   const { mutate: thearUp } = useThearMutation(reviewId, queryKeyType, "up");
   const { mutate: thearDown } = useThearMutation(
@@ -49,6 +51,15 @@ function Review({
   );
 
   const handleUpButtonClick = () => {
+    if (user.id === null) {
+      Swal.fire({
+        text: "로그인 후 공감할 수 있습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
     if (isWriter) {
       Swal.fire({
         text: "내가 작성한 리뷰에는 공감할 수 없습니다.",
@@ -68,7 +79,16 @@ function Review({
     }
     if (queryKeyType !== "hotReview") thearUp();
   };
+
   const handleDownButtonClick = () => {
+    if (user.id === null) {
+      Swal.fire({
+        text: "로그인 후 공감할 수 있습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
     if (isWriter) {
       Swal.fire({
         text: "내가 작성한 리뷰에는 공감할 수 없습니다.",
