@@ -44,7 +44,7 @@ export const DateText = styled.div`
   font-size: ${theme.fontSizes.sub2};
   font-weight: ${theme.fontWeight.regular};
   color: ${theme.colors.gray3};
-  margin-right: 40px;
+  margin-right: ${(props) => (props.$large ? "40px" : "4px")};
 `;
 
 export const StarRate = styled.div`

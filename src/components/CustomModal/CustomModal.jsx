@@ -6,16 +6,16 @@ import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import CloseIcon from "../../assets/svg/close-circle.svg";
 
 const Container = styled.div`
-  width: ${({ $large }) => ($large ? `800px` : `550px`)};
-  min-width: ${({ $large }) => ($large ? `800px` : `550px`)};
+  width: ${({ $large }) => ($large ? `800px` : `95%`)};
+  min-width: ${({ $large }) => ($large ? `800px` : `95%`)};
   position: relative;
 `;
 
 const TitleArea = styled.div`
   height: ${({ $titleHeight }) => ($titleHeight ? `${$titleHeight}` : `100px`)};
-  width: ${({ $large }) => ($large ? `800px` : `550px`)};
-  min-width: ${({ $large }) => ($large ? `800px` : `550px`)};
-  padding: 0 40px;
+  width: ${({ $large }) => ($large ? `800px` : `95%`)};
+  min-width: ${({ $large }) => ($large ? `800px` : `95%`)};
+  padding: ${({ $large }) => ($large ? `0 40px` : `10px`)};
   position: fixed;
   border-bottom: 1px solid ${theme.colors.gray2};
 
@@ -62,7 +62,7 @@ const BottomArea = styled.div`
 
 const CloseButton = styled.div`
   position: absolute;
-  right: 36px;
+  right: ${({ $large }) => ($large ? `36px` : `10px`)};
   cursor: pointer;
 
   &:hover {
@@ -91,6 +91,7 @@ function CustomModal({
         outline: "none",
         border: "none",
         backgroundColor: "none",
+        width: large ? "800" : "400",
         "& > *": {
           borderRadius: "1px",
           outline: "none",

@@ -53,6 +53,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   const [placeholder, setPlaceholder] = useState(
     "영화 리뷰에 대한 자신의 생각을 입력 해보세요."
   ); // placeholder 상태 추가
+  const [islargeScreen, setIslargeScreen] = useState(true);
   const [commentContent, setCommentContent] = useState(""); // 댓글 내용 상태 추가
   const inputRef = useRef(null); // 입력 필드에 대한 ref 생성
   const { data, isLoading, isError, error, refetch } = useGetReviewDetail(id);
@@ -130,6 +131,23 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIslargeScreen(window.innerWidth > 854);
+    };
+
+    // 초기 화면 크기 체크
+    handleResize();
+
+    // resize 이벤트 리스너 등록
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <CustomModal
       modal={modalOpen}
@@ -144,10 +162,11 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
             reviewDate={reviewData?.createdAt}
             badgeImg={reviewData?.memberBadgeImg}
             handleProfileClick={handleProfileClick}
+            large={islargeScreen}
           />
         )
       }
-      large
+      large={islargeScreen}
       titleHeight={"50px"}
     >
       {!isLoading && (
