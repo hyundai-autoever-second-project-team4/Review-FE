@@ -134,8 +134,8 @@ function MovieSlider({ title, movieData, cnt }) {
             navigation={
               !isMobile
                 ? {
-                    nextEl: `.swiper-button-next-comment`,
-                    prevEl: `.swiper-button-prev-comment`,
+                    nextEl: `.swiper-button-next-${cnt}`,
+                    prevEl: `.swiper-button-prev-${cnt}`,
                   }
                 : false // 모바일에서는 navigation 비활성화
             }
@@ -164,7 +164,7 @@ function MovieSlider({ title, movieData, cnt }) {
         {!isMobile && (
           <ButtonWrapper>
             <PrevButton
-              className={`swiper-button-prev-comment`}
+              className={`swiper-button-prev-${cnt}`}
               $isBeginning={isBeginning}
             >
               <DynamicSVG
@@ -173,7 +173,7 @@ function MovieSlider({ title, movieData, cnt }) {
                 svgUrl={arrowLeft}
               />
             </PrevButton>
-            <NextButton className={`swiper-button-next-comment`} $isEnd={isEnd}>
+            <NextButton className={`swiper-button-next-${cnt}`} $isEnd={isEnd}>
               <DynamicSVG
                 width={18}
                 color={theme.colors.black}
