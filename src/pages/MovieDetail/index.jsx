@@ -18,6 +18,21 @@ function MovieDetail() {
   const navigate = useNavigate();
   const { movieId } = useParams();
   const { user } = useUserStore();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // 모바일 환경 감지
+    const detectMobile = () => {
+      // "(pointer: coarse)"는 터치스크린을 지원하는 기기를 의미합니다.
+      setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+    };
+
+    detectMobile(); // 초기 감지 실행
+    window.addEventListener("resize", detectMobile); // 창 크기 변경 시 감지
+
+    // 정리 함수: 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => window.removeEventListener("resize", detectMobile);
+  }, []);
 
   const {
     data: movieData,
@@ -225,7 +240,7 @@ function MovieDetail() {
                 </Button>
               )}
             </S.ReviewTitleWrap>
-            <S.ReviewWrap>
+            <S.ReviewWrap $isMobile={isMobile}>
               {movieData.reviewCountInfo.totalReviewCount > 0 ? (
                 movieData.reviewInfoList.reviewInfos.map((review) => (
                   <S.CardWrapper key={review.reviewId}>

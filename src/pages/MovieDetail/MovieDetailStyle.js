@@ -336,7 +336,8 @@ export const ReviewWrap = styled.div`
   /* padding: 0 16px; */
   overflow-y: hidden; ///
   gap: 16px;
-  flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
+  flex-wrap: ${({ $isMobile }) =>
+    $isMobile ? `nowrap` : `wrap`}; /* 화면이 줄어들면 아래로 배치 */
   //////////
 `;
 
