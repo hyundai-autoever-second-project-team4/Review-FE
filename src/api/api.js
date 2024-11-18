@@ -101,3 +101,7 @@ export const getCommentList = async (reviewId, page) => {
 export const deleteReview = async (reviewId) => {
   return await axiosInstance.delete(`/review/${reviewId}`);
 };
+
+export const deleteComment = async (commentId) => {
+  return await axiosInstance.delete(`/comment/${commentId}`);
+};

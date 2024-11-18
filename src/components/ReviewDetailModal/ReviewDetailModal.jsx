@@ -34,16 +34,13 @@ import * as S from "../Review/ReviewStyle";
 import DynamicSVG from "../DynamicSVG/DynamicSVG";
 import theme from "../../styles/theme";
 import ChatLogo from "/src/assets/svg/ChatBubble.svg";
-import { Pagination } from "@mui/material";
 import { useGetReviewDetail } from "../../hooks/useGetReviewDetail";
-import { useGetCommentList } from "../../hooks/useGetCommentList";
 import CommentList from "./CommentList";
 import upLogo from "/src/assets/svg/up.svg";
 import downLogo from "/src/assets/svg/down.svg";
 import redUp from "/src/assets/svg/redUp.svg";
 import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
-import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useDeleteReview } from "../../hooks/useDeleteReview";
 import { axiosInstance } from "../../api/axiosInstance";
@@ -59,7 +56,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   const [commentContent, setCommentContent] = useState(""); // 댓글 내용 상태 추가
   const inputRef = useRef(null); // 입력 필드에 대한 ref 생성
   const { data, isLoading, isError, error, refetch } = useGetReviewDetail(id);
-  const { user, setUser, logOut } = useUserStore();
+  const { user } = useUserStore();
   const { mutate: thearUp } = useThearMutation(id, ["reviewDetail", id], "up");
   const navigate = useNavigate();
   const { mutate: thearDown } = useThearMutation(
@@ -204,33 +201,38 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
             <CommetUploadBox>
               {user?.id === null ? (
                 <MyContainer>
-                  <MyName>로그인이 필요합니다.</MyName>
+                  <MyName style={{ margin: "39px" }}>
+                    댓글을 작성하려면 로그인이 필요합니다.
+                  </MyName>
                 </MyContainer>
               ) : (
-                <MyContainer>
-                  <MyTierImg src={user?.tier?.image} />
-                  <MyProfileImgContainer>
-                    <MyProfileImg src={user?.profileImage} />
-                    <MyBadgeImg src={user?.badge?.image} />
-                  </MyProfileImgContainer>
-                  <MyName>{user?.name}</MyName>
-                </MyContainer>
+                <>
+                  <MyContainer>
+                    <MyTierImg src={user?.tier?.image} />
+                    <MyProfileImgContainer>
+                      <MyProfileImg src={user?.profileImage} />
+                      <MyBadgeImg src={user?.badge?.image} />
+                    </MyProfileImgContainer>
+                    <MyName>{user?.name}</MyName>
+                  </MyContainer>
+                  <ReviewInput
+                    type="text"
+                    value={commentContent} // 상태와 연결
+                    placeholder={placeholder} // placeholder 상태 사용
+                    onFocus={handleFocus} // 포커스 이벤트 핸들러
+                    onBlur={handleBlur} // 블러 이벤트 핸들러
+                    onChange={(e) => setCommentContent(e.target.value)} // 댓글 내용 상태 업데이트
+                    ref={inputRef} // ref를 입력 필드에 연결
+                    disabled={user?.id === null}
+                  />
+                  <SubmitBtn
+                    color="primary"
+                    onClick={() => handleCommentSubmit(commentContent)} // 댓글 등록 함수 호출
+                  >
+                    등록
+                  </SubmitBtn>
+                </>
               )}
-              <ReviewInput
-                type="text"
-                value={commentContent} // 상태와 연결
-                placeholder={placeholder} // placeholder 상태 사용
-                onFocus={handleFocus} // 포커스 이벤트 핸들러
-                onBlur={handleBlur} // 블러 이벤트 핸들러
-                onChange={(e) => setCommentContent(e.target.value)} // 댓글 내용 상태 업데이트
-                ref={inputRef} // ref를 입력 필드에 연결
-              />
-              <SubmitBtn
-                color="primary"
-                onClick={() => handleCommentSubmit(commentContent)} // 댓글 등록 함수 호출
-              >
-                등록
-              </SubmitBtn>
             </CommetUploadBox>
           </CommentUploadContainer>
         </>
