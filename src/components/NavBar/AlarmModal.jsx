@@ -8,6 +8,8 @@ import { useAlarmMutation } from "../../hooks/useAlarmMutation";
 const Default = styled.p`
   color: ${theme.colors.gray3};
   font-size: ${theme.fontSizes.sub1};
+  width: 100%;
+  text-align: center;
 `;
 
 const Container = styled.div`
