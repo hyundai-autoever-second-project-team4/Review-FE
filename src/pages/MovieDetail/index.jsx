@@ -9,6 +9,7 @@ import PhotoList from "./PhotoList";
 import { useQuery } from "@tanstack/react-query";
 import { getMovieDetail } from "../../api/api";
 import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
+import theme from "../../styles/theme";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
@@ -80,7 +81,7 @@ function MovieDetail() {
   ];
   console.log(movieData);
   return (
-    <div>
+    <>
       <S.Container>
         <S.BackImg
           $backgroundImage={
@@ -111,8 +112,6 @@ function MovieDetail() {
                       width: "100%",
                       display: "flex",
                       gap: "16px",
-                      background: "gray",
-                      opacity: "0.3",
 
                       flexDirection: "column",
                     }}
@@ -141,7 +140,10 @@ function MovieDetail() {
                         <S.SubText>
                           {movieData.genreInfoList.genres.map(
                             (genre, index) => (
-                              <span key={genre.genreId}>
+                              <span
+                                style={{ color: theme.colors.gray3 }}
+                                key={genre.genreId}
+                              >
                                 {genre.name}
                                 {index <
                                   movieData.genreInfoList.genres.length - 1 &&
@@ -262,7 +264,7 @@ function MovieDetail() {
           modalClose={handleWriteModalClose}
         />
       )}
-    </div>
+    </>
   );
 }
 

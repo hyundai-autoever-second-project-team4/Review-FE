@@ -45,6 +45,11 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
+
+  @media (max-width: 1320px) {
+    width: 100%;
+    padding: 0 16px;
+  }
 `;
 
 export const MovieWrap = styled.div`
@@ -87,11 +92,9 @@ export const MovieInfo = styled.div`
 `;
 
 export const StarWrap = styled.div`
-  /* max-width: 580px; */
   display: flex;
   gap: 16px;
-  background-color: blue;
-  opacity: 0.2;
+
   flex-direction: column;
 `;
 
@@ -100,7 +103,6 @@ export const MainInfo = styled.div`
   display: flex;
   /* height: 1px; */
   justify-content: space-between;
-  background-color: pink;
 
   flex-direction: row;
 `;
@@ -113,8 +115,8 @@ export const StarInfo = styled.div`
   width: 100%;
   /* max-width: 600px; */
   position: relative;
-  background-color: yellow;
-  opacity: 0.7;
+
+  /* opacity: 0.7; */
 `;
 
 export const Title = styled.h1`
@@ -129,16 +131,16 @@ export const SubInfo = styled.div`
   display: flex;
   flex-direction: column;
   font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.black};
+  color: ${theme.colors.gray1};
   font-weight: bold;
   gap: 8px;
-  background-color: red;
-  opacity: 0.4;
+
+  /* opacity: 0.8; */
 `;
 
 export const SubText = styled.div`
-  font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.black};
+  font-size: ${theme.fontSizes.sub1};
+  color: ${theme.colors.gray3};
   font-weight: bold;
 `;
 
@@ -165,7 +167,8 @@ export const Tags = styled.div`
 `;
 
 export const Tag = styled.span`
-  background-color: #f3f3f3;
+  background-color: ${theme.colors.gray2};
+
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 0.9em;
@@ -212,8 +215,8 @@ export const ChartSection = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 500px;
-
+  //width: 500px;
+  padding: 0 16px;
   border-radius: 10px;
 
   @media (max-width: 1200px) {
@@ -229,13 +232,9 @@ export const ProfileCont = styled.div`
   flex-direction: column;
   margin-top: 20px;
   margin-bottom: 24px;
-  padding-left: 20px;
-  margin: 0 auto;
-  max-width: 1320px;
 
   @media (max-width: 1320px) {
-    width: 90%;
-    /* padding-left: 20px; */
+    /* padding: 0 16px; */
   }
 `;
 export const ProfileWrap = styled.div`
@@ -243,28 +242,28 @@ export const ProfileWrap = styled.div`
   justify-content: flex-start;
   overflow-x: auto;
   width: 100%;
-  max-width: 1320px;
   flex-wrap: wrap; /* 줄어들면 아래로 배치 */
-
+  gap: 16px;
   margin: 0 auto;
 `;
 export const Profile = styled.div`
   display: flex;
-  width: 240px;
-  margin-right: 16px;
-  position: relative;
-  margin-bottom: 32px;
+  /* width: 240px; */
 
-  @media (max-width: 1120px) {
-    flex-basis: calc((100% - 16px) / 4.5);
+  position: relative;
+
+  flex-basis: calc((100% - 64px) / 5);
+
+  @media (max-width: 1320px) {
+    flex-basis: calc((100% - 48px) / 4);
   }
   @media (max-width: 960px) {
-    flex-basis: calc((100% - 16px) / 3.5);
+    flex-basis: calc((100% - 32px) / 3);
   }
   @media (max-width: 640px) {
     flex-basis: calc((100% - 16px) / 2);
   }
-  @media (max-width: 400px) {
+  @media (max-width: 480px) {
     flex-basis: calc(100%);
   }
 
@@ -291,6 +290,7 @@ export const ProfileImg = styled.img`
 
 export const Role = styled.div`
   font-weight: 500;
+  font-size: ${theme.fontSizes.sub2};
 `;
 
 export const ProfileInfo = styled.div`
@@ -307,6 +307,14 @@ export const ReviewCont = styled.div`
   margin-top: 20px;
   flex-direction: column;
   margin-bottom: 24px;
+  ////
+
+  width: 100%;
+  /* max-width: 1320px; */
+
+  @media (max-width: 1320px) {
+    /* padding: 0 16px; */
+  }
 `;
 
 export const ReviewTitleWrap = styled.div`
@@ -314,22 +322,8 @@ export const ReviewTitleWrap = styled.div`
   align-items: center;
   /* justify-content: space-between; */
   margin-bottom: 16px;
-
-  max-width: 1320px;
+  justify-content: space-between;
   width: 100%;
-  & > button {
-    margin-left: auto; /* 버튼을 오른쪽으로 밀기 */
-  }
-
-  @media (max-width: 1200px) {
-    width: 90%;
-    justify-content: space-between; /* 제목과 버튼의 간격 유지 */
-  }
-
-  @media (max-width: 960px) {
-    width: 90%;
-    justify-content: space-between; /* 제목과 버튼의 간격 유지 */
-  }
 `;
 
 export const ReviewWrap = styled.div`
@@ -338,21 +332,11 @@ export const ReviewWrap = styled.div`
   width: 100%;
 
   overflow-x: auto;
-  padding: 0 16px;
+  /* padding: 0 16px; */
   overflow-y: hidden; ///
   gap: 16px;
   flex-wrap: wrap; /* 화면이 줄어들면 아래로 배치 */
-
-  @media (max-width: 1200px) {
-    width: 100%;
-    gap: 16px;
-    padding: 0 16px;
-  }
-  @media (max-width: 960px) {
-    gap: 16px;
-    width: 100%;
-    padding: 0 16px;
-  }
+  //////////
 `;
 
 export const GalleryCont = styled.div`
@@ -361,15 +345,20 @@ export const GalleryCont = styled.div`
   margin-bottom: 24px;
   gap: 16px;
   margin-top: 20px;
-  width: 1320px;
+  //width: 1320px;
   justify-content: space-between;
-  background-color: goldenrod;
+
+  //////
+  width: 100%;
+  max-width: 1320px;
+
+  margin: 0 auto;
 `;
 
 export const CardWrapper = styled.div`
   flex-basis: calc((100% - 64px) / 5); /* 기본 너비 설정 */
 
-  min-width: 250px; /* 카드의 고정 너비 */
+  /* min-width: 250px; 카드의 고정 너비 */
 
   /////////////
   @media (max-width: 1320px) {
