@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import UserReviewListPage from "./pages/UserReviewListPage";
 import useDetectMobile from "./hooks/useDetectMobile";
 import { Helmet } from "react-helmet-async";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Container = styled.div`
@@ -33,6 +34,17 @@ function App() {
       }}
       $isMobile={isMobile}
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Helmet>
         <title>ThearUp</title>
         <meta

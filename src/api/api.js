@@ -33,7 +33,13 @@ export const getBadgeCnt = async () => {
 
 // 로그 아웃
 export const postLogout = async () => {
-  return await axiosInstance.post("/member/logout");
+  return await axiosInstance.post(
+    "/member/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
 };
 
 // UP & DOWN
