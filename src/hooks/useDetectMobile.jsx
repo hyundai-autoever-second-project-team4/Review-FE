@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 
 function useDetectMobile() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    return (
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer: coarse)").matches
+    );
+  });
 
   useEffect(() => {
     const detectMobile = () => {
