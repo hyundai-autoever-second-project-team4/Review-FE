@@ -125,30 +125,14 @@ const SkeletonMovieDetail = () => {
                       variant="text"
                       sx={{ fontSize: "1rem", width: "100%" }}
                     />
+                    <Skeleton
+                      variant="text"
+                      sx={{ fontSize: "1rem", width: "100%" }}
+                    />
                   </S.Description>
                 </S.MovieInfo>
               </S.MovieInfoCont>
-              {/* <S.ChartSection> */}
-              {/* <S.AvgRating>
-                  <div>
-                    평균별점
-                    <strong>
-                      {Math.floor(
-                        movieData.reviewCountInfo.averageStarRate * 10
-                      ) / 10}
-                    </strong>
-                    {`(${movieData.reviewCountInfo.totalReviewCount}명)`}
-                  </div>
-                </S.AvgRating>
 
-                <div style={{ marginBottom: "16px" }}>
-                  <RatingChart
-                    ratingArray={ratingArray}
-                    level={"movieGod"}
-                  ></RatingChart>
-                </div> */}
-              {/* </S.ChartSection> */}
-              {/* <div style={{ display: "flex", width: "100%", height:"300px"}}> */}
               <S.SkeletonChartSection>
                 <Skeleton
                   variant="rectangular"
@@ -162,11 +146,10 @@ const SkeletonMovieDetail = () => {
                   }}
                 ></Skeleton>
               </S.SkeletonChartSection>
-              {/* </div> */}
             </S.MovieWrap>
           </div>
           <S.ProfileCont>
-            <div style={{ width: "85vw" }}>
+            <div style={{ width: "90vw" }}>
               <S.Title>
                 <div style={{ display: "flex", alignSelf: "flex-start" }}>
                   <Skeleton
