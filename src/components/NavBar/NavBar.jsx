@@ -292,9 +292,11 @@ function NavBar() {
                 onKeyUp={handleKeyUp}
               />
               {user?.id === null ? (
-                <StyledButton $variant={isVariant} onClick={handleModalOpen}>
-                  로그인
-                </StyledButton>
+                <div style={{ width: "100px" }}>
+                  <StyledButton $variant={isVariant} onClick={handleModalOpen}>
+                    로그인
+                  </StyledButton>
+                </div>
               ) : (
                 <Tooltip
                   title={
