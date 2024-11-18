@@ -306,12 +306,12 @@ export const SkeletonChartSection = styled.div`
   display: flex;
   height: 300px;
   flex-direction: column;
-  /* justify-content: space-between;
-  align-items: center; */
-  width: 400px;
+
+  //width: 400px;
   padding: 0 16px;
   border-radius: 10px;
-  //width: 100%;
+  width: 60vw;
+
   @media (max-width: 1200px) {
     width: 100%; /* 작은 화면에서 전체 너비 사용 */
   }
