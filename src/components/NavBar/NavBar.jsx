@@ -7,7 +7,12 @@ import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import searchLogo from "../../assets/svg/search.svg";
 import { Tooltip } from "@mui/material";
-import { setCookies, deleteAllCookies } from "../../api/cookie";
+import {
+  setCookies,
+  deleteAllCookies,
+  getCookie,
+  getRefresh,
+} from "../../api/cookie";
 import useUserStore from "../../store/userStore";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import ProfileTooltip from "./ProfileTooltip";
@@ -118,7 +123,8 @@ function NavBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useDetectMobile();
   const { events, error, message } = useAuthenticatedSSE(user.id);
-
+  console.log(getCookie());
+  console.log(getRefresh());
   useEffect(() => {
     if (message && message !== null) {
       Swal.fire({
