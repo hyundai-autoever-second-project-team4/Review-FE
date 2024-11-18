@@ -236,7 +236,12 @@ function Search() {
 
   useEffect(() => {
     setQuery(searchKeyword || "");
+    setTab(0);
   }, [searchKeyword]);
+
+  useEffect(() => {
+    setPage(1); // 첫 번째 페이지로 초기화
+  }, [tab, query]);
 
   const handlePageChange = (event, value) => {
     setPage(value); // 페이지 변경

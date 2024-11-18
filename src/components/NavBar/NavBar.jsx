@@ -178,12 +178,21 @@ function NavBar() {
   const isPopularSelected = location.pathname === "/movieList/popular";
   const isRankingSelected = location.pathname === "/ranking";
 
-  const handleKeyDown = (e) => {
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "Enter" && searchKey.trim() !== "") {
+  //     navigate(`/search/search?query=${searchKey}`, {
+  //       state: { keyword: searchKey },
+  //     });
+  //     setSearchKey("");
+  //   }
+  // };
+
+  const handleKeyUp = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
       navigate(`/search/search?query=${searchKey}`, {
         state: { keyword: searchKey },
       });
-      setSearchKey("");
+      setSearchKey(""); // 입력 필드 초기화
     }
   };
 
@@ -271,7 +280,8 @@ function NavBar() {
               $variant={isVariant}
               value={searchKey}
               onChange={(e) => setSearchKey(e.target.value)}
-              onKeyDown={handleKeyDown}
+              //onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
             />
             {user?.id === null ? (
               <StyledButton $variant={isVariant} onClick={handleModalOpen}>
