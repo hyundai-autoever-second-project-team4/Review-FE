@@ -43,7 +43,7 @@ const ContentArea = styled.div`
     width: 10px;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(241, 241, 255, 0.8);
+    background-color: rgba(221, 221, 235, 0.8);
     border-radius: 5px;
   }
   &::-webkit-scrollbar-track-piece {

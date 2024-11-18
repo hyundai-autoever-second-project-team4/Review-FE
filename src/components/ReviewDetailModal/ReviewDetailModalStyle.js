@@ -203,10 +203,50 @@ export const ReviewInput = styled.textarea`
   border-radius: 10px;
 `;
 
+export const ReviewEditInput = styled.textarea`
+  border-style: none;
+  width: 100%;
+  height: 71px;
+  padding: 8px 120px 8px 8px;
+  resize: none;
+  font-size: 14px;
+  font-weight: ${theme.fontWeight.regular};
+  color: ${theme.colors.gray3};
+  border-radius: 10px;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(221, 221, 235, 0.8);
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+    border-radius: 5px;
+    margin: 0px 0;
+  }
+`;
+
+export const EditContainer = styled.div`
+  position: relative;
+`;
+
 export const SubmitBtn = styled(Button)`
   position: absolute;
   bottom: 20px;
   right: 18px;
+`;
+
+export const CancelBtn = styled(Button)`
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+`;
+
+export const UpdateBtn = styled(Button)`
+  position: absolute;
+  bottom: 21px;
+  right: 72px;
 `;
 
 export const DeleteButton = styled(Button)`
