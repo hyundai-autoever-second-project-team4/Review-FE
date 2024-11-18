@@ -12,6 +12,8 @@ import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
 import theme from "../../styles/theme";
 import useUserStore from "../../store/userStore";
 import SkeletonMovieDetail from "./SkeletonMovieDetail";
+import MetaTag from "../../MetaTag/MetaTag";
+
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
@@ -110,13 +112,94 @@ function MovieDetail() {
 
   return (
     <>
-      <S.Container>
-        <S.BackImg
-          $backgroundImage={
-            IMG_BACK_BASE_URL + `${movieData.movieInfo.backdropPath}`
-          }
-        />
-        <S.Content>
+      <MetaTag
+        title={movieData.movieInfo.title}
+        description={movieData.movieInfo.overview}
+        imgsrc={movieData.movieInfo.posterPath}
+        url={`https://theaterup.site/movieDetail/${movieId}`}
+      />
+      {isMobile ? (
+        <div>
+          <S.MobileBackImg
+            $backgroundImage={
+              IMG_BACK_BASE_URL + `${movieData.movieInfo.backdropPath}`
+            }
+          />
+          <S.MobileInfoHeader>
+            <S.MobilePoster
+              src={IMG_BASE_URL + `${movieData.movieInfo.posterPath}`}
+              alt="Poster"
+            />
+            <S.MobileTextWrap>
+              <S.MobileTitle>{movieData.movieInfo.title}</S.MobileTitle>
+              <S.MobileSubText>{formattedDate}</S.MobileSubText>
+              <S.MobileSubText>
+                {movieData.genreInfoList.genres.map((genre, index) => (
+                  <span
+                    style={{ color: theme.colors.gray3 }}
+                    key={genre.genreId}
+                  >
+                    {genre.name}
+                    {index < movieData.genreInfoList.genres.length - 1 && " / "}
+                  </span>
+                ))}
+              </S.MobileSubText>
+              <S.MobileSubText>
+                {movieData.movieInfo.originCountry}
+              </S.MobileSubText>
+            </S.MobileTextWrap>
+          </S.MobileInfoHeader>
+          <S.MobileTagWrap>
+            {movieData.tagInfoList.tags.map((tag, index) => (
+              <S.Tag key={index}>{tag.content}</S.Tag>
+            ))}
+          </S.MobileTagWrap>
+          <S.MobileRatingWrap>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <StarRating
+                readOnly
+                rate={movieData.reviewCountInfo.averageStarRate}
+              ></StarRating>
+              <div>
+                평균별점
+                <S.MobileStarSubText>
+                  {" " +
+                    Math.floor(movieData.reviewCountInfo.averageStarRate * 10) /
+                      10}
+                </S.MobileStarSubText>
+                {`(${movieData.reviewCountInfo.totalReviewCount}명)`}
+                {!movieData.isReviewed && (
+                  <Button
+                    onClick={handleWriteModalOpen}
+                    style={{ height: "36px", margin: "0 0 0 10px" }}
+                    color={"primary"}
+                  >
+                    리뷰작성
+                  </Button>
+                )}
+              </div>
+            </div>
+            <div style={{ marginTop: "40px" }}>
+              <RatingChart
+                ratingArray={ratingArray}
+                level={"movieGod"}
+              ></RatingChart>
+            </div>
+            <S.MobileOverviewText>
+              <span style={{ fontWeight: `${theme.fontWeight.bold}` }}>
+                영화 줄거리 -{" "}
+              </span>
+              {movieData.movieInfo.overview}
+            </S.MobileOverviewText>
+          </S.MobileRatingWrap>
+        </div>
+      ) : (
+        <div>
+          <S.BackImg
+            $backgroundImage={
+              IMG_BACK_BASE_URL + `${movieData.movieInfo.backdropPath}`
+            }
+          />
           <div
             style={{
               display: "flex",
@@ -216,6 +299,10 @@ function MovieDetail() {
               </S.ChartSection>
             </S.MovieWrap>
           </div>
+        </div>
+      )}
+      <S.Container>
+        <S.Content>
           <S.ProfileCont>
             <S.Title>출연/제작</S.Title>
             <S.ProfileWrap>

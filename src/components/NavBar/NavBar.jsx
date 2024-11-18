@@ -7,13 +7,23 @@ import svgLogo from "/src/assets/svg/svgLogo.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import searchLogo from "../../assets/svg/search.svg";
 import { Tooltip } from "@mui/material";
-import { setCookies, deleteAllCookies } from "../../api/cookie";
+import {
+  setCookies,
+  deleteAllCookies,
+  getCookie,
+  getRefresh,
+} from "../../api/cookie";
 import useUserStore from "../../store/userStore";
 import { useGetUserInfo } from "../../hooks/useGetUserInfo";
 import ProfileTooltip from "./ProfileTooltip";
 import Fade from "@mui/material/Fade";
 import LoginModal from "../LoginModal/LoginModal";
 import Swal from "sweetalert2";
+import useDetectMobile from "../../hooks/useDetectMobile";
+import NavBarBottom from "./NavBarBottom";
+import useAuthenticatedSSE from "../../hooks/useAuthenticatedSSE";
+import { toast } from "react-toastify";
+import { useLogout } from "../../hooks/useLogout";
 
 const Container = styled.div`
   position: fixed;
@@ -36,7 +46,7 @@ const InerContainer = styled.div`
   align-items: center;
 
   @media (max-width: 1320px) {
-    padding: 0 8px;
+    padding: 0 16px;
   }
 `;
 const LeftWrap = styled.div`
@@ -65,7 +75,7 @@ const NavItem = styled.a`
 
 const SearchInput = styled.input`
   @media (max-width: 960px) {
-    width: 200px;
+    width: 180px;
   }
 
   @media (max-width: 640px) {
@@ -91,9 +101,6 @@ const StyledDynamicSvg = styled(DynamicSVG)`
   left: 8px;
   top: 50%;
   transform: translateY(-50%);
-  /* @media (max-width: 640px) {
-    display: none;
-  } */
 `;
 
 const StyledButton = styled(Button)`
@@ -116,14 +123,23 @@ function NavBar() {
   const { data, isLoading, refetch } = useGetUserInfo();
   const { user, setUser, logOut } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isMobile = useDetectMobile();
+  const { events, error, message } = useAuthenticatedSSE(user.id);
+  const { mutate: realLogout } = useLogout();
 
   useEffect(() => {
-    setCookies(
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoi7Jik7KCV7ZmYIiwic29jaWFsIjoia2FrYW8iLCJlbWFpbCI6IndqZGdoa3MwMzE2QG5hdmVyLmNvbSIsInByb2ZpbGVJbWFnZSI6Imh0dHA6Ly9pbWcxLmtha2FvY2RuLm5ldC90aHVtYi9SNjQweDY0MC5xNzAvP2ZuYW1lPWh0dHA6Ly90MS5rYWthb2Nkbi5uZXQvYWNjb3VudF9pbWFnZXMvZGVmYXVsdF9wcm9maWxlLmpwZWciLCJyb2xlIjoiTUVNQkVSIiwiaWF0IjoxNzMxNDc0NTQzLCJleHAiOjE3MzE0NzgxNDN9.5GyVN3RXfQiUcryzX7I6mTEW2jt_YMhLOP5HjEuL3XU",
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzE0NzQ1NDMsImV4cCI6MTczMjA3OTM0MywiZW1haWwiOiJ3amRnaGtzMDMxNkBuYXZlci5jb20ifQ.wzsRVHHHNUCah-fNTNjatSltAMKYeauXO4yL661JrSQ",
-      60
-    );
-  }, []);
+    if (message && message !== null) {
+      toast.info(message.message);
+    }
+  }, [message]);
+
+  // useEffect(() => {
+  //   setCookies(
+  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoi7Jik7KCV7ZmYIiwic29jaWFsIjoia2FrYW8iLCJlbWFpbCI6IndqZGdoa3MwMzE2QG5hdmVyLmNvbSIsInByb2ZpbGVJbWFnZSI6Imh0dHA6Ly9pbWcxLmtha2FvY2RuLm5ldC90aHVtYi9SNjQweDY0MC5xNzAvP2ZuYW1lPWh0dHA6Ly90MS5rYWthb2Nkbi5uZXQvYWNjb3VudF9pbWFnZXMvZGVmYXVsdF9wcm9maWxlLmpwZWciLCJyb2xlIjoiTUVNQkVSIiwiaWF0IjoxNzMxNDc0NTQzLCJleHAiOjE3MzE0NzgxNDN9.5GyVN3RXfQiUcryzX7I6mTEW2jt_YMhLOP5HjEuL3XU",
+  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzE0NzQ1NDMsImV4cCI6MTczMjA3OTM0MywiZW1haWwiOiJ3amRnaGtzMDMxNkBuYXZlci5jb20ifQ.wzsRVHHHNUCah-fNTNjatSltAMKYeauXO4yL661JrSQ",
+  //     60
+  //   );
+  // }, []); // 배포 할 때는 없애 주세요.
 
   useEffect(() => {
     if (data) {
@@ -181,15 +197,6 @@ function NavBar() {
   const isPopularSelected = location.pathname === "/movieList/popular";
   const isRankingSelected = location.pathname === "/ranking";
 
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter" && searchKey.trim() !== "") {
-  //     navigate(`/search/search?query=${searchKey}`, {
-  //       state: { keyword: searchKey },
-  //     });
-  //     setSearchKey("");
-  //   }
-  // };
-
   const handleKeyUp = (e) => {
     if (e.key === "Enter" && searchKey.trim() !== "") {
       navigate(`/search/search?query=${searchKey}`, {
@@ -216,14 +223,7 @@ function NavBar() {
     }).then((result) => {
       if (result.isConfirmed) {
         logOut();
-        deleteAllCookies();
-        Swal.fire({
-          text: "로그아웃 되었습니다.",
-          icon: "success",
-          confirmButtonText: "확인",
-        }).then(() => {
-          navigate("/");
-        });
+        realLogout();
       }
     });
   };
@@ -237,114 +237,128 @@ function NavBar() {
   };
 
   return (
-    <Container $variant={isVariant}>
-      <InerContainer>
-        <LeftWrap>
-          <img
-            src={svgLogo}
-            alt=""
-            onClick={moveToMain}
-            style={{ cursor: "pointer" }}
-          />
-          {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
-          <NavItem
-            onClick={moveToPlaying}
-            $variant={isVariant}
-            $isSelected={isPlayingSelected}
-          >
-            현재상영작
-          </NavItem>
-          <NavItem
-            onClick={moveToPopular}
-            $variant={isVariant}
-            $isSelected={isPopularSelected}
-          >
-            인기영화
-          </NavItem>
-          <NavItem
-            onClick={moveToRanking}
-            $variant={isVariant}
-            $isSelected={isRankingSelected}
-          >
-            랭킹
-          </NavItem>
-        </LeftWrap>
-        <div>
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <StyledDynamicSvg svgUrl={searchLogo} color={theme.colors.gray3} />
-            <SearchInput
-              $variant={isVariant}
-              value={searchKey}
-              onChange={(e) => setSearchKey(e.target.value)}
-              //onKeyDown={handleKeyDown}
-              onKeyUp={handleKeyUp}
+    <>
+      <Container $variant={isVariant}>
+        <InerContainer>
+          <LeftWrap>
+            <img
+              src={svgLogo}
+              alt=""
+              onClick={moveToMain}
+              style={{ cursor: "pointer" }}
             />
-            {user?.id === null ? (
-              <StyledButton $variant={isVariant} onClick={handleModalOpen}>
-                로그인
-              </StyledButton>
-            ) : (
-              <Tooltip
-                title={
-                  <ProfileTooltip
-                    name={user?.name}
-                    img={user?.profileImage}
-                    level={user?.tier?.image}
-                    primaryBadge={user?.badge?.background_image}
-                    moveToMyPage={moveToMyPage}
-                    handleLogOut={handleLogOut}
-                  />
-                }
-                arrow
-                enterTouchDelay={0}
-                placement="bottom-end"
-                TransitionComponent={Fade}
-                TransitionProps={{ timeout: 650 }}
-                componentsProps={{
-                  tooltip: {
-                    sx: {
-                      padding: "0px",
-                      backgroundColor: "#fff",
-                      color: "black",
-                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
-                      borderRadius: theme.borderRadius.sm,
-                      ".css-iglfhh-MuiTooltip-arrow::before": {
+            {/* <DynamicSVG svgUrl={svglogo} color={theme.colors.primary} /> */}
+            <NavItem
+              onClick={moveToPlaying}
+              $variant={isVariant}
+              $isSelected={isPlayingSelected}
+            >
+              현재상영작
+            </NavItem>
+            <NavItem
+              onClick={moveToPopular}
+              $variant={isVariant}
+              $isSelected={isPopularSelected}
+            >
+              인기영화
+            </NavItem>
+            <NavItem
+              onClick={moveToRanking}
+              $variant={isVariant}
+              $isSelected={isRankingSelected}
+            >
+              랭킹
+            </NavItem>
+          </LeftWrap>
+          <div>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <StyledDynamicSvg
+                svgUrl={searchLogo}
+                color={theme.colors.gray3}
+              />
+              <SearchInput
+                $variant={isVariant}
+                value={searchKey}
+                onChange={(e) => setSearchKey(e.target.value)}
+                //onKeyDown={handleKeyDown}
+                onKeyUp={handleKeyUp}
+              />
+              {user?.id === null ? (
+                <div style={{ width: "100px" }}>
+                  <StyledButton $variant={isVariant} onClick={handleModalOpen}>
+                    로그인
+                  </StyledButton>
+                </div>
+              ) : (
+                <Tooltip
+                  title={
+                    <ProfileTooltip
+                      name={user?.name}
+                      img={user?.profileImage}
+                      level={user?.tier?.image}
+                      primaryBadge={user?.badge?.background_image}
+                      moveToMyPage={moveToMyPage}
+                      handleLogOut={handleLogOut}
+                    />
+                  }
+                  arrow
+                  enterTouchDelay={0}
+                  placement="bottom-end"
+                  TransitionComponent={Fade}
+                  TransitionProps={{ timeout: 650 }}
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        padding: "0px",
                         backgroundColor: "#fff",
+                        color: "black",
+                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+                        borderRadius: theme.borderRadius.sm,
+                        ".css-iglfhh-MuiTooltip-arrow::before": {
+                          backgroundColor: "#fff",
+                        },
                       },
                     },
-                  },
-                }}
-              >
-                <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
                   }}
-                  // onClick={moveToMyPage}
                 >
-                  <ProfileImg src={user?.profileImage} alt="" />
-                </div>
-              </Tooltip>
-            )}
+                  <div
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    // onClick={moveToMyPage}
+                  >
+                    <ProfileImg src={user?.profileImage} alt="" />
+                  </div>
+                </Tooltip>
+              )}
+            </div>
           </div>
-        </div>
-      </InerContainer>
-      <LoginModal
-        modalOpen={isModalOpen}
-        modalClose={handleModalClose}
-        handleLogin={handleLogin}
-      />
-    </Container>
+        </InerContainer>
+        <LoginModal
+          modalOpen={isModalOpen}
+          modalClose={handleModalClose}
+          handleLogin={handleLogin}
+        />
+      </Container>
+      {isMobile && (
+        <NavBarBottom
+          moveToPlaying={moveToPlaying}
+          moveToPopular={moveToPopular}
+          moveToRanking={moveToRanking}
+        />
+      )}
+    </>
   );
 }
 

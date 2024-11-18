@@ -130,7 +130,7 @@ function MovieSlider({ title, movieData, cnt }) {
             lazy="true"
             slidesPerView={groupSize}
             slidesPerGroup={groupSize}
-            allowTouchMove={isMobile}
+            allowTouchMove={true}
             navigation={
               !isMobile
                 ? {

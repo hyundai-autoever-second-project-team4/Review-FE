@@ -54,6 +54,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
     "영화 리뷰에 대한 자신의 생각을 입력 해보세요."
   ); // placeholder 상태 추가
   const [islargeScreen, setIslargeScreen] = useState(true);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
   const [commentContent, setCommentContent] = useState(""); // 댓글 내용 상태 추가
   const inputRef = useRef(null); // 입력 필드에 대한 ref 생성
   const { data, isLoading, isError, error, refetch } = useGetReviewDetail(id);
@@ -134,6 +135,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   useEffect(() => {
     const handleResize = () => {
       setIslargeScreen(window.innerWidth > 854);
+      setIsMobileScreen(window.innerWidth < 538);
     };
 
     // 초기 화면 크기 체크
@@ -163,11 +165,13 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
             badgeImg={reviewData?.memberBadgeImg}
             handleProfileClick={handleProfileClick}
             large={islargeScreen}
+            badgeModalMobile={isMobileScreen}
           />
         )
       }
       large={islargeScreen}
-      titleHeight={"50px"}
+      titleHeight={isMobileScreen ? "60px" : "50px"}
+      badgeModalMobile={isMobileScreen}
     >
       {!isLoading && (
         <>

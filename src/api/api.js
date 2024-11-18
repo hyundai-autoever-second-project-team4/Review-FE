@@ -31,6 +31,17 @@ export const getBadgeCnt = async () => {
   return await axiosInstance.get("/badges");
 };
 
+// 로그 아웃
+export const postLogout = async () => {
+  return await axiosInstance.post(
+    "/member/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+};
+
 // UP & DOWN
 export const postThearUp = async (id) => {
   return await axiosInstance.post(`/thearup/${id}`);
