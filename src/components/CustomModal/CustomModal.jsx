@@ -34,7 +34,8 @@ const ContentArea = styled.div`
   margin-top: ${({ $titleHeight }) => ($titleHeight ? `48px` : `98px`)};
   max-height: 500px;
   min-height: 100px;
-  padding: 20px 36px 0 36px;
+  padding: ${({ $badgeModalMobile }) =>
+    $badgeModalMobile ? `20px 4px 0 4px` : `20px 36px 0 36px`};
   overflow-y: auto;
   background-color: ${({ $reviewModal }) =>
     $reviewModal ? `${theme.colors.review}` : "#fff"};
@@ -78,6 +79,7 @@ function CustomModal({
   children,
   reviewModal,
   titleHeight,
+  badgeModalMobile,
 }) {
   return (
     <Modal
@@ -110,7 +112,11 @@ function CustomModal({
             {/* <img src="../../assets/svg/close-circle.svg" /> */}
           </CloseButton>
         </TitleArea>
-        <ContentArea $titleHeight={titleHeight} $reviewModal={reviewModal}>
+        <ContentArea
+          $titleHeight={titleHeight}
+          $reviewModal={reviewModal}
+          $badgeModalMobile={badgeModalMobile ? badgeModalMobile : false}
+        >
           {children}
         </ContentArea>
         <BottomArea $reviewModal={reviewModal} />

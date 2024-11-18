@@ -199,7 +199,12 @@ function EditProfileModal({ modal, modalClose, user, handleProfileEdit }) {
           </BadgeWrapper>
         </BadgeContainer>
         <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "100%",
+            padding: "0 0 10px 0",
+          }}
         >
           <Button onClick={handleSetting} color="primary">
             설정하기
