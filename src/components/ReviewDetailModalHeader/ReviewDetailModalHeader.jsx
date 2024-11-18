@@ -19,6 +19,7 @@ function ReviewDetailModalHeader({
   badgeImg,
   reviewDate,
   handleProfileClick,
+  large,
 }) {
   // 문자열 분리
   const dateTimeParts = reviewDate.split("T");
@@ -34,7 +35,9 @@ function ReviewDetailModalHeader({
   const seconds = parseInt(timeParts[2]);
 
   // 원하는 형식으로 문자열 생성
-  const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`;
+  const formattedDate = large
+    ? `리뷰일 : ${year}년 ${month}월 ${day}일 ${hours}:${minutes}:${seconds}`
+    : `${year}.${month}.${day} ${hours}:${minutes}`;
 
   return (
     <Container>
@@ -54,8 +57,7 @@ function ReviewDetailModalHeader({
         </ProfileImgContainer>
         <Name>{nickname}</Name>
       </div>
-
-      <DateText>리뷰일 : {formattedDate}</DateText>
+      <DateText $large={large}>{formattedDate}</DateText>
       <StarRate>
         <img src={StarIcon} width={16} height={16} />
         <p>{starRate}</p>
