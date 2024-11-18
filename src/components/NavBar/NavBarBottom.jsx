@@ -38,8 +38,8 @@ const ButtonWrap = styled.div`
   cursor: pointer;
 
   p {
-    font-weight: ${({ isSelected }) => (isSelected ? "bold" : "normal")};
-    color: ${({ isSelected }) => isSelected && `${theme.colors.black}`};
+    font-weight: ${({ $isSelected }) => ($isSelected ? "bold" : "normal")};
+    color: ${({ $isSelected }) => $isSelected && `${theme.colors.black}`};
   }
 `;
 
@@ -55,7 +55,7 @@ function NavBarBottom({ moveToPlaying, moveToPopular, moveToRanking }) {
     <Container>
       <ButtonWrap
         onClick={() => handleButtonClick(1, moveToPlaying)}
-        isSelected={selected === 1}
+        $isSelected={selected === 1}
       >
         <img
           src={selected === 1 ? video : videoD}
@@ -67,7 +67,7 @@ function NavBarBottom({ moveToPlaying, moveToPopular, moveToRanking }) {
       </ButtonWrap>
       <ButtonWrap
         onClick={() => handleButtonClick(2, moveToPopular)}
-        isSelected={selected === 2}
+        $isSelected={selected === 2}
       >
         <img
           src={selected === 2 ? star2 : starD}
@@ -79,7 +79,7 @@ function NavBarBottom({ moveToPlaying, moveToPopular, moveToRanking }) {
       </ButtonWrap>
       <ButtonWrap
         onClick={() => handleButtonClick(3, moveToRanking)}
-        isSelected={selected === 3}
+        $isSelected={selected === 3}
       >
         <img
           src={selected === 3 ? ranking : rankingD}
