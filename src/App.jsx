@@ -26,25 +26,7 @@ const Container = styled.div`
 function App() {
   const isMobile = useDetectMobile();
   return (
-    <Container
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-      $isMobile={isMobile}
-    >
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+    <div>
       <Helmet>
         <title>ThearUp</title>
         <meta
@@ -60,21 +42,42 @@ function App() {
         />
         <meta property="og:description" content="영화 리뷰, ThearUp과 함께!" />
       </Helmet>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/movieDetail/:movieId" element={<MovieDetail />} />
-        <Route path="/movieList/:type" element={<MovieList />} />
-        <Route path="/movieReview/:movieId" element={<MovieReview />} />
-        <Route path="/ranking" element={<Ranking />} />
-        <Route path="/search/:searchTerm" element={<Search />} />
-        <Route path="/userReview/:userId" element={<UserReviewListPage />} />
-        <Route path="/userPage/:userId" element={<UserPage />} />
-        {/* test 추가 */}
-        <Route path="/test" element={<Test />} />
-      </Routes>
-      <ReactQueryDevtools initialIsOpen={true} />
-    </Container>
+      <Container
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        $isMobile={isMobile}
+      >
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/movieDetail/:movieId" element={<MovieDetail />} />
+          <Route path="/movieList/:type" element={<MovieList />} />
+          <Route path="/movieReview/:movieId" element={<MovieReview />} />
+          <Route path="/ranking" element={<Ranking />} />
+          <Route path="/search/:searchTerm" element={<Search />} />
+          <Route path="/userReview/:userId" element={<UserReviewListPage />} />
+          <Route path="/userPage/:userId" element={<UserPage />} />
+          {/* test 추가 */}
+          <Route path="/test" element={<Test />} />
+        </Routes>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </Container>
+    </div>
   );
 }
 
