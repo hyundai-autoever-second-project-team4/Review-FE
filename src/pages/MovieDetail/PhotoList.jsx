@@ -8,6 +8,8 @@ import DynamicSVG from "../../components/DynamicSVG/DynamicSVG";
 import arrowLeft from "../../assets/svg/arrow-left.svg";
 import arrowRight from "../../assets/svg/arrow-right.svg";
 import theme from "../../styles/theme";
+import useDetectMobile from "../../hooks/useDetectMobile";
+
 const IMG_GALLERY_BASE_URL = "https://image.tmdb.org/t/p/w780"; // 이미지 베이스 URL
 
 const phots = [
@@ -91,6 +93,7 @@ const PhotoCard = styled.div`
 function PhotoList({ photos }) {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const isMobile = useDetectMobile();
 
   return (
     <div style={{ width: "100%" }}>
@@ -110,8 +113,8 @@ function PhotoList({ photos }) {
               speed={1500}
               lazy="true"
               // slidesPerView={3}
-              slidesPerView={Math.min(photos.length, 3)}
-              slidesPerGroup={Math.min(photos.length, 3)}
+              slidesPerView={isMobile ? 1 : Math.min(photos.length, 3)}
+              slidesPerGroup={isMobile ? 1 : Math.min(photos.length, 3)}
               allowTouchMove={false}
               navigation={{
                 nextEl: `.swiper-button-next`,
