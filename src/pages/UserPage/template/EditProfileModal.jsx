@@ -103,6 +103,8 @@ const Primary = styled(DynamicSVG)`
 function EditProfileModal({ modal, modalClose, user, handleProfileEdit }) {
   const [profileImage, setProfileImage] = useState(user?.memberProfileImg);
   const [profileName, setProfileName] = useState(user?.memberName);
+  const [islargeScreen, setIslargeScreen] = useState(true);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
   const [mode, setMode] = useState("normal");
   const [primaryId, setPrimaryId] = useState(
     user?.memberBadgeList?.primaryBadgeId
@@ -138,8 +140,32 @@ function EditProfileModal({ modal, modalClose, user, handleProfileEdit }) {
     handleProfileEdit(data);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIslargeScreen(window.innerWidth > 854);
+      setIsMobileScreen(window.innerWidth < 538);
+    };
+
+    // 초기 화면 크기 체크
+    handleResize();
+
+    // resize 이벤트 리스너 등록
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <CustomModal title="프로필 편집" modal={modal} modalClose={modalClose}>
+    <CustomModal
+      title="프로필 편집"
+      modal={modal}
+      modalClose={modalClose}
+      large={islargeScreen}
+      badgeModalMobile={isMobileScreen}
+    >
       <Container>
         <div style={{ position: "relative" }}>
           <ProfileImg src={profileImage} alt="Profile" />

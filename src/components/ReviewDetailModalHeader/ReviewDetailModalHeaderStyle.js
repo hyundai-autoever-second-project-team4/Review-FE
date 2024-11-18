@@ -37,7 +37,8 @@ export const BadgeImg = styled.img`
 export const Name = styled.div`
   font-size: 18px;
   font-weight: ${theme.fontWeight.regular};
-  margin-right: 20px;
+  margin-right: ${({ $badgeModalMobile }) =>
+    $badgeModalMobile ? `10px` : `20px`};
 `;
 
 export const DateText = styled.div`

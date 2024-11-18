@@ -101,7 +101,7 @@ function ProfileTooltip({
           height={16}
           color={theme.colors.gray3}
         />
-        <p style={{ color: theme.colors.gray3 }}>로그 아웃</p>
+        <p style={{ color: theme.colors.gray3 }}>로그아웃</p>
       </LogoutWrapper>
     </Container>
   );

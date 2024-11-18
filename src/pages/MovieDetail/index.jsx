@@ -11,6 +11,7 @@ import { getMovieDetail } from "../../api/api";
 import ReviewAddModal from "../../components/ReviewAddModal/ReviewAddModal";
 import theme from "../../styles/theme";
 import useUserStore from "../../store/userStore";
+import MetaTag from "../../MetaTag/MetaTag";
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 const IMG_BACK_BASE_URL = "https://image.tmdb.org/t/p/w1280"; // 이미지 베이스 URL
 
@@ -103,6 +104,12 @@ function MovieDetail() {
 
   return (
     <>
+      <MetaTag
+        title={movieData.movieInfo.title}
+        description={movieData.movieInfo.overview}
+        imgsrc={movieData.movieInfo.posterPath}
+        url={`https://theaterup.site/movieDetail/${movieId}`}
+      />
       <S.Container>
         <S.BackImg
           $backgroundImage={

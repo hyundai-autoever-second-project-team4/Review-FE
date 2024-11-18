@@ -20,6 +20,7 @@ function ReviewDetailModalHeader({
   reviewDate,
   handleProfileClick,
   large,
+  badgeModalMobile,
 }) {
   // 문자열 분리
   const dateTimeParts = reviewDate.split("T");
@@ -40,29 +41,38 @@ function ReviewDetailModalHeader({
     : `${year}.${month}.${day} ${hours}:${minutes}`;
 
   return (
-    <Container>
-      <div
-        style={{
-          cursor: "pointer",
-          height: "100%",
-          display: "flex",
-          alignItems: "flex-end",
-        }}
-        onClick={handleProfileClick}
-      >
-        <TierImg src={tierImg} />
-        <ProfileImgContainer>
-          <ProfileImg src={profileImg} />
-          <BadgeImg src={badgeImg} />
-        </ProfileImgContainer>
-        <Name>{nickname}</Name>
-      </div>
-      <DateText $large={large}>{formattedDate}</DateText>
-      <StarRate>
-        <img src={StarIcon} width={16} height={16} />
-        <p>{starRate}</p>
-      </StarRate>
-    </Container>
+    <>
+      <Container>
+        <div
+          style={{
+            cursor: "pointer",
+            height: "100%",
+            display: "flex",
+            alignItems: "flex-end",
+          }}
+          onClick={handleProfileClick}
+        >
+          <TierImg src={tierImg} />
+          <ProfileImgContainer>
+            <ProfileImg src={profileImg} />
+            <BadgeImg src={badgeImg} />
+          </ProfileImgContainer>
+          <Name $badgeModalMobile={badgeModalMobile}>{nickname}</Name>
+        </div>
+        {!badgeModalMobile && (
+          <DateText $large={large}>{formattedDate}</DateText>
+        )}
+        <StarRate>
+          <img src={StarIcon} width={16} height={16} />
+          <p>{starRate}</p>
+        </StarRate>
+      </Container>
+      {badgeModalMobile && (
+        <DateText $large={large} style={{ margin: "8px 0 4px" }}>
+          {formattedDate}
+        </DateText>
+      )}
+    </>
   );
 }
 
