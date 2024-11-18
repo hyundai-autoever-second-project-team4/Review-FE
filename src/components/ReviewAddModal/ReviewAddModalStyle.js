@@ -46,11 +46,16 @@ export const CheckBoxContainer = styled.div`
 `;
 
 export const CheckBoxWrap = styled.div`
-  width: 25%; /* 4개가 들어갈 수 있도록 너비 설정 (여백 고려) */
+  width: ${({ $large, $Mobile }) =>
+    $large
+      ? `25%`
+      : $Mobile
+      ? `50%`
+      : `33%`}; /* 4,3개가 들어갈 수 있도록 너비 설정 (여백 고려) */
   margin-bottom: 8px; /* 아래쪽 여백 추가 */
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${({ $large }) => ($large ? `8px` : `2px`)};
 `;
 
 export const TagText = styled.div`
@@ -58,7 +63,7 @@ export const TagText = styled.div`
   font-family: "Noto Sans KR";
   font-size: 14px;
   font-weight: ${theme.fontWeight.regular};
-  margin-right: 8px;
+  margin-right: ${({ $large }) => ($large ? `8px` : `0px`)};
 `;
 
 export const TagCheckBox = styled.input`

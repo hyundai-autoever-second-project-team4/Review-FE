@@ -3,6 +3,7 @@ import theme from "../../styles/theme";
 
 export const Container = styled.div`
   width: 100%;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;

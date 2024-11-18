@@ -31,7 +31,7 @@ const TitleArea = styled.div`
 `;
 
 const ContentArea = styled.div`
-  margin-top: ${({ $titleHeight }) => ($titleHeight ? `48px` : `100px`)};
+  margin-top: ${({ $titleHeight }) => ($titleHeight ? `48px` : `98px`)};
   max-height: 500px;
   min-height: 100px;
   padding: 20px 36px 0 36px;
