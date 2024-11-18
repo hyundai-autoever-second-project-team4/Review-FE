@@ -123,9 +123,9 @@ function NavBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useDetectMobile();
   const { events, error, message } = useAuthenticatedSSE(user.id);
-  console.log(getCookie());
-  console.log(getRefresh());
+
   useEffect(() => {
+    console.log(message);
     if (message && message !== null) {
       Swal.fire({
         title: "새 알림",
@@ -149,6 +149,8 @@ function NavBar() {
       setUser(data);
     }
   }, [data]);
+
+  console.log(user);
 
   useEffect(() => {
     // 페이지 로드 시 스크롤을 최상단으로 설정
