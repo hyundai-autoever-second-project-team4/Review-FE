@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomModal from "./../CustomModal/CustomModal";
 import StarRating from "./../StarRating/StarRating";
 import {
@@ -43,6 +43,25 @@ function ReviewAddModal({ modalClose, movieTitle, refetch }) {
   const [rate, setRate] = useState(5);
   const [isSpoiler, setIsSpoiler] = useState(false); // 스포일러 체크 상태 관리
   const [content, setContent] = useState("");
+  const [islargeScreen, setIslargeScreen] = useState(true);
+  const [isMobileScreen, setIsMobileScreen] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIslargeScreen(window.innerWidth > 854);
+      setIsMobileScreen(window.innerWidth < 538);
+    };
+
+    // 초기 화면 크기 체크
+    handleResize();
+
+    // resize 이벤트 리스너 등록
+    window.addEventListener("resize", handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const [checkedTags, setCheckedTags] = useState(
     new Array(tagList.length).fill(false)
   );
@@ -127,8 +146,18 @@ function ReviewAddModal({ modalClose, movieTitle, refetch }) {
   return (
     <CustomModal
       modal={true}
-      title={`"${movieTitle}" 리뷰 남기기`}
-      large
+      title={
+        isMobileScreen ? (
+          <span>
+            {movieTitle}
+            <br />
+            리뷰 남기기
+          </span>
+        ) : (
+          `"${movieTitle}" 리뷰 남기기`
+        )
+      }
+      large={islargeScreen}
       modalClose={modalClose}
     >
       <form onSubmit={handleSubmit}>
@@ -148,8 +177,12 @@ function ReviewAddModal({ modalClose, movieTitle, refetch }) {
         <MaxTextInfo>태그는 최대 3개까지 선택 가능합니다</MaxTextInfo>
         <CheckBoxContainer>
           {tagList.map((tag, index) => (
-            <CheckBoxWrap key={index}>
-              <TagText>{tag.tagName}</TagText>
+            <CheckBoxWrap
+              key={index}
+              $large={islargeScreen}
+              $Mobile={isMobileScreen}
+            >
+              <TagText $large={islargeScreen}>{tag.tagName}</TagText>
               <TagCheckBox
                 type="checkbox"
                 name={`tag-${index}`}
