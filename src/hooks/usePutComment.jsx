@@ -1,23 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteComment } from "../api/api";
+import { ChangeComment } from "../api/api";
 import Swal from "sweetalert2";
 
-export const useDeleteComment = (reviewId, page) => {
+export const usePutComment = (commentId, content, reviewId, page) => {
   const queryClient = useQueryClient();
-
   return useMutation({
-    mutationFn: (commentId) => deleteComment(commentId),
+    mutationFn: ({ commentId, content }) => ChangeComment(commentId, content),
     onSuccess: () => {
       queryClient.invalidateQueries(["commentList", reviewId, page]);
       Swal.fire({
-        text: "삭제되었습니다.",
+        text: "댓글이 수정 되었습니다.",
         icon: "success",
         confirmButtonText: "확인",
       });
     },
     onError: (error) => {
       Swal.fire({
-        text: `삭제에 실패했습니다: ${error}`,
+        text: `수정에 실패했습니다: ${error}`,
         icon: "error",
         confirmButtonText: "확인",
       });
