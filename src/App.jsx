@@ -7,19 +7,21 @@ import MovieReview from "./pages/MovieReview";
 import Ranking from "./pages/Ranking";
 import Search from "./pages/Search";
 import UserPage from "./pages/UserPage";
-
 import Test from "./pages/Test";
 import NavBar from "./components/NavBar/NavBar";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/pagination";
 import UserReviewListPage from "./pages/UserReviewListPage";
+import useDetectMobile from "./hooks/useDetectMobile";
 
 const Container = styled.div`
   font-family: "Noto Sans KR", sans-serif;
+  margin-bottom: ${({ $isMobile }) => $isMobile && "60px"};
 `;
 
 function App() {
+  const isMobile = useDetectMobile();
   return (
     <Container
       style={{
@@ -27,6 +29,7 @@ function App() {
         flexDirection: "column",
         alignItems: "center",
       }}
+      $isMobile={isMobile}
     >
       <NavBar />
       <Routes>
