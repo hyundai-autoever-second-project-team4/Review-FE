@@ -18,6 +18,8 @@ const useAuthenticatedSSE = (userId) => {
         eventSource.addEventListener("alarm", (event) => {
           const eventData = JSON.parse(event.data);
           setEvents((prev) => [...prev, eventData]);
+          console.log(event.data);
+          setEvent(event.data);
         });
 
         eventSource.onerror = (err) => {
