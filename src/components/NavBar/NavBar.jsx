@@ -24,6 +24,7 @@ import NavBarBottom from "./NavBarBottom";
 import useAuthenticatedSSE from "../../hooks/useAuthenticatedSSE";
 import { toast } from "react-toastify";
 import { useLogout } from "../../hooks/useLogout";
+import AlarmModal from "./AlarmModal";
 
 const Container = styled.div`
   position: fixed;
@@ -115,6 +116,21 @@ const ProfileImg = styled.img`
   object-fit: cover;
 `;
 
+const AlarmsNum = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${theme.colors.red};
+  color: #fff;
+  font-size: ${theme.fontSizes.sub2};
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -123,6 +139,7 @@ function NavBar() {
   const { data, isLoading, refetch } = useGetUserInfo();
   const { user, setUser, logOut } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [alarmModal, setAlarmModal] = useState(false);
   const isMobile = useDetectMobile();
   const { events, error, message } = useAuthenticatedSSE(user.id);
   const { mutate: realLogout } = useLogout();
@@ -133,13 +150,13 @@ function NavBar() {
     }
   }, [message]);
 
-  // useEffect(() => {
-  //   setCookies(
-  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoi7Jik7KCV7ZmYIiwic29jaWFsIjoia2FrYW8iLCJlbWFpbCI6IndqZGdoa3MwMzE2QG5hdmVyLmNvbSIsInByb2ZpbGVJbWFnZSI6Imh0dHA6Ly9pbWcxLmtha2FvY2RuLm5ldC90aHVtYi9SNjQweDY0MC5xNzAvP2ZuYW1lPWh0dHA6Ly90MS5rYWthb2Nkbi5uZXQvYWNjb3VudF9pbWFnZXMvZGVmYXVsdF9wcm9maWxlLmpwZWciLCJyb2xlIjoiTUVNQkVSIiwiaWF0IjoxNzMxNDc0NTQzLCJleHAiOjE3MzE0NzgxNDN9.5GyVN3RXfQiUcryzX7I6mTEW2jt_YMhLOP5HjEuL3XU",
-  //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzE0NzQ1NDMsImV4cCI6MTczMjA3OTM0MywiZW1haWwiOiJ3amRnaGtzMDMxNkBuYXZlci5jb20ifQ.wzsRVHHHNUCah-fNTNjatSltAMKYeauXO4yL661JrSQ",
-  //     60
-  //   );
-  // }, []); // 배포 할 때는 없애 주세요.
+  useEffect(() => {
+    setCookies(
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoi7Jik7KCV7ZmYIiwic29jaWFsIjoia2FrYW8iLCJlbWFpbCI6IndqZGdoa3MwMzE2QG5hdmVyLmNvbSIsInByb2ZpbGVJbWFnZSI6Imh0dHA6Ly9pbWcxLmtha2FvY2RuLm5ldC90aHVtYi9SNjQweDY0MC5xNzAvP2ZuYW1lPWh0dHA6Ly90MS5rYWthb2Nkbi5uZXQvYWNjb3VudF9pbWFnZXMvZGVmYXVsdF9wcm9maWxlLmpwZWciLCJyb2xlIjoiTUVNQkVSIiwiaWF0IjoxNzMxNDc0NTQzLCJleHAiOjE3MzE0NzgxNDN9.5GyVN3RXfQiUcryzX7I6mTEW2jt_YMhLOP5HjEuL3XU",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzE0NzQ1NDMsImV4cCI6MTczMjA3OTM0MywiZW1haWwiOiJ3amRnaGtzMDMxNkBuYXZlci5jb20ifQ.wzsRVHHHNUCah-fNTNjatSltAMKYeauXO4yL661JrSQ",
+      60
+    );
+  }, []); // 배포 할 때는 없애 주세요.
 
   useEffect(() => {
     if (data) {
@@ -236,6 +253,14 @@ function NavBar() {
     setIsModalOpen(false);
   };
 
+  const handleAlarmModalOpen = () => {
+    setAlarmModal(true);
+  };
+
+  const handleAlarmModalClose = () => {
+    setAlarmModal(false);
+  };
+
   return (
     <>
       <Container $variant={isVariant}>
@@ -306,6 +331,8 @@ function NavBar() {
                       primaryBadge={user?.badge?.background_image}
                       moveToMyPage={moveToMyPage}
                       handleLogOut={handleLogOut}
+                      alarms={user?.alarms}
+                      handleAlarmModalOpen={handleAlarmModalOpen}
                     />
                   }
                   arrow
@@ -335,10 +362,14 @@ function NavBar() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
+                      position: "relative",
                     }}
                     // onClick={moveToMyPage}
                   >
                     <ProfileImg src={user?.profileImage} alt="" />
+                    {user?.alarms?.length > 0 && (
+                      <AlarmsNum>{user.alarms.length}</AlarmsNum>
+                    )}
                   </div>
                 </Tooltip>
               )}
@@ -350,6 +381,13 @@ function NavBar() {
           modalClose={handleModalClose}
           handleLogin={handleLogin}
         />
+        {alarmModal && (
+          <AlarmModal
+            alarms={user?.alarms}
+            modal={alarmModal}
+            modalClose={handleAlarmModalClose}
+          />
+        )}
       </Container>
       {isMobile && (
         <NavBarBottom
