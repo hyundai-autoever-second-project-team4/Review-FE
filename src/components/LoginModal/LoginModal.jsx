@@ -11,6 +11,7 @@ function LoginModal({ modalOpen, modalClose, handleLogin }) {
       modalClose={modalClose}
       title={"ThearUp 소셜 로그인"}
       titleHeight={"60px"}
+      large
     >
       <Container>
         <KakaoBtn onClick={handleLogin}>
