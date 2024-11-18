@@ -7,6 +7,7 @@ import { Navigation } from "swiper/modules";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
 import arrowLeft from "../../../assets/svg/arrow-left.svg";
 import arrowRight from "../../../assets/svg/arrow-right.svg";
+import useDetectMobile from "../../../hooks/useDetectMobile";
 
 const Container = styled.div`
   margin-bottom: 40px;
@@ -95,6 +96,7 @@ function MovieSlider({ title, movieData, cnt }) {
   const [groupSize, setGroupSize] = useState(5);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const isMobile = useDetectMobile();
 
   useEffect(() => {
     // 화면 크기에 따라 groupSize를 설정하는 함수
@@ -128,11 +130,15 @@ function MovieSlider({ title, movieData, cnt }) {
             lazy="true"
             slidesPerView={groupSize}
             slidesPerGroup={groupSize}
-            allowTouchMove={false}
-            navigation={{
-              nextEl: `.swiper-button-next${cnt}`,
-              prevEl: `.swiper-button-prev${cnt}`,
-            }}
+            allowTouchMove={isMobile}
+            navigation={
+              !isMobile
+                ? {
+                    nextEl: `.swiper-button-next-comment`,
+                    prevEl: `.swiper-button-prev-comment`,
+                  }
+                : false // 모바일에서는 navigation 비활성화
+            }
             modules={[Navigation]}
             onSlideChange={(swiper) => {
               setIsBeginning(swiper.isBeginning);
@@ -155,26 +161,27 @@ function MovieSlider({ title, movieData, cnt }) {
             ))}
           </Swiper>
         </Slide>
-        <ButtonWrapper>
-          <PrevButton
-            className={`swiper-button-prev${cnt}`}
-            $isBeginning={isBeginning}
-          >
-            <DynamicSVG
-              width={18}
-              color={theme.colors.black}
-              svgUrl={arrowLeft}
-            />
-          </PrevButton>
-
-          <NextButton className={`swiper-button-next${cnt}`} $isEnd={isEnd}>
-            <DynamicSVG
-              width={18}
-              color={theme.colors.black}
-              svgUrl={arrowRight}
-            />
-          </NextButton>
-        </ButtonWrapper>
+        {!isMobile && (
+          <ButtonWrapper>
+            <PrevButton
+              className={`swiper-button-prev-comment`}
+              $isBeginning={isBeginning}
+            >
+              <DynamicSVG
+                width={18}
+                color={theme.colors.black}
+                svgUrl={arrowLeft}
+              />
+            </PrevButton>
+            <NextButton className={`swiper-button-next-comment`} $isEnd={isEnd}>
+              <DynamicSVG
+                width={18}
+                color={theme.colors.black}
+                svgUrl={arrowRight}
+              />
+            </NextButton>
+          </ButtonWrapper>
+        )}
       </SliderContainer>
     </Container>
   );

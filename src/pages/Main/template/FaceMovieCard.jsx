@@ -8,9 +8,11 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   flex-direction: column;
-
+  background-color: #ddd;
   box-sizing: border-box;
   width: 100%;
+  aspect-ratio: 1 / 1;
+  /* height: 300px; */
   transition: 0.2s;
   &:hover {
     cursor: pointer;
@@ -24,6 +26,8 @@ const BackPoster = styled.img`
   object-fit: cover;
   border-radius: ${theme.borderRadius.md};
   filter: blur(2px);
+
+  display: block;
 `;
 
 const Poster = styled.img`
@@ -120,6 +124,7 @@ function FaceMovieCard({
         <BackPoster
           src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
           alt=""
+          width={300}
         />
         <Blur />
         <InnerContainer>

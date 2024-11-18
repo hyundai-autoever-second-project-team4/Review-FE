@@ -43,6 +43,7 @@ const LeftWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-right: 16px;
 `;
 const NavItem = styled.a`
   font-size: 16px;
@@ -57,6 +58,9 @@ const NavItem = styled.a`
     transform: scale(1.03);
     cursor: pointer;
   }
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -65,7 +69,7 @@ const SearchInput = styled.input`
   }
 
   @media (max-width: 640px) {
-    display: none;
+    width: 100%;
   }
   transition: 0.3s;
   width: 500px;
@@ -87,9 +91,9 @@ const StyledDynamicSvg = styled(DynamicSVG)`
   left: 8px;
   top: 50%;
   transform: translateY(-50%);
-  @media (max-width: 640px) {
+  /* @media (max-width: 640px) {
     display: none;
-  }
+  } */
 `;
 
 const StyledButton = styled(Button)`
@@ -112,7 +116,6 @@ function NavBar() {
   const { data, isLoading, refetch } = useGetUserInfo();
   const { user, setUser, logOut } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedNav, setSelectedNav] = useState(""); // 현재 선택된 Nav 상태 추가
 
   useEffect(() => {
     setCookies(
@@ -300,6 +303,7 @@ function NavBar() {
                   />
                 }
                 arrow
+                enterTouchDelay={0}
                 placement="bottom-end"
                 TransitionComponent={Fade}
                 TransitionProps={{ timeout: 650 }}
