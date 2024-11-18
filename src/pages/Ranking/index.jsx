@@ -13,7 +13,7 @@ import { Helmet } from "react-helmet-async";
 
 function Ranking() {
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <Helmet>
         <title>랭킹페이지 - ThearUp</title>
         <meta name="description" content="자신의 랭킹을 확인해보세요!" />
