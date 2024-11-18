@@ -22,6 +22,7 @@ import Swal from "sweetalert2";
 import useDetectMobile from "../../hooks/useDetectMobile";
 import NavBarBottom from "./NavBarBottom";
 import useAuthenticatedSSE from "../../hooks/useAuthenticatedSSE";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   position: fixed;
@@ -125,14 +126,8 @@ function NavBar() {
   const { events, error, message } = useAuthenticatedSSE(user.id);
 
   useEffect(() => {
-    console.log(message);
     if (message && message !== null) {
-      Swal.fire({
-        title: "새 알림",
-        text: message.message,
-        icon: "info",
-        confirmButtonText: "확인",
-      });
+      toast.success(message.message);
     }
   }, [message]);
 
