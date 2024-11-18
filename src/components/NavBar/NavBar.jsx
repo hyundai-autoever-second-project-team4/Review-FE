@@ -129,7 +129,7 @@ function NavBar() {
     if (message && message !== null) {
       Swal.fire({
         title: "새 알림",
-        text: message,
+        text: message.message,
         icon: "info",
         confirmButtonText: "확인",
       });
