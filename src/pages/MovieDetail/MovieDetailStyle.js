@@ -39,6 +39,83 @@ export const BackImg = styled.div`
   background-position: 50%;
 `;
 
+export const MobileBackImg = styled.div`
+  width: 100vw;
+  height: 300px;
+  overflow: hidden;
+
+  background-image: ${(props) => `url(${props.$backgroundImage})`};
+  background-position: center; /* 이미지를 중앙에 위치 */
+  background-size: cover; /* 이미지를 전체에 꽉 채움 */
+  background-repeat: no-repeat;
+
+  background-position: 50%;
+`;
+
+export const MobileInfoHeader = styled.div`
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+`;
+
+export const MobilePoster = styled.img`
+  width: 140px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+`;
+
+export const MobileTextWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+`;
+
+export const MobileStarSubText = styled.strong`
+  font-size: ${theme.fontSizes.h4};
+  font-weight: ${theme.fontWeight.bold};
+  color: ${theme.colors.primary};
+`;
+
+export const MobileTitle = styled.div`
+  font-size: ${theme.fontSizes.h2};
+  font-weight: ${theme.fontWeight.bold};
+  margin-bottom: 10px;
+`;
+
+export const MobileSubText = styled.div`
+  font-size: ${theme.fontSizes.h4};
+  font-weight: ${theme.fontWeight.bold};
+  color: ${theme.colors.gray3};
+`;
+
+export const MobileRatingWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const MobileOverviewText = styled.div`
+  font-size: ${theme.fontSizes.sub1};
+  font-weight: ${theme.fontWeight.regular};
+  color: ${theme.colors.gray3};
+  padding: 16px;
+  line-height: 24px;
+`;
+
+export const MobileTagWrap = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+`;
+
 export const Content = styled.div`
   width: 1320px;
   display: flex;
