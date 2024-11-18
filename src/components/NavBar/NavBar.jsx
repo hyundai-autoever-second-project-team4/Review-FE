@@ -150,8 +150,6 @@ function NavBar() {
     }
   }, [data]);
 
-  console.log(user);
-
   useEffect(() => {
     // 페이지 로드 시 스크롤을 최상단으로 설정
     window.scrollTo(0, 0);
