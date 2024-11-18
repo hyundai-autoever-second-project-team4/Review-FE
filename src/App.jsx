@@ -14,6 +14,7 @@ import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/pagination";
 import UserReviewListPage from "./pages/UserReviewListPage";
+import { Helmet } from "react-helmet-async";
 
 const Container = styled.div`
   font-family: "Noto Sans KR", sans-serif;
@@ -28,6 +29,21 @@ function App() {
         alignItems: "center",
       }}
     >
+      <Helmet>
+        <title>ThearUp</title>
+        <meta
+          name="description"
+          content="ThearUp에서 즐겁게 영화 리뷰를 해보세요. ThearUp에서는 여러 사람들의 리뷰를 통해 영화에 대한 다양한 정보를 얻을 수 있습니다."
+        />
+        <meta property="og:url" content="https://theaterup.site/" />
+        <meta property="og:title" content="ThearUp - 즐거운 영화 리뷰 서비스" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="https://theaterup.site/ThearUpImg.png"
+        />
+        <meta property="og:description" content="영화 리뷰, ThearUp과 함께!" />
+      </Helmet>
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />} />
