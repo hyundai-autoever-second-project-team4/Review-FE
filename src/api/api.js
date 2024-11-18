@@ -103,7 +103,6 @@ export const deleteReview = async (reviewId) => {
 };
 
 export const deleteComment = async (commentId) => {
-  console.log("삭제할 댓글 ID:", commentId);
   return await axiosInstance.delete(`/comment/${commentId}`);
 };
 
