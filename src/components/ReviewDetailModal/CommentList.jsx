@@ -3,6 +3,7 @@ import {
   BadgeImg,
   CommentBox,
   CommentContainer,
+  CommentDeleteBtn,
   CommentText,
   DateText,
   Name,
@@ -15,6 +16,8 @@ import {
 } from "./ReviewDetailModalStyle";
 import { useGetCommentList } from "../../hooks/useGetCommentList";
 import { Pagination } from "@mui/material";
+import Swal from "sweetalert2";
+import { useDeleteComment } from "../../hooks/useDeleteComment";
 
 function formatDate(dateString) {
   const options = {
@@ -32,7 +35,10 @@ function formatDate(dateString) {
 
 function CommentList({ reviewId }) {
   const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState(null);
   const { data, isLoading, isError, error } = useGetCommentList(reviewId, page);
+  const { mutate: deleteComment } = useDeleteComment(selected, reviewId, page);
+
   if (isLoading) {
     return (
       <CommentContainer>
@@ -50,6 +56,21 @@ function CommentList({ reviewId }) {
     setPage(value); // 페이지 변경
   };
 
+  const handleDeleteButtonClick = (commentId) => {
+    setSelected(commentId);
+    Swal.fire({
+      text: "정말 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "취소",
+      confirmButtonText: "확인",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteComment(commentId, reviewId, page);
+      }
+    });
+  };
+
   return (
     <>
       <CommentContainer>
@@ -59,12 +80,26 @@ function CommentList({ reviewId }) {
           comments.map((comment) => (
             <CommentBox key={comment.commentId}>
               <UserBox>
-                <TierImg src={comment.tierImage} />
-                <ProfileImgContainer>
-                  <ProfileImg src={comment.profileImage} />
-                  <BadgeImg src={comment.badgeImage} />
-                </ProfileImgContainer>
-                <Name>{comment.name}</Name>
+                <div style={{ display: "flex" }}>
+                  <TierImg src={comment.tierImage} />
+                  <ProfileImgContainer>
+                    <ProfileImg src={comment.profileImage} />
+                    <BadgeImg src={comment.badgeImage} />
+                  </ProfileImgContainer>
+                  <Name>{comment.name}</Name>
+                </div>
+                {comment.user ? (
+                  <div style={{ display: "flex" }}>
+                    <CommentDeleteBtn>댓글 수정</CommentDeleteBtn>
+                    <CommentDeleteBtn
+                      onClick={() => handleDeleteButtonClick(comment.commentId)}
+                    >
+                      댓글 삭제
+                    </CommentDeleteBtn>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </UserBox>
               <CommentText>{comment.content}</CommentText>
               <DateText>{formatDate(comment.createdAt)}</DateText>
