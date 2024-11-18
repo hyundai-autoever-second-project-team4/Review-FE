@@ -76,7 +76,7 @@ const NavItem = styled.a`
 
 const SearchInput = styled.input`
   @media (max-width: 960px) {
-    width: 200px;
+    width: 180px;
   }
 
   @media (max-width: 640px) {
