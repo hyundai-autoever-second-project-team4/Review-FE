@@ -12,6 +12,7 @@ import blueDown from "/src/assets/svg/blueDown.svg";
 import { useThearMutation } from "../../hooks/useThearMutation";
 import { useNavigate, useParams } from "react-router-dom";
 import ReviewDetailModal from "../ReviewDetailModal/ReviewDetailModal";
+import Swal from "sweetalert2";
 
 function Review({
   reviewId,
@@ -34,6 +35,7 @@ function Review({
   queryKeyType,
   memberId,
   movieId,
+  isWriter,
 }) {
   const [blur, setBlur] = useState(isBlur);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,9 +49,43 @@ function Review({
   );
 
   const handleUpButtonClick = () => {
+    if (isWriter) {
+      Swal.fire({
+        text: "내가 작성한 리뷰에는 공감할 수 없습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
+    if (theIsDown) {
+      Swal.fire({
+        text: "이미 공감한 리뷰입니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
     if (queryKeyType !== "hotReview") thearUp();
   };
   const handleDownButtonClick = () => {
+    if (isWriter) {
+      Swal.fire({
+        text: "내가 작성한 리뷰에는 공감할 수 없습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
+    if (theIsUp) {
+      Swal.fire({
+        text: "이미 공감한 리뷰입니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
     if (queryKeyType !== "hotReview") thearDown();
   };
 

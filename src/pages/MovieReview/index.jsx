@@ -106,6 +106,7 @@ function MovieReview() {
                 theIsDown={review.isThearDown}
                 reviewId={review.reviewId}
                 queryKeyType={["reviews", movieId, selectedSort, page]}
+                isWriter={review.isWriter}
               />
             ))
           : Array.from({ length: 5 }).map((_, index) => (

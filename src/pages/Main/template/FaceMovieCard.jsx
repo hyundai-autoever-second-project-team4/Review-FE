@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: inline-flex;
@@ -100,10 +101,22 @@ const Tag = styled.div`
     left: 6px;
   }
 `;
-function FaceMovieCard({ title, poster, onClick, type, backdropPath }) {
+function FaceMovieCard({
+  title,
+  poster,
+  onClick,
+  type,
+  backdropPath,
+  movieId,
+}) {
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate(`/movieDetail/${movieId}`);
+  };
   return (
     <>
-      <Container onClick={onClick}>
+      <Container onClick={handleOnClick}>
         <BackPoster
           src={`https://image.tmdb.org/t/p/w500${backdropPath}`}
           alt=""

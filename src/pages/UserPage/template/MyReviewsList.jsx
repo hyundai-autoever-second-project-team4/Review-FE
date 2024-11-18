@@ -100,6 +100,7 @@ function MyReviewsList({ reviews, queryKeyType }) {
                 queryKeyType={queryKeyType}
                 movieId={review.movieId}
                 userId={userId}
+                isWriter={review.isWriter}
               />
             </CardWrapper>
           );

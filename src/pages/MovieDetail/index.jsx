@@ -85,7 +85,7 @@ function MovieDetail() {
       role: actor.characterName, // 역할을 캐릭터 이름으로 설정
     })),
   ];
-  console.log(movieData);
+
   return (
     <>
       <S.Container>
@@ -245,6 +245,7 @@ function MovieDetail() {
                       reviewId={review.reviewId}
                       memberId={review.memberId}
                       queryKeyType={["movieDetail", movieId]}
+                      isWriter={review.isWriter}
                     />
                   </S.CardWrapper>
                 ))
