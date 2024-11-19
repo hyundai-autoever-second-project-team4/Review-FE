@@ -181,10 +181,10 @@ function UserPage() {
   }, [userDetail?.memberTier?.tierId]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    setTimeout(() => {
       const calculatedPercent =
-        (userDetail.memberTier.tierCurrentPoints /
-          userDetail.memberTier.tierRequiredPoints) *
+        (userDetail?.memberTier?.tierCurrentPoints /
+          userDetail?.memberTier?.tierRequiredPoints) *
         100;
 
       if (percent !== calculatedPercent) {

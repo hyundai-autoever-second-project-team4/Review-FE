@@ -31,7 +31,7 @@ function Main() {
     loading,
     error,
   } = useMainPageApi(user);
-  console.log(topReviewedMovies, thearupHonorMovies);
+
   useEffect(() => {
     const arr = [];
     if (user.id !== null)
