@@ -35,7 +35,7 @@ const ContentArea = styled.div`
   max-height: 500px;
   min-height: 100px;
   padding: ${({ $badgeModalMobile }) =>
-    $badgeModalMobile ? `20px 4px 0 4px` : `20px 36px 0 36px`};
+    $badgeModalMobile ? `20px 12px 0 12px` : `20px 36px 0 36px`};
   overflow-y: auto;
   background-color: ${({ $reviewModal }) =>
     $reviewModal ? `${theme.colors.review}` : "#fff"};

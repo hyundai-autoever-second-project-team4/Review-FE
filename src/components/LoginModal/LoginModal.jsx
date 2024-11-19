@@ -38,7 +38,15 @@ function LoginModal({ modalOpen, modalClose, handleLogin }) {
             width="24"
             height="24"
           />
-          카카오계정으로 로그인
+          {islargeScreen ? (
+            "카카오계정으로 로그인"
+          ) : (
+            <>
+              카카오계정으로
+              <br />
+              로그인
+            </>
+          )}
         </KakaoBtn>
       </Container>
     </CustomModal>
