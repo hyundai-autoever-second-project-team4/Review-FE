@@ -292,13 +292,17 @@ function UserPage() {
             }}
           >
             {userDetail?.memberTier?.tierName}
+            {"  "}
+            {userDetail?.memberTier?.tierTotalPoints}
           </p>
-          <p>
-            {`승급 까지 -${
-              userDetail?.memberTier?.tierRequiredPoints -
-              userDetail?.memberTier?.tierCurrentPoints
-            }`}
-          </p>
+          {userDetail?.memberTier?.tierName !== "영화의 신" && (
+            <p style={{ fontSize: "12px" }}>
+              {`${userDetail?.memberTier?.nextTierName} 승급 까지 -${
+                userDetail?.memberTier?.tierRequiredPoints -
+                userDetail?.memberTier?.tierCurrentPoints
+              }`}
+            </p>
+          )}
         </div>
         <XpBar>
           <Now
