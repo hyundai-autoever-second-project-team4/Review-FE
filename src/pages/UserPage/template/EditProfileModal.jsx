@@ -8,6 +8,8 @@ import userEditSvg from "../../../assets/svg/user-edit.svg";
 import DynamicSVG from "../../../components/DynamicSVG/DynamicSVG";
 import Button from "../../../components/Button/Button";
 import primarySvg from "../../../assets/svg/primary.svg";
+import Swal from "sweetalert2";
+import { Icon } from "@mui/material";
 
 const Container = styled.div`
   width: 100%;
@@ -126,8 +128,18 @@ function EditProfileModal({ modal, modalClose, user, handleProfileEdit }) {
     setMode((p) => (p === "normal" ? "edit" : "normal"));
   };
 
-  const handleNameChange = (event) => {
-    setProfileName(event.target.value);
+  const handleNameChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 12) {
+      setProfileName(value);
+    } else {
+      Swal.fire({
+        title: "경고",
+        text: "이름은 12자까지 가능합니다.",
+        icon: "warning",
+        confirmButtonText: "확인",
+      });
+    }
   };
 
   const handleSetting = () => {
