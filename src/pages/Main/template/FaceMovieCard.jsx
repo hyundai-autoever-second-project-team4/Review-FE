@@ -8,7 +8,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   flex-direction: column;
-  background-color: #ddd;
+
   box-sizing: border-box;
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -25,8 +25,8 @@ const BackPoster = styled.img`
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: ${theme.borderRadius.md};
+  /* filter: blur(2px); */
   filter: blur(2px);
-
   display: block;
 `;
 

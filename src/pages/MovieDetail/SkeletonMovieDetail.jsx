@@ -1,15 +1,21 @@
 import React from "react";
 import { Skeleton } from "@mui/material";
 import * as S from "./MovieDetailStyle";
+import useDetectMobile from "../../hooks/useDetectMobile";
 
 const SkeletonMovieDetail = () => {
+  const isMobile = useDetectMobile();
   return (
     <>
       {/* <Skeleton variant="rectangular" width={210} height={118} />
       <div>sdfsdfksjfksjfksldfjslkf</div> */}
 
       <S.Container>
-        <Skeleton variant="rectangular" width="100%" height={550}></Skeleton>
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={isMobile ? 300 : 550}
+        ></Skeleton>
         <S.Content>
           <div
             style={{

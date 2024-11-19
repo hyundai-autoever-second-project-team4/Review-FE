@@ -310,7 +310,7 @@ export const SkeletonChartSection = styled.div`
   //width: 400px;
   padding: 0 16px;
   border-radius: 10px;
-  width: 60vw;
+  width: 45vw;
 
   @media (max-width: 1200px) {
     width: 100%; /* 작은 화면에서 전체 너비 사용 */
