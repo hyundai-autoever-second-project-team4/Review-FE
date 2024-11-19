@@ -317,6 +317,7 @@ export const SkeletonChartSection = styled.div`
   }
 `;
 export const ProfileCont = styled.div`
+  width: 100%;
   display: flex;
   /* align-self: flex-start; */
   /* justify-content: space-between; */
