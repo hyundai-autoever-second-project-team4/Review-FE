@@ -129,3 +129,7 @@ export const ChangeComment = async (commentId, content) => {
 export const readAlram = async (alarmId) => {
   return await axiosInstance.post(`/alarms/${alarmId}`);
 };
+
+export const readAllAlrams = async () => {
+  return await axiosInstance.post(`/alarms/read-all`);
+};

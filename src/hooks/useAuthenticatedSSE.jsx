@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCookie, getRefresh } from "../api/cookie";
+import { useQueryClient } from "@tanstack/react-query";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -7,6 +7,8 @@ const useAuthenticatedSSE = (userId) => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [event, setEvent] = useState(null);
+  const queryClient = useQueryClient();
+  const queryKey = ["userInfo"];
 
   useEffect(() => {
     if (userId !== null) {
@@ -18,8 +20,17 @@ const useAuthenticatedSSE = (userId) => {
         eventSource.addEventListener("alarm", (event) => {
           const eventData = JSON.parse(event.data);
           setEvents((prev) => [...prev, eventData]);
-          console.log(JSON.parse(event.data));
-          setEvent(JSON.parse(event.data));
+          setEvent(eventData);
+          queryClient.setQueryData(queryKey, (old) => {
+            if (!old) return;
+
+            const newAlarms = [...old?.alarms, eventData];
+
+            return {
+              ...old,
+              alarms: newAlarms,
+            };
+          });
         });
 
         eventSource.onerror = (err) => {

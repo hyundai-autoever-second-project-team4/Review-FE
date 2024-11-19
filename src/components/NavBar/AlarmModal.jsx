@@ -4,6 +4,10 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import Button from "../Button/Button";
 import { useAlarmMutation } from "../../hooks/useAlarmMutation";
+import { readAllAlrams } from "../../api/api";
+import { useMutation } from "@tanstack/react-query";
+import { useGetUserInfo } from "../../hooks/useGetUserInfo";
+import Swal from "sweetalert2";
 
 const Default = styled.p`
   color: ${theme.colors.gray3};
@@ -36,7 +40,19 @@ const AlarmWrapper = styled.div`
 function AlarmModal({ modal, modalClose, alarms }) {
   const [islargeScreen, setIslargeScreen] = useState(true);
   const [isMobileScreen, setIsMobileScreen] = useState(false);
-  const { mutate } = useAlarmMutation();
+  const { refetch } = useGetUserInfo();
+  const { mutate: readAlarm } = useAlarmMutation();
+  const { mutate: readAll } = useMutation({
+    mutationFn: () => readAllAlrams(),
+    onSuccess: () => {
+      Swal.fire({
+        text: "모든 알림을 읽었습니다.",
+        icon: "success",
+        confirmButtonText: "확인",
+      });
+      refetch();
+    },
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,12 +73,25 @@ function AlarmModal({ modal, modalClose, alarms }) {
   }, []);
 
   const handleAlarmClick = (id) => {
-    mutate(id);
+    readAlarm(id);
   };
 
   return (
     <CustomModal
-      title="알람"
+      title={
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            paddingRight: "40px",
+            justifyContent: "space-between",
+          }}
+        >
+          <p>알림</p>
+          {alarms.length !== 0 && <Button onClick={readAll}>모두 읽기</Button>}
+        </div>
+      }
       modal={modal}
       modalClose={modalClose}
       large={islargeScreen}
@@ -70,7 +99,7 @@ function AlarmModal({ modal, modalClose, alarms }) {
     >
       <Container>
         {alarms.length === 0 ? (
-          <Default>알람이 없습니다.</Default>
+          <Default>알림이 없습니다.</Default>
         ) : (
           alarms.map((alarm) => {
             return (
@@ -80,7 +109,7 @@ function AlarmModal({ modal, modalClose, alarms }) {
                   onClick={() => handleAlarmClick(alarm.id)}
                   style={{ minWidth: "56px" }}
                 >
-                  확인
+                  읽기
                 </Button>
               </AlarmWrapper>
             );

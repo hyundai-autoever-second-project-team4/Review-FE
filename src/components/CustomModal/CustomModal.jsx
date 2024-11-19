@@ -106,7 +106,7 @@ function CustomModal({
           $reviewModal={reviewModal}
           $titleHeight={titleHeight}
         >
-          <div>{title}</div>
+          <div style={{ width: "100%" }}>{title}</div>
           <CloseButton onClick={modalClose}>
             <DynamicSVG color={theme.colors.black} svgUrl={CloseIcon} />
             {/* <img src="../../assets/svg/close-circle.svg" /> */}
