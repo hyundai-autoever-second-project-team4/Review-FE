@@ -82,8 +82,8 @@ function UserReviewListPage() {
   return (
     <Container>
       <MetaTag
-        title={data?.content[0].memberName + "님의 리뷰"}
-        description={data?.content[0].memberName + " 리뷰 목록 페이지"}
+        title={data?.content[0]?.memberName + "님의 리뷰"}
+        description={data?.content[0]?.memberName + " 리뷰 목록 페이지"}
         imgsrc={"https://theaterup.site/ThearUpImg.png"}
         url={`https://theaterup.site/userReview/${userId}`}
         original={true}
