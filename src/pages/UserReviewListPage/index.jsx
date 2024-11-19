@@ -85,45 +85,51 @@ function UserReviewListPage() {
       </HeaderTextContainer>
       <HeaderBackground>
         <DropDownContainer>
-          <select value={selectedSort} onChange={handleSortChange}>
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          {data?.totalPages !== 0 && (
+            <select value={selectedSort} onChange={handleSortChange}>
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          )}
         </DropDownContainer>
       </HeaderBackground>
       <ReviewContainer>
-        {isLoading
-          ? Array.from({ length: 5 }).map((_, index) => (
-              <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
-            ))
-          : data?.content.map((review) => (
-              <Review
-                key={review.reviewId}
-                width={isMobile ? "80%" : "640px"}
-                id={review.id}
-                starRate={review.starRate}
-                content={review.content}
-                isBlur={review.isBlur}
-                theUpCnt={review.ThearUpCount}
-                theDownCnt={review.ThearDownCount}
-                commentCnt={review.commentCount}
-                movieName={review.movieTitle}
-                contentClick={() => handleModalOpen(review.reviewId)}
-                memberId={review.memberId}
-                reviewId={review.reviewId}
-                theIsUp={review.isThearUp}
-                movieId={review.movieId}
-                theIsDown={review.isThearDown}
-                queryKeyType={["userReviews", userId, selectedSort, page]}
-                isWriter={review.isWriter}
-                isMine
-              />
-            ))}
+        {isLoading ? (
+          Array.from({ length: 5 }).map((_, index) => (
+            <ReviewSkeleton key={index} width={isMobile ? "80%" : "640px"} />
+          ))
+        ) : data?.content.length === 0 ? (
+          <>아직 작성된 리뷰가 없습니다. 첫번째 리뷰를 달아주세요~^^</>
+        ) : (
+          data?.content.map((review) => (
+            <Review
+              key={review.reviewId}
+              width={isMobile ? "80%" : "640px"}
+              id={review.id}
+              starRate={review.starRate}
+              content={review.content}
+              isBlur={review.isBlur}
+              theUpCnt={review.ThearUpCount}
+              theDownCnt={review.ThearDownCount}
+              commentCnt={review.commentCount}
+              movieName={review.movieTitle}
+              contentClick={() => handleModalOpen(review.reviewId)}
+              memberId={review.memberId}
+              reviewId={review.reviewId}
+              theIsUp={review.isThearUp}
+              movieId={review.movieId}
+              theIsDown={review.isThearDown}
+              queryKeyType={["userReviews", userId, selectedSort, page]}
+              isWriter={review.isWriter}
+              isMine
+            />
+          ))
+        )}
       </ReviewContainer>
-      {totalPages && (
+      {totalPages !== null && (
         <CustomPagination
           count={totalPages}
           page={page}

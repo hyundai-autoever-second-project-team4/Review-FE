@@ -72,11 +72,10 @@ function MyReviewsList({ reviews, queryKeyType }) {
         }}
       >
         <Title>작성한 리뷰</Title>
-        {reviews?.length > 5 && (
-          <StyledButton onClick={() => handleMoveReviewListPage()}>
-            더보기
-          </StyledButton>
-        )}
+
+        <StyledButton onClick={() => handleMoveReviewListPage()}>
+          더보기
+        </StyledButton>
       </div>
 
       <ReviewWrapper>
