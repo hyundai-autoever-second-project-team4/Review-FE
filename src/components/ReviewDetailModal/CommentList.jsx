@@ -25,6 +25,7 @@ import { Pagination } from "@mui/material";
 import Swal from "sweetalert2";
 import { useDeleteComment } from "../../hooks/useDeleteComment";
 import { usePutComment } from "../../hooks/usePutComment";
+import CustomPagination from "../CustomPagination/CustomPagination";
 
 function formatDate(dateString) {
   const options = {
@@ -174,16 +175,10 @@ function CommentList({ reviewId }) {
         )}
       </CommentContainer>
       <PaginationContainer>
-        <Pagination
+        <CustomPagination
           count={data.commentList.totalPages}
           page={page} // 현재 페이지
-          siblingCount={3}
           onChange={handlePageChange} // 페이지 변경 핸들러
-          sx={{
-            ".MuiPaginationItem-root.Mui-selected": {
-              backgroundColor: "#F2B705",
-            },
-          }}
         />
       </PaginationContainer>
     </>
