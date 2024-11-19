@@ -15,7 +15,7 @@ export function useMainPageApi(user) {
   } = useQuery({
     queryKey: ["userRecommendMovies"],
     queryFn: getUserRecommendMovies,
-    staleTime: 60000, // 1분
+    staleTime: 0, // 1분
     select: (data) => data.data.movies,
     enabled: user?.id !== null,
   });
