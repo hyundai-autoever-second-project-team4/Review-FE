@@ -65,8 +65,74 @@ function RankingBoardBox({ tab }) {
 
   if (isLoading)
     return (
-      <div style={{ marginTop: "20px" }}>
-        <Skeleton variant="rounded" width={1224} height={600} />
+      <div style={{ marginTop: "10px" }}>
+        <Skeleton variant="rounded" width={1224} height={36} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+
+            marginTop: "16px",
+          }}
+        >
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: "56px",
+                width: "100%",
+                padding: "0 64px",
+              }}
+            >
+              <Skeleton
+                variant="rounded"
+                width={34}
+                height={34}
+                style={{ borderRadius: "50%" }}
+              />
+              <div
+                style={{
+                  width: "300px",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Skeleton
+                  variant="rounded"
+                  width={160}
+                  height={34}
+                  style={{ borderRadius: "8px" }}
+                />
+              </div>
+              <Skeleton
+                variant="rounded"
+                width={34}
+                height={34}
+                style={{ borderRadius: "50%" }}
+              />
+              <Skeleton
+                variant="rounded"
+                width={34}
+                height={34}
+                style={{ borderRadius: "50%" }}
+              />
+              <Skeleton
+                variant="rounded"
+                width={34}
+                height={34}
+                style={{ borderRadius: "50%" }}
+              />
+              <Skeleton
+                variant="rounded"
+                width={34}
+                height={34}
+                style={{ borderRadius: "50%" }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     );
   if (isError)
