@@ -61,7 +61,7 @@ export const getTopRatedMovies = async () => {
 };
 
 export const getTopReviewedMovies = async () => {
-  return await axiosInstance.get("/movie/honor-board");
+  return await axiosInstance.get("/movie/most-reviewed/weekly");
 };
 
 export const getHotReview = async () => {
@@ -69,7 +69,7 @@ export const getHotReview = async () => {
 };
 
 export const getThearupHonorMovies = async () => {
-  return await axiosInstance.get("/movie/most-reviewed/weekly");
+  return await axiosInstance.get("/movie/honor-board");
 };
 
 //랭킹 페이지 함수
