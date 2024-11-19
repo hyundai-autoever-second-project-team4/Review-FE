@@ -110,8 +110,12 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
   };
 
   const handleCommentSubmit = async (content) => {
-    if (commentContent == "") {
-      alert("댓글 내용을 입력해주세요!");
+    if (commentContent === "") {
+      Swal.fire({
+        text: "댓글 내용을 입력해주세요!",
+        icon: "warning",
+        confirmButtonText: "확인",
+      });
     } else {
       try {
         const response = await axiosInstance.post("/comment", {
@@ -120,14 +124,22 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
         });
         // 댓글 등록 후 쿼리 무효화
         queryClient.invalidateQueries(queryKeyType);
-        alert("댓글이 등록되었습니다.");
+        Swal.fire({
+          text: "댓글이 등록되었습니다.",
+          icon: "success",
+          confirmButtonText: "확인",
+        });
         inputRef.current.blur(); // 입력 필드의 포커스를 해제
         setPlaceholder("영화 리뷰에 대한 자신의 생각을 입력 해보세요.");
         setCommentContent("");
         refetch();
       } catch (error) {
         console.error("댓글 등록 오류:", error);
-        alert("댓글 등록에 실패했습니다.");
+        Swal.fire({
+          text: "댓글 등록에 실패했습니다.",
+          icon: "error",
+          confirmButtonText: "확인",
+        });
       }
     }
   };
@@ -149,6 +161,65 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleUpButtonClick = () => {
+    if (user.id === null) {
+      Swal.fire({
+        text: "로그인 후 공감할 수 있습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+    console.log(data);
+    if (reviewData?.isWriter) {
+      Swal.fire({
+        text: "내가 작성한 리뷰에는 공감할 수 없습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
+    if (reviewData.isThearDown) {
+      Swal.fire({
+        text: "이미 공감한 리뷰입니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+    if (queryKeyType !== "hotReview") thearUp();
+  };
+
+  const handleDownButtonClick = () => {
+    if (user.id === null) {
+      Swal.fire({
+        text: "로그인 후 공감할 수 있습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+    if (reviewData?.isWriter) {
+      Swal.fire({
+        text: "내가 작성한 리뷰에는 공감할 수 없습니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+
+    if (reviewData.isThearUp) {
+      Swal.fire({
+        text: "이미 공감한 리뷰입니다.",
+        icon: "info",
+        confirmButtonText: "확인",
+      });
+      return;
+    }
+    if (queryKeyType !== "hotReview") thearDown();
+  };
 
   return (
     <CustomModal
@@ -184,7 +255,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
                   width={24}
                   height={24}
                   style={{ cursor: "pointer" }}
-                  onClick={toggleUpVote}
+                  onClick={handleUpButtonClick} //여기수정
                 />
                 <UpDownText>{reviewData.ThearUpCount}</UpDownText>
               </S.ThumbWrapper>
@@ -198,7 +269,7 @@ function ReviewDetailModal({ modalOpen, modalClose, id, queryKeyType }) {
                     position: "relative",
                     top: "6px",
                   }}
-                  onClick={toggleDownVote}
+                  onClick={handleDownButtonClick}
                 />
                 <UpDownText>{reviewData.ThearDownCount}</UpDownText>
               </S.ThumbWrapper>

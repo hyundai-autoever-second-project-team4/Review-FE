@@ -166,8 +166,6 @@ function HotComment({ reviewData }) {
                   // theIsUp={review.isThearUp}
                   // theIsDown={review.isThearDown}
                   commentCnt={review.commentCount}
-                  upClick={() => console.log(review.reviewId)}
-                  downClick={() => console.log(review.reviewId)}
                   movieName={review.movieTitle}
                   queryKeyType={"hotReview"}
                   memberId={review.memberId}
