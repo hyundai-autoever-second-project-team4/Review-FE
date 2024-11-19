@@ -11,6 +11,7 @@ import { getSearchTitle, getSearchGenre } from "../../api/api";
 import { CircularProgress } from "@mui/material";
 import CustomPagination from "../../components/CustomPagination/CustomPagination";
 import { smoothScrollTo } from "../../utils/smoothScrollTop";
+import MetaTag from "../../MetaTag/MetaTag";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
 
@@ -112,60 +113,6 @@ const CardWrapper = styled.div`
     flex-basis: 100%; /* 화면 너비가 480px 이하일 때 1열 */
   }
 `;
-
-const movieData = [
-  {
-    adult: false,
-    backdrop_path: "/3V4kLQg0kSqPLctI5ziYWabAZYF.jpg",
-    genre_ids: [878, 28, 12],
-    id: 912649,
-    original_language: "en",
-    original_title: "Venom: The Last Dance",
-    overview:
-      "환상의 케미스트리의 에디 브록과 그의 심비오트 베놈은 그들을 노리는 정체불명 존재의 추격을 피해 같이 도망을 다니게 된다. 한편 베놈의 창조자 널은 고향 행성에서부터 그들을 찾아내기 위해 지구를 침략하고 에디와 베놈은 그동안 겪어보지 못한 최악의 위기를 맞이하게 되는데…",
-    popularity: 3930.216,
-    posterPath: "/3flIDcZF3tnR7m5OU2h7lLPQwmr.jpg",
-    releaseDate: "2024-10-22",
-    title: "베놈: 라스트 댄스",
-    video: false,
-    vote_average: 6.395,
-    vote_count: 663,
-  },
-  {
-    adult: false,
-    backdrop_path: "/18TSJF1WLA4CkymvVUcKDBwUJ9F.jpg",
-    genre_ids: [27, 53, 9648],
-    id: 1034541,
-    original_language: "en",
-    original_title: "Terrifier 3",
-    overview:
-      '"아트 더 클라운"이 크리스마스 이브에 평화롭게 잠든 "마일스 카운티"의 주민들을 향해 혼돈을 일으키려 한다',
-    popularity: 3304.003,
-    posterPath: "/l1175hgL5DoXnqeZQCcU3eZIdhX.jpg",
-    releaseDate: "2024-10-09",
-    title: "테리파이어 3",
-    video: false,
-    vote_average: 6.9,
-    vote_count: 898,
-  },
-  {
-    adult: false,
-    backdrop_path: "/v9acaWVVFdZT5yAU7J2QjwfhXyD.jpg",
-    genre_ids: [16, 878, 10751],
-    id: 1184918,
-    original_language: "en",
-    original_title: "The Wild Robot",
-    overview:
-      "우연한 사고로 거대한 야생에 불시착한 로봇 로즈는 주변 동물들의 행동을 배우며 낯선 환경 속에 적응해 가던 중, 사고로 세상에 홀로 남겨진 아기 기러기 브라이트빌의 보호자가 된다. 로즈는 입력되어 있지 않은 새로운 역할과 관계에 낯선 감정을 마주하고 겨울이 오기 전에 남쪽으로 떠나야 하는 브라이트빌을 위해 동물들의 도움을 받아 이주를 위한 생존 기술을 가르쳐준다. 그러나 선천적으로 몸집이 작은 브라이트빌은 짧은 비행도 힘겨워 하는데...",
-    popularity: 2214.674,
-    posterPath: "/8dkuf9IuVh0VZjDTk7kAY67lU0U.jpg",
-    releaseDate: "2024-09-12",
-    title: "와일드 로봇",
-    video: false,
-    vote_average: 8.5,
-    vote_count: 2735,
-  },
-];
 
 function Search() {
   const location = useLocation();
@@ -306,6 +253,13 @@ function Search() {
   // console.log(genreData);
   return (
     <>
+      <MetaTag
+        title={searchKeyword + " 검색"}
+        description={searchKeyword + " 검색 페이지"}
+        imgsrc={"https://theaterup.site/ThearUpImg.png"}
+        url={`https://theaterup.site/search/${searchKeyword}`}
+        original={true}
+      />
       <KeywordBar>
         <Title>"{searchKeyword}"의 검색결과</Title>
       </KeywordBar>

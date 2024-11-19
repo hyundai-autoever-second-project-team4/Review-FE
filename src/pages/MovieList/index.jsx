@@ -15,6 +15,7 @@ import axios from "axios";
 import { smoothScrollTo } from "../../utils/smoothScrollTop.js";
 import MovieCardSkeleton from "../../components/MovieCard/MovieCardSkeleton.jsx";
 import CustomPagination from "../../components/CustomPagination/CustomPagination.jsx";
+import MetaTag from "../../MetaTag/MetaTag.jsx";
 
 const apiKey = import.meta.env.VITE_TMDB_API_KEY; // Vite 환경 변수에서 API 키를 가져옴
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500"; // 이미지 베이스 URL
@@ -63,6 +64,17 @@ function MovieList() {
 
   return (
     <EveryContainer>
+      <MetaTag
+        title={type === "nowPlaying" ? "현재상영작" : "인기영화"}
+        description={type + " 목록 페이지"}
+        imgsrc={"https://theaterup.site/ThearUpImg.png"}
+        url={
+          type === "nowPlaying"
+            ? `https://theaterup.site/movieList/${type}`
+            : `https://theaterup.site/movieList/${type}`
+        }
+        original={true}
+      />
       <TitleWrap>
         <Title>{type === "nowPlaying" ? "현재상영작" : "인기영화"}</Title>
       </TitleWrap>
