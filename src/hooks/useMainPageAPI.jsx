@@ -15,7 +15,7 @@ export function useMainPageApi(user) {
   } = useQuery({
     queryKey: ["userRecommendMovies"],
     queryFn: getUserRecommendMovies,
-    staleTime: 0, // 1분
+    staleTime: 6000, // 1분
     select: (data) => data.data.movies,
     enabled: user?.id !== null,
   });
@@ -27,7 +27,7 @@ export function useMainPageApi(user) {
   } = useQuery({
     queryKey: ["topRatedMovies"],
     queryFn: getTopRatedMovies,
-    staleTime: 0, // 1분
+    staleTime: 6000, // 1분
     select: (data) => data.data.movies,
   });
 
@@ -38,7 +38,7 @@ export function useMainPageApi(user) {
   } = useQuery({
     queryKey: ["topReviewedMovies"],
     queryFn: getTopReviewedMovies,
-    staleTime: 0, // 1분
+    staleTime: 6000, // 1분
     select: (data) => data.data.movies,
   });
 
@@ -49,7 +49,7 @@ export function useMainPageApi(user) {
   } = useQuery({
     queryKey: ["hotReview"],
     queryFn: getHotReview,
-    staleTime: 0, // 1분
+    staleTime: 6000, // 1분
     select: (data) => data.data.reviewInfos,
   });
 
@@ -60,7 +60,7 @@ export function useMainPageApi(user) {
   } = useQuery({
     queryKey: ["thearupHonorMovies"],
     queryFn: getThearupHonorMovies,
-    staleTime: 0, // 1분
+    staleTime: 6000, // 1분
     select: (data) => data.data.movies,
   });
 
