@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { smoothScrollTo } from "../../utils/smoothScrollTop";
 import CustomPagination from "../../components/CustomPagination/CustomPagination";
 import ReviewSkeleton from "../../components/Review/ReviewSkeleton";
+import MetaTag from "../../MetaTag/MetaTag";
 
 const sortOptions = [
   { value: "likes", label: "UP 순" },
@@ -71,6 +72,13 @@ function MovieReview() {
 
   return (
     <Container>
+      <MetaTag
+        title={movieTitle + " 리뷰"}
+        description={movieTitle + " 리뷰 목록 페이지"}
+        imgsrc={"https://theaterup.site/ThearUpImg.png"}
+        url={`https://theaterup.site/movieReview/${movieId}`}
+        original={true}
+      />
       <HeaderTextContainer>
         <HeaderText>"{movieTitle}" 리뷰 목록</HeaderText>
       </HeaderTextContainer>

@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { smoothScrollTo } from "../../utils/smoothScrollTop";
 import ReviewSkeleton from "../../components/Review/ReviewSkeleton";
+import MetaTag from "../../MetaTag/MetaTag";
 
 const sortOptions = [
   { value: "likes", label: "UP 순" },
@@ -80,6 +81,13 @@ function UserReviewListPage() {
 
   return (
     <Container>
+      <MetaTag
+        title={data?.content[0].memberName + "님의 리뷰"}
+        description={data?.content[0].memberName + " 리뷰 목록 페이지"}
+        imgsrc={"https://theaterup.site/ThearUpImg.png"}
+        url={`https://theaterup.site/userReview/${userId}`}
+        original={true}
+      />
       <HeaderTextContainer>
         <HeaderText>작성한 리뷰 목록</HeaderText>
       </HeaderTextContainer>

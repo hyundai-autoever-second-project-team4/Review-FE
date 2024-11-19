@@ -21,6 +21,7 @@ import { Tooltip } from "@mui/material";
 import { badgeNames } from "../../utils/badges.js";
 import UserPageLoading from "./template/UserPageLoading.jsx";
 import Swal from "sweetalert2";
+import MetaTag from "../../MetaTag/MetaTag.jsx";
 
 const Container = styled.div`
   width: 1320px;
@@ -219,6 +220,13 @@ function UserPage() {
 
   return (
     <>
+      <MetaTag
+        title={userDetail?.memberName + "님의 페이지"}
+        description={userDetail?.memberName + "님의 페이지"}
+        imgsrc={"https://theaterup.site/ThearUpImg.png"}
+        url={`https://theaterup.site/userPage/${path.userId}`}
+        original={true}
+      />
       <BadgeImage
         src={userDetail?.memberBadgeList?.primaryBadgeBackgroundImg}
         alt=""
