@@ -31,6 +31,12 @@ export const MovieNameArea = styled.div`
   border-bottom: 1px solid ${theme.colors.gray2};
   width: 100%;
   padding: 4px 0px;
+
+  border-radius: 4px;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const MovieTitle = styled.p``;
@@ -58,6 +64,27 @@ export const ContentArea = styled.div`
   -ms-user-select:none;
   user-select:none`
       : `cursor: pointer;`}
+  border-radius: 4px;
+  display: "relative";
+  transition: 0.2s;
+
+  &:hover {
+    ${({ $isBlur }) =>
+      !$isBlur &&
+      `background-color: rgba(0, 0, 0, 0.2);
+    &::after {
+      content: "자세히 보기";
+      display: flex;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }`}
+  }
 `;
 
 export const BottomArea = styled.div`
@@ -77,6 +104,11 @@ export const ProfileWrapper = styled.div`
   gap: 4px;
   width: calc(100% - 49px);
   cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s;
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
 export const ProfileImg = styled.img`

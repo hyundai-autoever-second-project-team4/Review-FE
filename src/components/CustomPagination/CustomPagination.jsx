@@ -27,17 +27,21 @@ const CustomPagination = ({ count, page, onChange }) => {
   }, []);
 
   return (
-    <Pagination
-      count={count}
-      page={page}
-      onChange={onChange}
-      siblingCount={siblingCount}
-      sx={{
-        ".MuiPaginationItem-root.Mui-selected": {
-          backgroundColor: "#F2B705",
-        },
-      }}
-    />
+    <>
+      {count !== 0 && (
+        <Pagination
+          count={count}
+          page={page}
+          onChange={onChange}
+          siblingCount={siblingCount}
+          sx={{
+            ".MuiPaginationItem-root.Mui-selected": {
+              backgroundColor: "#F2B705",
+            },
+          }}
+        />
+      )}
+    </>
   );
 };
 

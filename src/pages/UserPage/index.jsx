@@ -49,6 +49,12 @@ const ProfileImg = styled.img`
   object-fit: cover;
   box-shadow: ${({ level }) =>
     level && `0px 4px 10px ${theme.colors.super[level]}`};
+  transition: 0.5s;
+
+  &:hover {
+    box-shadow: ${({ level }) =>
+      level && `0px 8px 20px ${theme.colors.super[level]}`};
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -184,11 +190,6 @@ function UserPage() {
         setPercent(calculatedPercent);
       }
     }, 300);
-
-    return () => {
-      clearTimeout(timeoutId);
-      setPercent(0);
-    };
   }, [userDetail]);
 
   useEffect(() => {

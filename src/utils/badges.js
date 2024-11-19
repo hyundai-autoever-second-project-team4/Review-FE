@@ -49,7 +49,7 @@ export const badges = {
   },
   commentTrooper: {
     name: "댓글 군대 출격😎",
-    condition: "하나의 리뷰에 댓글 10개 달성",
+    condition: "하나의 리뷰에 댓글 10개 달리기",
   },
   badgeCollector: {
     name: "뱃지, 너 내 동료가 돼라❗",
@@ -57,7 +57,7 @@ export const badges = {
   },
   keepGoingChamp: {
     name: "잘하고 있어요, 언제나 포기하지 말기🤗",
-    condition: "숨겨진 달성 목표(리뷰 Down 10개 달성)",
+    condition: "숨겨진 달성 목표",
   },
 };
 
