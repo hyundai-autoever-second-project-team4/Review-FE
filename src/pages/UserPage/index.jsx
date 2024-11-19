@@ -181,15 +181,31 @@ function UserPage() {
   }, [userDetail?.memberTier?.tierId]);
 
   useEffect(() => {
-    setTimeout(() => {
-      const calculatedPercent =
-        (userDetail?.memberTier?.tierCurrentPoints /
-          userDetail?.memberTier?.tierRequiredPoints) *
-        100;
+    const id = setTimeout(() => {
+      const currentPoints = userDetail?.memberTier?.tierCurrentPoints;
+      const requiredPoints = userDetail?.memberTier?.tierRequiredPoints;
+      if (
+        typeof currentPoints === "number" &&
+        typeof requiredPoints === "number"
+      ) {
+        const calculatedPercent =
+          (userDetail?.memberTier?.tierCurrentPoints /
+            userDetail?.memberTier?.tierRequiredPoints) *
+          100;
 
-      if (percent !== calculatedPercent) {
-        setPercent(calculatedPercent);
+        if (percent !== calculatedPercent) {
+          // console.log(calculatedPercent);
+          setPercent(calculatedPercent);
+        }
+      } else {
+        // 잘못된 데이터가 있으면 기본값으로 설정
+        setPercent(0);
+        console.warn("Invalid tier points data:", {
+          currentPoints,
+          requiredPoints,
+        });
       }
+      s;
     }, 300);
   }, [userDetail]);
 
