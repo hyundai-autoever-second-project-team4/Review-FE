@@ -87,8 +87,6 @@ function BadgeModal({ modal, modalClose, badgeCnt }) {
     >
       <Container>
         {Object.entries(badges)?.map(([key, { name, condition }], index) => {
-          if (key === "keepGoingChamp") return;
-
           return (
             <BadgeWrapper key={key}>
               <Left>

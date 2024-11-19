@@ -167,6 +167,13 @@ export const RankingMemberNicknameText = styled.div`
   font-weight: ${theme.fontWeight.bold};
 `;
 
+export const Ha = styled.div`
+  border-radius: 8px;
+  &:hover {
+    background-color: ${theme.colors.gray2}6C;
+  }
+`;
+
 export const RankingMemberTierImg = styled.img`
   width: 18px;
   height: 18px;
@@ -177,6 +184,7 @@ export const RankingMemberProfileImg = styled.img`
   width: 18px;
   height: 18px;
   margin-right: 4px;
+  border-radius: 50%;
 `;
 
 export const RankingMemberReviewText = styled.div`

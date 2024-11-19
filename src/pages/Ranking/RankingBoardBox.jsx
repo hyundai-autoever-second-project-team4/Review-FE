@@ -17,6 +17,7 @@ import {
   RankingMemberScoreText,
   RankingMemberTierImg,
   RankingMemberUPText,
+  Ha,
 } from "./RankingPageStyle";
 import { Pagination, Skeleton } from "@mui/material";
 import { getEndpoint, useGetRanking } from "../../hooks/useGetRanking";
@@ -24,11 +25,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { getRankingData } from "../../api/api";
 import { smoothScrollTo } from "../../utils/smoothScrollTop.js";
 import CustomPagination from "../../components/CustomPagination/CustomPagination.jsx";
+import { useNavigate } from "react-router-dom";
 
 function RankingBoardBox({ tab }) {
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
   const { data, isLoading, isError, error } = useGetRanking(tab, page);
-
+  const queryClient = useQueryClient();
   // urlType이 변경될 때 pagination 초기화
   useEffect(() => {
     setPage(1);
@@ -39,7 +42,9 @@ function RankingBoardBox({ tab }) {
     smoothScrollTo(0, 500); // 500ms 동안 부드럽게 스크롤
   };
 
-  const queryClient = useQueryClient();
+  const handleUserClick = (id) => {
+    navigate(`/userPage/${id}`);
+  };
 
   // 모든 탭의 데이터를 미리 로드
   useEffect(() => {
@@ -85,9 +90,20 @@ function RankingBoardBox({ tab }) {
             <RankingContentBox key={member.memberId}>
               <RankingMemberRankText>{member.rank}</RankingMemberRankText>
               <RankingMemberNicknameText>
-                <RankingMemberTierImg src={`${member.tierImage}`} />
-                <RankingMemberProfileImg src={`${member.profileImage}`} />
-                {member.memberName}
+                <Ha
+                  onClick={() => handleUserClick(member.memberId)}
+                  style={{
+                    display: "flex",
+                    gap: "4px",
+                    cursor: "pointer",
+                    alignItems: "center",
+                    padding: "8px 8px",
+                  }}
+                >
+                  <RankingMemberTierImg src={`${member.tierImage}`} />
+                  <RankingMemberProfileImg src={`${member.profileImage}`} />
+                  {member.memberName}
+                </Ha>
               </RankingMemberNicknameText>
               <RankingMemberReviewText>
                 {member.totalReviewCount.toLocaleString()}

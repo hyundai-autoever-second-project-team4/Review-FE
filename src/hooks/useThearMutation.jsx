@@ -97,7 +97,10 @@ export const useThearMutation = (reviewId, querykeyType, actionType) => {
       console.log(err);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: querykeyType });
+      const mainQueryKey = querykeyType[0];
+      if (mainQueryKey !== "movieDetail")
+        // 일단 바로 갱신 막기
+        queryClient.invalidateQueries({ queryKey: querykeyType });
     },
   });
 };
