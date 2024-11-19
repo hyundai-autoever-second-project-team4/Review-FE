@@ -72,39 +72,45 @@ function MyReviewsList({ reviews, queryKeyType }) {
         }}
       >
         <Title>작성한 리뷰</Title>
-        <StyledButton onClick={() => handleMoveReviewListPage()}>
-          더보기
-        </StyledButton>
+        {reviews?.length > 5 && (
+          <StyledButton onClick={() => handleMoveReviewListPage()}>
+            더보기
+          </StyledButton>
+        )}
       </div>
 
       <ReviewWrapper>
-        {reviews.map((review) => {
-          return (
-            <CardWrapper key={review.reviewId}>
-              <Review
-                width={"100%"}
-                level={review.level}
-                reviewId={review.reviewId}
-                movieName={review.movieTitle}
-                starRate={review.starRate}
-                profileName={review.profileName}
-                profileImg={review.profileImg}
-                content={review.content}
-                isBlur={review.spoiler} // 내 리뷰 일때도 스포일러
-                theUpCnt={review.ThearUpCount}
-                theDownCnt={review.ThearDownCount}
-                theIsUp={review.isThearUp}
-                theIsDown={review.isThearDown}
-                commentCnt={review.commentCount}
-                isMine
-                queryKeyType={queryKeyType}
-                movieId={review.movieId}
-                userId={userId}
-                isWriter={review.isWriter}
-              />
-            </CardWrapper>
-          );
-        })}
+        {reviews?.length === 0 ? (
+          <>아직 작성된 리뷰가 없습니다. 첫번째 리뷰를 달아주세요~^^</>
+        ) : (
+          reviews.map((review) => {
+            return (
+              <CardWrapper key={review.reviewId}>
+                <Review
+                  width={"100%"}
+                  level={review.level}
+                  reviewId={review.reviewId}
+                  movieName={review.movieTitle}
+                  starRate={review.starRate}
+                  profileName={review.profileName}
+                  profileImg={review.profileImg}
+                  content={review.content}
+                  isBlur={review.spoiler} // 내 리뷰 일때도 스포일러
+                  theUpCnt={review.ThearUpCount}
+                  theDownCnt={review.ThearDownCount}
+                  theIsUp={review.isThearUp}
+                  theIsDown={review.isThearDown}
+                  commentCnt={review.commentCount}
+                  isMine
+                  queryKeyType={queryKeyType}
+                  movieId={review.movieId}
+                  userId={userId}
+                  isWriter={review.isWriter}
+                />
+              </CardWrapper>
+            );
+          })
+        )}
       </ReviewWrapper>
     </Container>
   );

@@ -106,6 +106,7 @@ const StyledDynamicSvg = styled(DynamicSVG)`
 
 const StyledButton = styled(Button)`
   opacity: ${({ $variant }) => $variant && `0.6`};
+  width: 96px;
 `;
 
 const ProfileImg = styled.img`
@@ -316,11 +317,9 @@ function NavBar() {
                 onKeyUp={handleKeyUp}
               />
               {user?.id === null ? (
-                <div style={{ width: "100px" }}>
-                  <StyledButton $variant={isVariant} onClick={handleModalOpen}>
-                    로그인
-                  </StyledButton>
-                </div>
+                <StyledButton $variant={isVariant} onClick={handleModalOpen}>
+                  로그인
+                </StyledButton>
               ) : (
                 <Tooltip
                   title={
